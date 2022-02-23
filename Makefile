@@ -10,14 +10,21 @@ CC	= gcc
 
 FLAGS	= -Wall -Wextra -Werror
 
+LIBFT		= ./libft/libft.a
+
 all:		${NAME}
 
 .c.o:      
-			@${CC} ${FLAGS} -c $< -o ${<:.c=.o} 
+			@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}:	${OBJS} 
+${NAME}:	${OBJS} ${LIBFT} 
 			@echo "$(shell tput bold)$(shell tput setaf 5)Compiling...$(shell tput sgr0)"
-			@${CC} ${OBJS} -o ${NAME}
+			@${CC} ${OBJS} -lreadline -o ${NAME} ${LIBFT} 
+			@echo "$(shell tput bold)$(shell tput setaf 5)DONE$(shell tput sgr0)"
+
+${LIBFT}:	
+			@echo "$(shell tput bold)$(shell tput setaf 5)Building libft...$(shell tput sgr0)"
+			@make -sC libft
 			@echo "$(shell tput bold)$(shell tput setaf 5)DONE$(shell tput sgr0)"
 
 clean:          
@@ -28,6 +35,8 @@ clean:
 fclean:		clean
 			@${RM} ${NAME}
 			@echo "$(shell tput bold)$(shell tput setaf 5)Deleting binaries...$(shell tput sgr0)"
+			@make fclean -sC ./libft 
+			@echo "$(shell tput bold)$(shell tput setaf 5)Cleaning libft...$(shell tput sgr0)"
 			@echo "$(shell tput bold)$(shell tput setaf 5)DONE$(shell tput sgr0)"
 
 re:			fclean all
