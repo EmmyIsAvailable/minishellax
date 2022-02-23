@@ -5,6 +5,8 @@
 
 # include "./libft/libft.h"
 
+# include "struct.h"
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -25,5 +27,9 @@
 /*_FUNCTIONS_*/
 
 /*_main_*/
+int	main(int ac, char **av);
+
+/*_exit_program_*/
+void	event_ctrl_d(void);
 
 #endif

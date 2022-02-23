@@ -2,12 +2,19 @@
 
 int main(int ac, char **av)
 {
+	char	*history;
+
 	(void)av;
 	if (ac != 1)
 	{
 		ft_putstr_fd("Error format : ./minishell\n", 1);
 		return (1);
 	}
-	readline("test> ");
+	event_ctrl_d();
+	while (1)
+	{
+		history = readline("> ");
+		add_history(history);
+	}
 	return (0);
 }
