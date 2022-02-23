@@ -5,6 +5,6 @@
 
 int	main(void)
 {
-	printf("hello\n");
+	printf("hello, j'ai modifie le main\n");
 	return (0);
 }
