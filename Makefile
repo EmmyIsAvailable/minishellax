@@ -1,6 +1,6 @@
 NAME	= minishell
 
-SRCS	= main.c
+SRCS	= main.c exit_program.c
 
 OBJS	= ${SRCS:.c=.o}
 
