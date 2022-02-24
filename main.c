@@ -10,10 +10,12 @@ int main(int ac, char **av)
 		ft_putstr_fd("Error format : ./minishell\n", 1);
 		return (1);
 	}
-	event_ctrl_d();
+	event_ctrl_c();
 	while (1)
 	{
 		history = readline("> ");
+		if (history == NULL) 
+			break ;
 		add_history(history);
 	}
 	return (0);

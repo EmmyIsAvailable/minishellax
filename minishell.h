@@ -30,6 +30,7 @@
 int	main(int ac, char **av);
 
 /*_exit_program_*/
-void	event_ctrl_d(void);
+void	sig_int(int code);
+void	event_ctrl_c(void);
 
 #endif

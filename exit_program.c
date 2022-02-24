@@ -1,15 +1,18 @@
 #include "minishell.h"
 
-void	handler(__attribute__((unused))int dummy)
+void	sig_int(int code)
 {
-	exit(EXIT_SUCCESS);
+	(void)code;
+	write(1, "\n", 1);	
+	rl_on_new_line();
+	rl_replace_line("", 1);
 }
 
-void	event_ctrl_d(void)
+void	event_ctrl_c(void)
 {
 	struct sigaction sa;
 	
-	sa.sa_handler = handler; 
+	sa.sa_handler = sig_int; 
 	sa.sa_flags = 0;
-	sigaction(EOF, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 }
