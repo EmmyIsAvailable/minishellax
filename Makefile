@@ -1,6 +1,7 @@
 NAME	= minishell
 
-SRCS	= main.c exit_program.c
+SRCS	= main.c exit_program.c \
+		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c
 
 OBJS	= ${SRCS:.c=.o}
 

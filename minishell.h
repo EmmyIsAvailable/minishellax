@@ -24,13 +24,23 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/*_FUNCTIONS_*/
+/*_RACINE_*/
 
 /*_main_*/
-int	main(int ac, char **av);
+//int	main(int ac, char **av);
 
 /*_exit_program_*/
 void	sig_int(int code);
 void	event_ctrl_c(void);
+
+/*_builtins_cmd_*/
+int	displayOnTerm(char *str);
+int	ft_echo(char **params);
+int	ft_pwd(void);
+int	ft_env(t_data *data);
+int	ft_cd(char *path);
+
+/*builtins_dispatch*/
+int	dispatch_builtins(char **cmd, t_data *data);
 
 #endif
