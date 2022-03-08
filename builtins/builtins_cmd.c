@@ -8,18 +8,40 @@ int	displayOnTerm(char *str)
 	while (str[len])
 		len++;
 	write(1, str, len);
+	return (1);
+}
+
+int	variables_in_echo(char *params, t_data *data)
+{
+	char	**envp;
+	int	i;
+
+	i = 0;
+	envp = data->envp;
+	while (envp[i])
+	{
+		if (ft_strncmp(&envp[i][ft_strlen(params)], "=", 1) == 0)
+		{
+			if (ft_strncmp(envp[i], params, ft_strlen(params)) == 0)
+			{
+				displayOnTerm(&envp[i][ft_strlen(params) + 1]);
+				return (1);
+			}
+		}
+		i++;
+	}
 	return (0);
 }
 
-int	ft_echo(char **params)
+int	ft_echo(char **params, t_data *data)
 {
 	int	i;
 	int	option;
+	int	print;
 
 	i = 0;
 	option = 0;
-	if (!params[0])
-		return (0);
+	print = 0;
 	if (ft_strncmp(params[0], "-n", 3) == 0)
 	{
 		option = 1;
@@ -27,8 +49,11 @@ int	ft_echo(char **params)
 	}
 	while (params[i])
 	{
-		displayOnTerm(params[i]);
-		if (params[i + 1] != NULL)
+		if (params[i][0] == '$')
+			print = variables_in_echo(&params[i][1], data);
+		else
+			print = displayOnTerm(params[i]);
+		if (params[i + 1] != NULL && print != 0)
 			displayOnTerm(" ");
 		i++;
 	}
@@ -53,12 +78,5 @@ int	ft_pwd(void)
 {
 	displayOnTerm(getcwd(NULL, 0));
 	displayOnTerm("\n");
-	return (0);
-}
-
-int	ft_cd(char *path)
-{
-	if (chdir(path) != 0)
-		return (1);
 	return (0);
 }
