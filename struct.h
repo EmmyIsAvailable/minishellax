@@ -3,7 +3,7 @@
 
 typedef struct s_data {
 	char	**envp;
-	char	*var;
+	char	**var;
 } t_data;
 
 #endif
