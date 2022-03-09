@@ -6,33 +6,25 @@ int	ft_unset(char **cmd, t_data *data)
 	int	i;
 	int	j;
 
-	j = 1;
+	j = 0;
 	envp = data->envp;
-	while (cmd[j])
+	while (cmd[++j])
 	{
-		i = 0;
-		while (envp[i])
+		i = -1;
+		while (envp[++i])
 		{
 			if (ft_strncmp(&envp[i][ft_strlen(cmd[j])], "=", 1) == 0)
 			{
 				if (ft_strncmp(envp[i], cmd[j], ft_strlen(cmd[j])) == 0)
 				{
-					/*printf("non\n");
-					if (envp[i + 1])
-					{
-						printf("%s\n", envp[i + 1]);
-						while (envp[i] && envp[i + 1])
-						{	
-							envp[i] = envp[i + 1];
-							i++;
-						}
-					} */
-					envp[i] = NULL;
+					while (envp[i])
+					{	
+						envp[i] = envp[i + 1];
+						i++;
+					}
 				}
 			}
-			i++;
 		}
-		j++;
 	}
 	return (0);
 }
@@ -47,6 +39,7 @@ void	add_var_envp(char *cmd, t_data *data)
 	while (envp[i])
 		i++;
 	envp[i] = cmd;
+	envp[i + 1] = NULL;
 }
 
 int	ft_export(char **cmd, t_data *data)
@@ -58,11 +51,11 @@ int	ft_export(char **cmd, t_data *data)
 	i = 1;
 	while (cmd[i])
 	{
-		j = 0;
+		j = 1;
 		is_var = 0;
 		while (cmd[i][j])
 		{
-			if (cmd[i][j] == '=')
+			if (cmd[i][j] == '=' && cmd[i][j + 1] != '\0')
 				is_var = 1;
 			j++;
 		}

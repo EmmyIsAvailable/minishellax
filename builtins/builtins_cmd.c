@@ -67,9 +67,9 @@ int	ft_env(t_data *data)
 	char	**envp;
 	int	i;
 
-	i = 0;
+	i = -1;
 	envp = data->envp;
-	while (envp[i++])
+	while (envp[++i])
 		printf("%s\n", envp[i]);
 	return (0);
 }
