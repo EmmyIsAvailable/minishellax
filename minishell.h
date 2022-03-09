@@ -42,5 +42,8 @@ int	variables_in_echo(char *params, t_data *data);
 
 /*builtins_dispatch*/
 int	dispatch_builtins(char **cmd, t_data *data);
+int	ft_unset(char **cmd, t_data *data);
+void	add_var_envp(char *cmd, t_data *data);
+int	ft_export(char **cmd, t_data *data);
 
 #endif

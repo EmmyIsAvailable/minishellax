@@ -3,28 +3,36 @@
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = envp;
-	data->var = NULL;
+	data->var[0] = "oui=0";
+	data->var[1] = "non=1";
 	return (0);
 }
 
 int	tmp_pars(char **cmd, t_data *data) //parsing nul en attendant que tu fasses le vrai celuici juste pour mes tests
 {
 	int	i;
+	int	j;
+	int	k;
 
-	i = 0;
-	if (cmd[0] && !cmd[1])
+	j = -1;
+	while (cmd[++j])
 	{
-		while (cmd[0][i])
-		{
-			if (cmd[0][i] == '=')
+		i = 1;
+		k = 0;
+		while (cmd[j][i])
+		{	
+			if (cmd[j][i] == '=' && cmd[j][i + 1] != '\0')
 			{
 				if (!data->var)
-					data->var = cmd[0];
+					data->var[k] = cmd[j];
 				else
 				{
-					data->var = ft_strjoin(data->var, " ");
-					data->var = ft_strjoin(data->var, cmd[0]);
+					while (data->var[k])
+						k++;
+					data->var[k] = cmd[j];
 				}
+				printf("%s\n", data->var[k]);
+				data->var[k + 1] = NULL;
 				return (0);
 			}
 			i++;
@@ -60,7 +68,7 @@ int main(int ac, char **av, char **envp)
 		if (cmd[0])
 		{
 			dispatch_builtins(cmd, &data);
-			tmp_pars(cmd, &data);
+			//tmp_pars(cmd, &data);
 		}
 	}
 	return (0);

@@ -42,6 +42,23 @@ void	add_var_envp(char *cmd, t_data *data)
 	envp[i + 1] = NULL;
 }
 
+int	browse_data_var(char *cmd, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->var[i])
+	{
+		if (ft_strncmp(data->var[i], cmd, ft_strlen(cmd)) == 0)
+		{
+			add_var_envp(data->var[i], data);
+			return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	ft_export(char **cmd, t_data *data)
 {
 	int	i;
@@ -59,6 +76,8 @@ int	ft_export(char **cmd, t_data *data)
 				is_var = 1;
 			j++;
 		}
+		if (is_var == 0)
+			browse_data_var(cmd[i], data);
 		if (is_var == 1)
 			add_var_envp(cmd[i], data);
 		i++;
