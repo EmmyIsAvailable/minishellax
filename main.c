@@ -21,7 +21,7 @@ int	tmp_pars(char **cmd, t_data *data) //parsing nul en attendant que tu fasses 
 		k = 0;
 		while (cmd[j][i])
 		{	
-			if (cmd[j][i] == '=' && cmd[j][i + 1] != '\0')
+			if (cmd[j][i] == '=')
 			{
 				if (!data->var)
 					data->var[k] = cmd[j];
@@ -31,7 +31,6 @@ int	tmp_pars(char **cmd, t_data *data) //parsing nul en attendant que tu fasses 
 						k++;
 					data->var[k] = cmd[j];
 				}
-				printf("%s\n", data->var[k]);
 				data->var[k + 1] = NULL;
 				return (0);
 			}
