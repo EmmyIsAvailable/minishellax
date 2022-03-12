@@ -4,6 +4,7 @@
 enum token_type {
 	WORD,
 	WORD_ASSIGNMENT,
+	SPACE,
 	PIPE,
 	DOUBLE_QUOTE,
 	SIMPLE_QUOTE,
