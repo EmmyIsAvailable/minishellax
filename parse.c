@@ -43,7 +43,7 @@ t_token	*fill_data(token_type token, int len, char *op)
 	i = -1;
 	new_token = (t_token *)malloc(sizeof(t_token));
 	new_token->token = token;
-	new_token->data = malloc(sizeof(char) * 3);
+	new_token->data = malloc(sizeof(char) * 3); //a modif pour len
 	if (!new_token->data)
 			return (NULL);
 	while (op[++i])
@@ -57,6 +57,8 @@ t_token	*fill_data(token_type token, int len, char *op)
 
 int	check_token(char c)
 {
+	token_type token;
+
 	if (c == SPACE)
 		return (SPACE);
 	if (c == PIPE)
@@ -68,8 +70,6 @@ int	check_token(char c)
 
 t_token	*scan_token(char *str)
 {
-//	t_token	*new_token;
-//	token_type	tokens;
 	int		i;
 	int		len;
 	char	*data;
@@ -107,10 +107,9 @@ int	ft_parse(char *str, t_token **head)
 	i = 0;
 	if (!str)
 		return (1);
-	while (str[i]) // (str[i] != EOF || str[i] != '\n')
+	while (str[i])
 	{
 		tmp = scan_token(&str[i]);
-		printf("%d\n", i);	
 		i += (int)tmp->data_size;
 		ft_lst_add_back(head, tmp);
 	}

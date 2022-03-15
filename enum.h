@@ -18,7 +18,6 @@ typedef enum {
 	DOUBLE_GREATER,
 	HEREDOC,
 	WORD,
-//	WORD_ASSIGNMENT : ou juste mettre WORD=WORD || WORD= 
 } token_type;
 
 #endif

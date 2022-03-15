@@ -5,8 +5,9 @@
 
 # include "./libft/libft.h"
 
-# include "struct.h"
 # include "enum.h"
+# include "struct.h"
+
 
 # include <stdio.h>
 # include <unistd.h>
