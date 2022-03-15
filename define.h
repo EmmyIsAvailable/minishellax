@@ -4,7 +4,6 @@
 # define PIPE		"|"
 # define SIMPLE_QUOTE	"'"
 # define DOUBLE_QUOTE	"""
-# define SEMI_COLON	";"
 # define DOLLAR_SIGN	"$"
 # define SIMPLE_GREATER	">"
 # define DOUBLE_GREATER	">>"
