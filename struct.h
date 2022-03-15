@@ -4,6 +4,8 @@
 typedef struct s_data {
 	char	**envp;
 	char	**var;
+	char	*oldpwd;
+	char	*pwd;
 } t_data;
 
 typedef struct s_token {
