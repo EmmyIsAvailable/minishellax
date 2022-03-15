@@ -4,6 +4,8 @@
 typedef struct s_data {
 	char	**envp;
 	char	**var;
+	char	*oldpwd;
+	char	*pwd;
 } t_data;
 
 typedef struct s_token {
@@ -11,7 +13,6 @@ typedef struct s_token {
     char *data;
     size_t data_size;
 	struct s_token *next;
-//	struct s_list *prev_token;
 } t_token;
 
 #endif
