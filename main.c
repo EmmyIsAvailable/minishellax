@@ -57,8 +57,8 @@ int main(int ac, char **av, char **envp)
 	event_ctrl_c();
 	while (1)
 	{
-		if (cmd != NULL)
-			free(cmd);
+//		if (cmd != NULL)
+//			free(cmd);
 		history = readline("> ");
 		if (history == NULL) 
 			break ;
