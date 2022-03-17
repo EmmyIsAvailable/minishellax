@@ -3,8 +3,10 @@
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = envp;
-	data->var[0] = "oui=0";
-	data->var[1] = "non=1";
+	data->var = malloc(sizeof(char **) * 3);
+	data->var[0] = ft_strdup("oui=0");
+	data->var[1] = ft_strdup("non=1");
+	data->var[2] = NULL;
 	return (0);
 }
 

@@ -1,7 +1,7 @@
 NAME	= minishell
 
 SRCS	= main.c exit_program.c \
-		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c
+		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/env_builtins.c
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -20,7 +20,7 @@ all:		${NAME}
 
 ${NAME}:	${OBJS} ${LIBFT} 
 			@echo "$(shell tput bold)$(shell tput setaf 5)Compiling...$(shell tput sgr0)"
-			@${CC} ${OBJS} -lreadline -o ${NAME} ${LIBFT} 
+			@${CC} ${OBJS} -lreadline -fsanitize=address -o ${NAME} ${LIBFT} 
 			@echo "$(shell tput bold)$(shell tput setaf 5)DONE$(shell tput sgr0)"
 
 ${LIBFT}:	
