@@ -30,6 +30,7 @@ int main(int ac, char **av, char **envp)
 	{
 //		if (cmd != NULL)
 //			free(cmd);
+		head = NULL;
 		history = readline("> ");
 		if (history == NULL) 
 			break ;
