@@ -14,44 +14,9 @@ int	check_token(char c)
 		return (EQ);
 	if (c == '|')
 		return (PIPE);
-	if (c == '$')
-		return (DOLLAR_SIGN);
+//	if (c == '$')
+//		return (DOLLAR_SIGN);
 	return (-1);
-}
-
-int	is_print_and_no_token(char *str, int len)
-{
-	int	i;
-	char c;
-
-	i = 0;
-	c = 0;
-	while (str[i] && i < len)
-	{
-		c = str[i];
-		if ((c < 32 || c >= 127) && check_token(str[i]) != -1)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-t_token	*ft_lst_last(t_token *lst)
-{
-	while (lst -> next)
-		lst = lst -> next;
-	return (lst);
-}
-
-void	ft_lst_add_back(t_token **alst, t_token *new)
-{
-	if (alst)
-	{
-		if (*alst)
-			ft_lst_last(*alst)->next = new;
-		else
-			*alst = new;
-	}
 }
 
 t_token	*fill_data(token_type token, int len, char *op)
@@ -72,8 +37,8 @@ t_token	*fill_data(token_type token, int len, char *op)
 	new_token->data[len] = '\0';
 	new_token->data_size = len;
 	new_token->next = NULL;
-	if (len > 1)
-		free(op);
+//	if (len > 1)
+//		free(op);
 	return (new_token);
 }
 
@@ -86,20 +51,27 @@ t_token	*scan_token(char *str)
 	i = -1;
 	len = 0;
 	data = NULL;
-	if (ft_strncmp((const char *)str, "<<", 2) == 0)
+	if (ft_strncmp((const char *)str, "-n", 2) == 0)
+		return (fill_data(ECHO_OPT, 2, "-n"));
+	else if (ft_strncmp((const char *)str, "<<", 2) == 0)
 		return (fill_data(HEREDOC, 2, "<<"));
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>"));
-	else if (check_token(str[len]) != -1 && check_token(str[len]) < 9)
+	else if (check_token(str[len]) != -1)
 		return (fill_data(check_token(str[len]), 1, &str[len]));
-	while (str[len] && str[len] != 32 && check_token(str[len]) == -1)
+	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_' || str[len] == '$') && check_token(str[len]) == -1)
+	{
+		if (ft_isalnum(str[len]) == 0 && (str[len] != '_' || str[len] != '$'))
+			return (NULL);
 		len++;
-	printf("len : %d\n", len);
+	}
 	data = malloc(sizeof(char) * len + 1);
 	while (++i < len)
 		data[i] = str[i];
 	data[len] = '\0';
-	if (data)
+	if (data[0] == '$')
+		return (fill_data(DOLLAR_SIGN, len, data));
+	else if (data)
 		return (fill_data(WORD, len, data));
 	return (NULL);
 }
@@ -114,13 +86,15 @@ int	ft_parse(char *str, t_token **head)
 		return (1);
 	while (str[i])
 	{
-		printf("str : %s\n", &str[i]);
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 			|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
 		tmp = scan_token(&str[i]);
 		if (!tmp)
+		{
+			ft_lst_clear(head, free);
 			return (1);
+		}
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
@@ -130,7 +104,6 @@ int	ft_parse(char *str, t_token **head)
 void	ft_print(t_token *head)
 {
 	t_token	*temp;
-	t_token	*tmp;
 	int		i;
 
 	temp = head;
@@ -139,20 +112,18 @@ void	ft_print(t_token *head)
 	{
 		printf("i : %d, token : %u, data : %s, size : %zu\n", i, temp->token, temp->data, temp->data_size);
 		i++;
-		tmp = temp->next;
-		free(temp->data);
-		free(temp);
-		temp = tmp;
+		temp  = temp->next;
 	}
 }
-
+/*
 int	main(int ac,char **av)
 {
 	(void)ac;
 	t_token	*head;
 
 	head = NULL;
-	ft_parse(av[1], &head);
+	if (ft_parse(av[1], &head) == 1)
+		return (1);
 	ft_print(head);
 	return (0);
-}
+}*/

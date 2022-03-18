@@ -29,6 +29,14 @@
 
 /*_RACINE_*/
 
+/*_list_*/
+void	ft_lst_clear(t_token **lst, void (*del)(void *));
+void	ft_lst_add_back(t_token **alst, t_token *new);
+
+/*_parsing_*/
+void	ft_print(t_token *head);
+int		ft_parse(char *str, t_token **head);
+
 /*_main_*/
 //int	main(int ac, char **av);
 

@@ -10,43 +10,12 @@ int	init_data(t_data *data, char **envp)
 	return (0);
 }
 
-int	tmp_pars(char **cmd, t_data *data) //parsing nul en attendant que tu fasses le vrai celuici juste pour mes tests
-{
-	int	i;
-	int	j;
-	int	k;
-
-	j = -1;
-	while (cmd[++j])
-	{
-		i = 1;
-		k = 0;
-		while (cmd[j][i])
-		{	
-			if (cmd[j][i] == '=')
-			{
-				if (!data->var)
-					data->var[k] = cmd[j];
-				else
-				{
-					while (data->var[k])
-						k++;
-					data->var[k] = cmd[j];
-				}
-				data->var[k + 1] = NULL;
-				return (0);
-			}
-			i++;
-		}
-	}
-	return (0);
-}
-
 int main(int ac, char **av, char **envp)
 {
 	char	*history;
 	t_data	data;
-	char	**cmd;
+	t_token	*head;
+//	char	**cmd;
 
 	(void)av;
 	history = NULL;
@@ -64,13 +33,16 @@ int main(int ac, char **av, char **envp)
 		history = readline("> ");
 		if (history == NULL) 
 			break ;
+		if (ft_parse(history, &head) == 1)
+			exit(EXIT_FAILURE);
+		ft_print(head);
 		add_history(history);
-		cmd = ft_split(history, ' ');
+/*		cmd = ft_split(history, ' ');
 		if (cmd[0])
 		{
 			dispatch_builtins(cmd, &data);
 			//tmp_pars(cmd, &data);
-		}
+		}*/
 	}
 	return (0);
 }

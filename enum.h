@@ -3,6 +3,7 @@
 
 typedef enum {
 	PIPE,
+	ECHO_OPT,
 	DOLLAR_SIGN,
 	DOUBLE_QUOTE,
 	SIMPLE_QUOTE,
