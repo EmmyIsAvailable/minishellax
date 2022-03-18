@@ -38,6 +38,7 @@ int main(int ac, char **av, char **envp)
 			exit(EXIT_FAILURE);
 		ft_print(head);
 		add_history(history);
+		ft_lst_clear(&head, free);
 /*		cmd = ft_split(history, ' ');
 		if (cmd[0])
 		{
