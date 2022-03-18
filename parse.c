@@ -61,7 +61,7 @@ t_token	*scan_token(char *str)
 		return (fill_data(check_token(str[len]), 1, &str[len]));
 	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_' || str[len] == '$') && check_token(str[len]) == -1)
 	{
-		if (ft_isalnum(str[len]) == 0 && (str[len] != '_' || str[len] != '$'))
+		if (ft_isalnum(str[len]) == 0 && (str[len] != '_' && str[len] != '$'))
 			return (NULL);
 		len++;
 	}
