@@ -9,7 +9,7 @@ typedef enum {
 	SIMPLE_QUOTE,
 	REDIR_IN,
 	REDIR_OUT,
-	EQ,
+	ASSIGN,
 	DOUBLE_GREATER,
 	HEREDOC,
 	WORD

@@ -10,13 +10,25 @@ int	check_token(char c)
 		return (SIMPLE_QUOTE);
 	if (c == '"')
 		return (DOUBLE_QUOTE);
-//	if (c == '=')
-//		return (EQ);
 	if (c == '|')
 		return (PIPE);
-//	if (c == '$')
-//		return (DOLLAR_SIGN);
 	return (-1);
+}
+
+int	assign_token(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '=' && i != 0)
+			return (1);
+		else if (str[i] == '=' && i == 0) //jsp si on doit signaler erreur a ce moment
+			return (-1);
+	}
+	return (0);
+
 }
 
 t_token	*fill_data(token_type token, int len, char *op)
@@ -49,22 +61,25 @@ t_token	*other_token(char *str)
 	char 	*data;
 
 	i = -1;
-	j = 0;
-	data = NULL;
-	while (str[j] && check_token(str[j]) == -1)
+	j = -1;
+	while (str[++j] && check_token(str[j]) == -1 && str[j] != ' ')
 	{
 		if (ft_isalnum(str[j]) == 0 && (str[j] != '_' && str[j] != '$' && str[j] != '='))
 			return (NULL);
-		j++;
 	}
 	data = malloc(sizeof(char) * j + 1);
-	while (++i < j)
-		data[i] = str[i];
-	data[j] = '\0';
-	if (data[0] == '$')
-		return (fill_data(DOLLAR_SIGN, j, data));
-	else if (data)
-		return (fill_data(WORD, j, data));
+	if (data)
+	{
+		while (++i < j)
+			data[i] = str[i];
+		data[j] = '\0';
+		if (assign_token(data) == 1)
+			return (fill_data(ASSIGN, j, data));
+		else if (data[0] == '$' && !assign_token(data))
+			return (fill_data(DOLLAR_SIGN, j, data));
+		else
+			return (fill_data(WORD, j, data));
+	}
 	return (NULL);
 }
 
