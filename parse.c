@@ -24,11 +24,10 @@ int	assign_token(char *str)
 	{
 		if (str[i] == '=' && i != 0)
 			return (1);
-		else if (str[i] == '=' && i == 0) //jsp si on doit signaler erreur a ce moment
+		else if (str[i] == '=' && i == 0)
 			return (-1);
 	}
 	return (0);
-
 }
 
 t_token	*fill_data(token_type token, int len, char *op)
@@ -49,8 +48,6 @@ t_token	*fill_data(token_type token, int len, char *op)
 	new_token->data[len] = '\0';
 	new_token->data_size = len;
 	new_token->next = NULL;
-//	if (len > 1)
-//		free(op);
 	return (new_token);
 }
 
@@ -58,13 +55,14 @@ t_token	*other_token(char *str)
 {
 	int		i;
 	int		j;
-	char 	*data;
+	char	*data;
 
 	i = -1;
 	j = -1;
 	while (str[++j] && check_token(str[j]) == -1 && str[j] != ' ')
 	{
-		if (ft_isalnum(str[j]) == 0 && (str[j] != '_' && str[j] != '$' && str[j] != '='))
+		if (ft_isalnum(str[j]) == 0
+			&& (str[j] != '_' && str[j] != '$' && str[j] != '='))
 			return (NULL);
 	}
 	data = malloc(sizeof(char) * j + 1);
@@ -77,8 +75,7 @@ t_token	*other_token(char *str)
 			return (fill_data(ASSIGN, j, data));
 		else if (data[0] == '$' && !assign_token(data))
 			return (fill_data(DOLLAR_SIGN, j, data));
-		else
-			return (fill_data(WORD, j, data));
+		return (fill_data(WORD, j, data));
 	}
 	return (NULL);
 }
@@ -93,14 +90,14 @@ t_token	*scan_token(char *str)
 		return (fill_data(DOUBLE_GREATER, 2, ">>"));
 	else if (check_token(str[0]) != -1)
 		return (fill_data(check_token(str[0]), 1, &str[0]));
-	else 
+	else
 		return (other_token(str));
 	return (NULL);
 }
 
 int	ft_parse(char *str, t_token **head)
 {
-	int	i;
+	int		i;
 	t_token	*tmp;
 
 	i = 0;
@@ -109,7 +106,7 @@ int	ft_parse(char *str, t_token **head)
 	while (str[i])
 	{
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
-			|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
+				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
 		tmp = scan_token(&str[i]);
 		if (!tmp)
@@ -134,7 +131,7 @@ void	ft_print(t_token *head)
 	{
 		printf("i : %d, token : %u, data : %s, size : %zu\n", i, temp->token, temp->data, temp->data_size);
 		i++;
-		temp  = temp->next;
+		temp = temp->next;
 	}
 }
 /*
