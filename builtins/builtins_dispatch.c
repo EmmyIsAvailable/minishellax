@@ -1,40 +1,41 @@
 #include "../minishell.h"
 
-int	ft_cd(char *cmd, t_data *data)
+int	ft_cd(t_token *token, t_data *data)
 {
 	getcwd(data->oldpwd, 0);
-	if (chdir(cmd) == -1)
+	if (chdir(token->data) == -1)
 		return (1);
 	getcwd(data->pwd, 0);
 	return (0);
 }
 
-int	dispatch_builtins(char **cmd, t_data *data)
+int	dispatch_builtins(t_token *token, t_data *data)
 {
-	if (ft_strncmp(cmd[0], "echo", 5) == 0)
+	if (ft_strncmp(token->data, "echo", 5) == 0)
 	{
-		if (!cmd[1])
+		if (!token->next)
 			return (displayOnTerm("\n"));
-		return (ft_echo(&cmd[1], data));
+		return (ft_echo(token->next, data));
 	}
-	if (ft_strncmp(cmd[0], "pwd", 4) == 0 && cmd[1] == NULL)
+	if (ft_strncmp(token->data, "pwd", 4) == 0 && !token->next)
 		return (ft_pwd());
-	if (ft_strncmp(cmd[0], "env", 4) == 0 && cmd[1] == NULL)
+	if (ft_strncmp(token->data, "env", 4) == 0 && !token->next)
 		return (ft_env(data));
-	if (ft_strncmp(cmd[0], "cd", 3) == 0 && cmd[2] == NULL)
+	if (ft_strncmp(token->data, "cd", 3) == 0 && !token->next->next)
 	{
-		chdir(cmd[1]);
+		ft_cd(token->next, data);
 		return (0);
 	}
-	if (ft_strncmp(cmd[0], "exit", 6) == 0 && cmd[1] == NULL)
+	if (ft_strncmp(token->data, "exit", 6) == 0 && !token->next)
 	{
 		//free les futurs trucs a free
 		exit(0);
 	}
-	if (ft_strncmp(cmd[0], "export", 7) == 0)
+	if (ft_strncmp(token->data, "export", 7) == 0)
 		return (ft_export(cmd, data));
-	if (ft_strncmp(cmd[0], "unset", 6) == 0 && cmd[1] != NULL)
+	/*if (ft_strncmp(token->data, "unset", 6) == 0 && cmd[1] != NULL)
 	{	
 		return (ft_unset(cmd, data));
-	}
-	return (0);}
+	}*/
+	return (1);
+}

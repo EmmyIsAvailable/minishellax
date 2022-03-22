@@ -33,29 +33,29 @@ int	variables_in_echo(char *params, t_data *data)
 	return (0);
 }
 
-int	ft_echo(char **params, t_data *data)
+int	ft_echo(t_token *token, t_data *data)
 {
-	int	i;
 	int	option;
 	int	print;
+	char	*param;
 
-	i = 0;
 	option = 0;
 	print = 0;
-	if (ft_strncmp(params[0], "-n", 3) == 0)
+	if (ft_strncmp(token->data, "-n", 3) == 0)
 	{
 		option = 1;
-		i = 1;
+		token = token->next;
 	}
-	while (params[i])
+	while (token)
 	{
-		if (params[i][0] == '$')
-			print = variables_in_echo(&params[i][1], data);
+		param = token->data;
+		if (param[0] == '$')
+			print = variables_in_echo(&param[1], data);
 		else
-			print = displayOnTerm(params[i]);
-		if (params[i + 1] != NULL && print != 0)
+			print = displayOnTerm(param);
+		if (token->next && print != 0)
 			displayOnTerm(" ");
-		i++;
+		token = token->next;
 	}
 	if (option == 0)
 		displayOnTerm("\n");
