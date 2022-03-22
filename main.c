@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
+/*   Updated: 2022/03/22 13:26:36 by eruellan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	init_data(t_data *data, char **envp)
@@ -15,7 +27,6 @@ int main(int ac, char **av, char **envp)
 	char	*history;
 	t_data	data;
 	t_token	*head;
-//	char	**cmd;
 
 	(void)av;
 	history = NULL;
@@ -28,23 +39,17 @@ int main(int ac, char **av, char **envp)
 	event_ctrl_c();
 	while (1)
 	{
-//		if (cmd != NULL)
-//			free(cmd);
 		head = NULL;
 		history = readline("> ");
 		if (history == NULL) 
 			break ;
 		if (ft_parse(history, &head) == 1)
 			exit(EXIT_FAILURE);
-		ft_print(head);
+		//ft_print(head);
 		add_history(history);
+		dispatch_builtins(head, &data);
+			
 		ft_lst_clear(&head, free);
-/*		cmd = ft_split(history, ' ');
-		if (cmd[0])
-		{
-			dispatch_builtins(cmd, &data);
-			//tmp_pars(cmd, &data);
-		}*/
 	}
 	return (0);
 }

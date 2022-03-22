@@ -46,7 +46,7 @@ void	event_ctrl_c(void);
 
 /*_builtins_cmd_*/
 int	displayOnTerm(char *str);
-int	ft_echo(char **params, t_data *data);
+int	ft_echo(t_token *token, t_data *data);
 int	ft_pwd(void);
 int	ft_env(t_data *data);
 int	variables_in_echo(char *params, t_data *data);
@@ -55,7 +55,7 @@ int	variables_in_echo(char *params, t_data *data);
 int	ft_unset(char **cmd, t_data *data);
 void	add_var_envp(char *cmd, t_data *data);
 int	ft_export(char **cmd, t_data *data);
-int	dispatch_builtins(char **cmd, t_data *data);
+int	dispatch_builtins(t_token *token, t_data *data);
 
 
 #endif
