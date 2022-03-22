@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/03/22 14:10:53 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_token(char c)
@@ -81,6 +93,7 @@ int	ft_parse(char *str, t_token **head)
 {
 	int		i;
 	t_token	*tmp;
+	
 
 	i = 0;
 	if (!str)
@@ -99,6 +112,7 @@ int	ft_parse(char *str, t_token **head)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
+	check_token(head);
 	return (0);
 }
 

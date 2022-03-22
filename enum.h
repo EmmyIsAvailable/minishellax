@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enum.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 13:23:49 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/03/22 14:10:36 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ENUM_H
 # define ENUM_H
 
@@ -13,5 +25,14 @@ typedef enum {
 	HEREDOC,
 	WORD
 } token_type;
+
+typedef enum {
+	INFILE,
+	OUTFILE,
+	OUTFILE_APPEND,
+	HEREDOC,
+	CMD,
+	ARG
+}
 
 #endif
