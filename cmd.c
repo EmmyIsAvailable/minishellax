@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:20:14 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 14:57:08 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:01:16 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,24 @@ char	**fill_token_tab(t_token *token)
 {
 	char	**tab;
 	int	i;
+	t_token	*tmp;
 
-	tab = NULL;
+	tmp = token;
+	i = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	tab = (char **)malloc(sizeof(char *) * i + 1);
+	if (!tab)
+		return (NULL);
 	i = 0;
 	while (token)
 	{
+		tab[i] = malloc(sizeof(char) * (ft_strlen(token->data)));
+		if (!tab[i])
+			return (NULL);
 		tab[i] = token->data;
 		token = token->next;
 		i++;
