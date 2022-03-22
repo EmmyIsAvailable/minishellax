@@ -15,21 +15,6 @@ int	check_token(char c)
 	return (-1);
 }
 
-int	assign_token(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '=' && i != 0)
-			return (1);
-		else if (str[i] == '=' && i == 0)
-			return (-1);
-	}
-	return (0);
-}
-
 t_token	*fill_data(token_type token, int len, char *op)
 {
 	t_token	*new_token;
@@ -61,8 +46,7 @@ t_token	*other_token(char *str)
 	j = -1;
 	while (str[++j] && check_token(str[j]) == -1 && str[j] != ' ')
 	{
-		if (ft_isalnum(str[j]) == 0
-			&& (str[j] != '_' && str[j] != '$' && str[j] != '='))
+		if (ft_isalnum(str[j]) == 0 && ft_strchr("_$,=/.-", (int)str[j]) == NULL)
 			return (NULL);
 	}
 	data = malloc(sizeof(char) * j + 1);
@@ -71,10 +55,10 @@ t_token	*other_token(char *str)
 		while (++i < j)
 			data[i] = str[i];
 		data[j] = '\0';
-		if (assign_token(data) == 1)
-			return (fill_data(ASSIGN, j, data));
-		else if (data[0] == '$' && !assign_token(data))
+		if (data[0] == '$' && ft_strchr((const char *)data, '=') == NULL)
 			return (fill_data(DOLLAR_SIGN, j, data));
+		else if (data[0] != '$' && ft_isalpha((int)data[0]) && ft_strchr((const char *)data, '=') != NULL) //pas trop sure la
+			return (fill_data(ASSIGN, j, data));
 		return (fill_data(WORD, j, data));
 	}
 	return (NULL);
@@ -82,9 +66,7 @@ t_token	*other_token(char *str)
 
 t_token	*scan_token(char *str)
 {
-	if (ft_strncmp((const char *)str, "-n", 2) == 0)
-		return (fill_data(ECHO_OPT, 2, "-n"));
-	else if (ft_strncmp((const char *)str, "<<", 2) == 0)
+	 if (ft_strncmp((const char *)str, "<<", 2) == 0)
 		return (fill_data(HEREDOC, 2, "<<"));
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>"));
