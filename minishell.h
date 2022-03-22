@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
+/*   Updated: 2022/03/22 14:57:03 by eruellan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -51,11 +63,22 @@ int	ft_pwd(void);
 int	ft_env(t_data *data);
 int	variables_in_echo(char *params, t_data *data);
 
-/*builtins_dispatch*/
+/*_builtins_dispatch_*/
+int	dispatch_builtins(t_token *token, t_data *data);
+int	ft_cd(t_token *token, t_data *data);
+
+/*_env_builtins_*/
 int	ft_unset(char **cmd, t_data *data);
 void	add_var_envp(char *cmd, t_data *data);
 int	ft_export(char **cmd, t_data *data);
-int	dispatch_builtins(t_token *token, t_data *data);
+
+/*_cmd_*/
+void	ft_exec(t_token *token, t_data *data);
+void	**ft_free_tab(char **data);
+char	*get_binary(char *cmd, char **env_path);
+char	**fill_token_tab(t_token *token);
+
+/*_pipex_*/
 
 
 #endif
