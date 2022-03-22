@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 13:26:36 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:14:16 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int main(int ac, char **av, char **envp)
 			break ;
 		if (ft_parse(history, &head) == 1)
 			exit(EXIT_FAILURE);
-		//ft_print(head);
+		ft_print(head);
 		add_history(history);
 		dispatch_builtins(head, &data);
 			
