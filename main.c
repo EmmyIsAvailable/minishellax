@@ -49,7 +49,7 @@ int main(int ac, char **av, char **envp)
 		add_history(history);
 		if ((dispatch_builtins(head, &data)) == 1)
 			ft_exec(head, &data);
-		ft_lst_clear(&head, free);
+//		ft_lst_clear(&head, free);
 	}
 	return (0);
 }

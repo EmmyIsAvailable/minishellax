@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_token(char c)
+int	find_token(char c)
 {
 	if (c == '<')
 		return (REDIR_IN);
@@ -56,7 +56,7 @@ t_token	*other_token(char *str)
 
 	i = -1;
 	j = -1;
-	while (str[++j] && check_token(str[j]) == -1 && str[j] != ' ')
+	while (str[++j] && find_token(str[j]) == -1 && str[j] != ' ')
 	{
 		if (ft_isalnum(str[j]) == 0 && ft_strchr("_$,=/.-", (int)str[j]) == NULL)
 			return (NULL);
@@ -82,8 +82,8 @@ t_token	*scan_token(char *str)
 		return (fill_data(HEREDOC, 2, "<<"));
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>"));
-	else if (check_token(str[0]) != -1)
-		return (fill_data(check_token(str[0]), 1, &str[0]));
+	else if (find_token(str[0]) != -1)
+		return (fill_data(find_token(str[0]), 1, &str[0]));
 	else
 		return (other_token(str));
 	return (NULL);

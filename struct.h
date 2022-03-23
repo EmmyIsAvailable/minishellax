@@ -22,7 +22,6 @@ typedef struct s_token
 
 typedef struct s_heads
 {
-	t_token	*line;
 	t_token	*cmd;
 	t_token	*infile;
 	t_token	*outfile;
