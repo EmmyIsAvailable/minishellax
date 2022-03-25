@@ -28,43 +28,27 @@ void	push(t_token **head, t_token **head_b)
 		(*head_b)->next = tmpb;
 		(*head) = tmp;
 	}
-	else
+	else //on veut push in the back : essai ne marche pas 
 	{
+		/*tmpb = (*head_b);
+		while (tmpb->next != NULL)
+			tmpb = tmpb->next;
+		tmpb->next = (*head);
+		(*head) = tmp;*/
 		tmpb = (*head_b);
 		(*head_b) = (*head);
 		(*head_b)->next = tmpb;
 		(*head) = tmp;
 	}
+	printf("push done\n");
 }
 
-int	check_word(t_token *tmp, t_heads *list);
-int	check_heredoc(t_token *tmp, t_heads *list);
-int	check_append(t_token *tmp, t_heads *list);
-int	check_infile(t_token *tmp, t_heads *list);
-int	check_outfile(t_token *tmp, t_heads *list);
+int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+//int	check_infile(t_token *tmp, t_token **infile, t_token **outfile, t_token **cmd);
+//int	check_outfile(t_token *tmp, t_token **infile, t_token **outfile, t_token **cmd);
+//int	check_heredoc(t_token *tmp, t_heads *list);
 
-int	check_word(t_token *tmp, t_heads *list)
-{
-	if (!tmp || tmp->token == 0)
-		return (0);
-	if (tmp->token == 9)
-	{
-		//push to cmd
-		push(&tmp, &list->cmd); 
-		return (check_word(tmp->next, list));
-	}
-	if (tmp->token == 4)
-		return (check_infile(tmp->next, list));
-	if (tmp->token == 5)
-		return (check_outfile(tmp->next, list));
-	if (tmp->token == 7)
-		return (check_append(tmp->next, list));
-	if (tmp->token == 8)
-		return (check_heredoc(tmp->next, list));
-	return (1);
-}
-
-int	check_dollar(t_token *tmp, t_heads *list) // abandon aussi car opt de export et echo 
+/*int	check_dollar(t_token *tmp, t_heads *list) // abandon aussi car opt de export et echo 
 {
 	if (!tmp)
 		return (0);
@@ -89,27 +73,36 @@ int	check_heredoc(t_token *tmp, t_heads *list) // voir comment gerer heredoc
 	(void)list;
 	if (tmp->token == 9)
 		return(check_word(tmp->next, list));
-/*	if (tmp->token == 6)
+	if (tmp->token == 6)
 		return(check_assign(tmp->next);
 	if (tmp->token == 1)
-		return(check_dollar(tmp->next);*/ //si on abandonne les $ et =
+		return(check_dollar(tmp->next); //commenter si on abandonne les $ et =
+	return (1);
+}*/
+
+int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
+{
+	if ((*tmp) == NULL || (*tmp)->token == 0)
+		return (0);
+	if ((*tmp)->token == 9)
+	{
+		//push to cmd
+		printf("push to cmd\n");
+		push(tmp, cmd);
+	//	ft_lst_add_back(cmd, *tmp);
+		ft_print(*cmd);
+		return (check_word(tmp, infile, outfile, cmd));
+	}
+/*	if ((*tmp)->token == 4)
+		return (check_infile((*tmp)->next, infile, outfile, cmd));
+	if ((*tmp)->token == 5 || (*tmp)->token == 7)
+		return (check_outfile((*tmp)->next, infile, outfile, cmd));*/
+//	if (tmp->token == 8)
+//		return (check_heredoc(tmp->next, list));
 	return (1);
 }
 
-int	check_append(t_token *tmp, t_heads *list)
-{
-	if (!tmp)
-		return (0);
-	if (tmp->token != 9)
-		return (1);
-	else
-	{
-		//push token to outfile - opt append
-		return(check_word(tmp->next, list));
-	}
-}
-
-int	check_infile(t_token *tmp, t_heads *list)
+/*int	check_infile(t_token *tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
 	if (!tmp)
 		return (0);
@@ -118,11 +111,13 @@ int	check_infile(t_token *tmp, t_heads *list)
 	else
 	{
 		//push token to infile list
-		return(check_word(tmp->next, list));
+		printf("push to infile\n");
+		push(&tmp, infile);
+		return(check_word(tmp->next, infile, outfile, cmd));
 	}
 }
 
-int	check_outfile(t_token *tmp, t_heads *list)
+int	check_outfile(t_token *tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
 	if (!tmp)
 		return (0);
@@ -131,29 +126,27 @@ int	check_outfile(t_token *tmp, t_heads *list)
 	else
 	{
 		//push token to outfile list
-		return(check_word(tmp->next, list));
+		printf("push to outfile\n");
+		push(&tmp, outfile);
+		return(check_word(tmp->next, infile, outfile, cmd));
 	}
-}
+}*/
 
-int	check_token(t_token **head)
+int	check_token(t_token **head, t_token *infile, t_token *outfile, t_token *cmd)
 {
 	//t_token	*tmp;
-	t_heads	list;
+//	t_heads	list;
 
 //	tmp = *head;
-	if ((*head)->token == 4)
-		return (check_infile((*head)->next, &list));
-	if ((*head)->token == 5)
-		return (check_outfile((*head)->next, &list));
-	if ((*head)->token == 6)
-		return (check_assign((*head)->next, &list));
-	if ((*head)->token == 7)
-		return (check_append((*head)->next, &list));
-	if ((*head)->token == 8)
-		return (check_heredoc((*head)->next, &list));
-	if ((*head)->token == 9)
-		return (check_word((*head)->next, &list));
-	printf("cmd : \n");
-	ft_print(list.cmd);
+//	if ((*head)->token == 4) // <
+//		return (check_infile((*head)->next, &infile, &outfile, &cmd));
+//	if ((*head)->token == 5 || (*head)->token == 7) // > & >>
+//		return (check_outfile((*head)->next, &infile, &outfile, &cmd));
+	if ((*head)->token == 9) // WORD
+		return (check_word(head, &infile, &outfile, &cmd));
+//	if ((*head)->token == 6) 
+//		return (check_assign((*head)->next, &list));
+//	if ((*head)->token == 8)
+//		return (check_heredoc((*head)->next, &list));
 	return (1);
 }

@@ -92,9 +92,10 @@ t_token	*scan_token(char *str)
 int	ft_parse(char *str, t_token **head)
 {
 	int		i;
-//	t_token **infile = NULL;
-//	t_token **outfile = NULL;
-//	t_token **cmd = NULL;	
+	int		j;
+	t_token *infile = NULL;
+	t_token *outfile = NULL;
+	t_token *cmd = NULL;	
 	t_token	*tmp;
 	i = 0;
 	if (!str)
@@ -113,7 +114,17 @@ int	ft_parse(char *str, t_token **head)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	check_token(head);
+	j  = check_token(head, infile, outfile, cmd);
+	if (j == 0)
+		printf("check token ok : %d\n", j);
+	else
+		printf("parsing error\n");
+/*	printf("cmd : \n");
+	ft_print(cmd);
+	printf("infile : \n");
+	ft_print(infile);
+	printf("outfile : \n");
+	ft_print(outfile);*/
 	return (0);
 }
 

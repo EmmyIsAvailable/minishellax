@@ -17,7 +17,7 @@ void	sig_int(int code)
 	(void)code;
 	write(1, "\n", 1);	
 	rl_on_new_line();
-	rl_replace_line("", 1);
+//	rl_replace_line("", 1);
 }
 
 void	event_ctrl_c(void)

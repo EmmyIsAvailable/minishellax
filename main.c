@@ -45,10 +45,11 @@ int main(int ac, char **av, char **envp)
 			break ;
 		if (ft_parse(history, &head) == 1)
 			exit(EXIT_FAILURE);
-		ft_print(head);
+	//	printf("head from main : \n");
+	//	ft_print(head);
 		add_history(history);
-		if ((dispatch_builtins(head, &data)) == 1)
-			ft_exec(head, &data);
+		//if ((dispatch_builtins(head, &data)) == 1)
+		//	ft_exec(head, &data);
 //		ft_lst_clear(&head, free);
 	}
 	return (0);

@@ -48,7 +48,7 @@ void	ft_lst_add_back(t_token **alst, t_token *new);
 /*_parsing_*/
 void	ft_print(t_token *head);
 int		ft_parse(char *str, t_token **head);
-int		check_token(t_token **head);
+int		check_token(t_token **head, t_token *infile, t_token *outfile, t_token *cmd);
 /*_main_*/
 //int	main(int ac, char **av);
 
