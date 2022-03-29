@@ -8,7 +8,7 @@ int	displayOnTerm(char *str)
 	while (str[len])
 		len++;
 	write(1, str, len);
-	return (1);
+	return (0);
 }
 
 int	variables_in_echo(char *params, t_data *data)

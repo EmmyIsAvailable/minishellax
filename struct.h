@@ -6,9 +6,10 @@ typedef struct s_data {
 	char	**var;
 	char	*oldpwd;
 	char	*pwd;
-	int		pipe0[2];
-	int		pipe1[2];
-	int		*pipes[2];
+	int	pipe0[2];
+	int	pipe1[2];
+	int	*pipes[2];
+	pid_t	last_pid;
 } t_data;
 
 typedef struct s_token

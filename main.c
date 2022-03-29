@@ -48,8 +48,8 @@ int main(int ac, char **av, char **envp)
 	//	printf("head from main : \n");
 	//	ft_print(head);
 		add_history(history);
-		//if ((dispatch_builtins(head, &data)) == 1)
-		//	ft_exec(head, &data);
+		if ((dispatch_builtins(head, &data)) == 1)
+			ft_pipex(head, &data);
 //		ft_lst_clear(&head, free);
 	}
 	return (0);

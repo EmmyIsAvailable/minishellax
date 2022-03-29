@@ -89,6 +89,8 @@ char	*get_binary(char *cmd, char **env_path);
 char	**fill_token_tab(t_token *token);
 
 /*_pipex_*/
-
+void	ft_wait(t_data *data);
+int	ft_pipex(t_token *token, t_data *data);
+int	ft_pipex_bis(t_token *token, t_data *data);
 
 #endif

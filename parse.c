@@ -138,7 +138,7 @@ int	ft_parse(char *str, t_token **head)
 {
 	int		i;
 	t_token	*tmp = NULL;
-
+  
 	i = 0;
 	if (!str)
 		return (1);
