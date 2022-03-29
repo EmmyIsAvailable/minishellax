@@ -92,36 +92,44 @@ t_token	*scan_token(char *str)
 int	cmd_line_building(t_token **head)
 {
 	int		j;
-	t_token *infile;
+	t_heads *line;
+	t_heads	tmp;
+	/*t_token *infile;
 	t_token *outfile;
-	t_token *cmd;	
+	t_token *cmd;*/
 	t_token	*temp;
 
 	j = 0;
 	temp = NULL;
+	line = NULL;
 	while (1)
 	{
-		infile = NULL;
+		/*infile = NULL;
 		outfile = NULL;
-		cmd = NULL;
-		j  = check_token(head, &infile, &outfile, &cmd);
+		cmd = NULL;*/
+		tmp.infile = NULL;
+		tmp.outfile = NULL;
+		tmp.cmd = NULL;
+		
+		j  = check_token(head, &tmp.infile, &tmp.outfile, &tmp.cmd);
 		if (j == -1)
 		{
 			printf("check token ok\n");
-			temp = (*head); // se debarasser du pipe au debut de la liste
+			temp = (*head);
 			(*head) = (*head)->next;
 			free(temp);
-			ft_print(cmd);
-			ft_print(infile);
-			ft_print(outfile);
+			ft_print(tmp.cmd);
+			ft_print(tmp.infile);
+			ft_print(tmp.outfile);	
+			ft_add_back(&line, &tmp);
 		}
 		else if (j == 0)
 		{
-			// pas de pipes une execution 
 			printf("check token ok, no pipes\n");
-			ft_print(cmd);
-			ft_print(infile);
-			ft_print(outfile);
+			ft_print(tmp.cmd);
+			ft_print(tmp.infile);
+			ft_print(tmp.outfile);	
+			ft_add_back(&line, &tmp);
 			return (0);
 		}
 		else if (j == 1)
