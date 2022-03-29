@@ -89,34 +89,16 @@ t_token	*scan_token(char *str)
 	return (NULL);
 }
 
-int	ft_parse(char *str, t_token **head)
+int	cmd_line_building(t_token **head)
 {
-	int		i;
 	int		j;
-	t_token *infile = NULL;
-	t_token *outfile = NULL;
-	t_token *cmd = NULL;	
-	t_token	*tmp = NULL;
-	t_token	*temp = NULL;
+	t_token *infile;
+	t_token *outfile;
+	t_token *cmd;	
+	t_token	*temp;
 
-	i = 0;
 	j = 0;
-	if (!str)
-		return (1);
-	while (str[i])
-	{
-		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
-				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
-			i++;
-		tmp = scan_token(&str[i]);
-		if (!tmp)
-		{
-			ft_lst_clear(head, free);
-			return (1);
-		}
-		ft_lst_add_back(head, tmp);
-		i += (int)tmp->data_size;
-	}
+	temp = NULL;
 	while (1)
 	{
 		infile = NULL;
@@ -149,6 +131,33 @@ int	ft_parse(char *str, t_token **head)
 			return (1);
 		}
 	}
+	return (0);
+}
+
+int	ft_parse(char *str, t_token **head)
+{
+	int		i;
+	t_token	*tmp = NULL;
+
+	i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
+	{
+		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
+				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
+			i++;
+		tmp = scan_token(&str[i]);
+		if (!tmp)
+		{
+			ft_lst_clear(head, free);
+			return (1);
+		}
+		ft_lst_add_back(head, tmp);
+		i += (int)tmp->data_size;
+	}
+	if (cmd_line_building(head) == 1)
+		return (1);
 	return (0);
 }
 
