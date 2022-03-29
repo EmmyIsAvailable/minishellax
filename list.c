@@ -32,6 +32,17 @@ t_token	*ft_lst_last(t_token *lst)
 	return (lst);
 }
 
+void	ft_lst_add_back(t_token **alst, t_token *new)
+{
+	if (alst)
+	{
+		if (*alst)
+			ft_lst_last(*alst)->next = new;
+		else
+			*alst = new;
+	}
+}
+
 t_heads	*ft_last(t_heads *lst)
 {
 	if (!lst || !lst->next)
@@ -47,17 +58,6 @@ void	ft_add_back(t_heads **alst, t_heads *new)
 	{
 		if (alst)
 			ft_last(*alst)->next = new;
-		else
-			*alst = new;
-	}
-}
-
-void	ft_lst_add_back(t_token **alst, t_token *new)
-{
-	if (alst)
-	{
-		if (*alst)
-			ft_lst_last(*alst)->next = new;
 		else
 			*alst = new;
 	}
