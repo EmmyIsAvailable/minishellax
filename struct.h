@@ -6,24 +6,25 @@ typedef struct s_data {
 	char	**var;
 	char	*oldpwd;
 	char	*pwd;
-	int	pipe0[2];
-	int	pipe1[2];
-	int	*pipes[2];
+	int		pipe0[2];
+	int		pipe1[2];
+	int		*pipes[2];
 } t_data;
 
 typedef struct s_token
 {
-	token_type	token;
-	char 		*data;
-	size_t		data_size;
+	token_type		token;
+	char 			*data;
+	size_t			data_size;
 	struct s_token	*next;
 } t_token;
 
 typedef struct s_heads
 {
-	t_token	*cmd;
-	t_token	*infile;
-	t_token	*outfile;
+	t_token			*cmd;
+	t_token			*infile;
+	t_token			*outfile;
+	struct s_heads	*next;
 }t_heads;
 
 #endif
