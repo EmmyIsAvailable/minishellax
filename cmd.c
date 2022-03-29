@@ -52,7 +52,6 @@ char    *get_binary(char *cmd, char **env_path)
                         return (cmd_path);
                 free(cmd_path);
         }
-        ft_error("Command not found");
         return (NULL);
 }
 
@@ -98,12 +97,9 @@ void    ft_exec(t_token *token, t_data *data)
         env_path = ft_split(getenv("PATH"), ':');
         binary = get_binary(cmd[0], env_path);
         ft_free_tab(env_path);
-        if (!binary)
-                ft_error("Getting binary file failed");
         if (execve(binary, cmd, data->envp) == -1)
         {
                 free (binary);
                 ft_free_tab(cmd);
-                ft_error("Error");
         }
 }
