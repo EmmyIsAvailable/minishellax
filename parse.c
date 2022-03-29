@@ -94,9 +94,6 @@ int	cmd_line_building(t_token **head)
 	int		j;
 	t_heads *line;
 	t_heads	tmp;
-	/*t_token *infile;
-	t_token *outfile;
-	t_token *cmd;*/
 	t_token	*temp;
 
 	j = 0;
@@ -104,9 +101,6 @@ int	cmd_line_building(t_token **head)
 	line = NULL;
 	while (1)
 	{
-		/*infile = NULL;
-		outfile = NULL;
-		cmd = NULL;*/
 		tmp.infile = NULL;
 		tmp.outfile = NULL;
 		tmp.cmd = NULL;

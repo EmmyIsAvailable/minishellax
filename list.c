@@ -80,14 +80,13 @@ void	push(t_token **head, t_token **head_b)
 	}
 	else //on veut push in the back : essai ne marche pas
 	{
-		/*tmpb = (*head_b);
-		while (tmpb->next != NULL)
-			tmpb = tmpb->next;
-		tmpb->next = (*head);
-		(*head) = tmp;*/
 		tmpb = (*head_b);
+		(*head)->next = NULL;
+		ft_lst_last(tmpb)->next = (*head);
+		(*head) = tmp;
+		/*tmpb = (*head_b);
 		(*head_b) = (*head);
 		(*head_b)->next = tmpb;
-		(*head) = tmp;
+		(*head) = tmp;*/
 	}
 }
