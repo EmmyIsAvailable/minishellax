@@ -14,7 +14,6 @@ typedef struct s_data {
 typedef struct s_token
 {
 	token_type	token;
-	token_cmd	cmd;
 	char 		*data;
 	size_t		data_size;
 	struct s_token	*next;

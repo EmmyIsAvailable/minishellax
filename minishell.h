@@ -44,11 +44,21 @@
 /*_list_*/
 void	ft_lst_clear(t_token **lst, void (*del)(void *));
 void	ft_lst_add_back(t_token **alst, t_token *new);
+void	push(t_token **head, t_token **head_b);
 
 /*_parsing_*/
 void	ft_print(t_token *head);
 int		ft_parse(char *str, t_token **head);
-int		check_token(t_token **head, t_token *infile, t_token *outfile, t_token *cmd);
+int		check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);
+
+/*_recusive_parsing*/
+int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+int	check_infile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+int	check_dollar(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
+//int	check_heredoc(t_token *tmp, t_heads *list);
+
 /*_main_*/
 //int	main(int ac, char **av);
 

@@ -122,19 +122,25 @@ int	ft_parse(char *str, t_token **head)
 		infile = NULL;
 		outfile = NULL;
 		cmd = NULL;
-		j  = check_token(head, infile, outfile, cmd);
+		j  = check_token(head, &infile, &outfile, &cmd);
 		printf("j : %d\n", j);
 		if (j == -1)
 		{
 			printf("check token ok\n");
 			temp = (*head); // se debarasser du pipe au debut de la liste
-			free(temp);
 			(*head) = (*head)->next;
-			//lancer programme depuis ici
+			free(temp);
+			ft_print(cmd);
+			ft_print(infile);
+			ft_print(outfile);
 		}
 		else if (j == 0)
 		{
 			// pas de pipes une execution 
+			printf("check token ok, no pipes\n");
+			ft_print(cmd);
+			ft_print(infile);
+			ft_print(outfile);
 			return (0);
 		}
 		else if (j == 1)
