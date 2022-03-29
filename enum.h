@@ -26,13 +26,4 @@ typedef enum {
 	WORD = 9
 } token_type;
 
-typedef enum {
-	INFILE,
-	OUTFILE,
-	OUTFILE_APPEND,
-	OUTFILE_HEREDOC,
-	CMD,
-	ARG
-} token_cmd;
-
 #endif
