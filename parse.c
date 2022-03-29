@@ -103,27 +103,27 @@ int	cmd_line_building(t_token **head)
 	{
 		tmp.infile = NULL;
 		tmp.outfile = NULL;
-		tmp.cmd = NULL;
-		
+		tmp.cmd = NULL;	
 		j  = check_token(head, &tmp.infile, &tmp.outfile, &tmp.cmd);
 		if (j == -1)
 		{
-			printf("check token ok\n");
 			temp = (*head);
 			(*head) = (*head)->next;
 			free(temp);
 			ft_print(tmp.cmd);
 			ft_print(tmp.infile);
-			ft_print(tmp.outfile);	
+			ft_print(tmp.outfile);
 			ft_add_back(&line, &tmp);
 		}
 		else if (j == 0)
 		{
-			printf("check token ok, no pipes\n");
 			ft_print(tmp.cmd);
 			ft_print(tmp.infile);
-			ft_print(tmp.outfile);	
+			ft_print(tmp.outfile);
 			ft_add_back(&line, &tmp);
+			//print tout line :
+			// ft_print_line(line); //fonctionne pas 
+			//ici lancer pipex
 			return (0);
 		}
 		else if (j == 1)
@@ -176,15 +176,20 @@ void	ft_print(t_token *head)
 		temp = temp->next;
 	}
 }
-/*
-int	main(int ac,char **av)
-{
-	(void)ac;
-	t_token	*head;
 
-	head = NULL;
-	if (ft_parse(av[1], &head) == 1)
-		return (1);
-	ft_print(head);
-	return (0);
-}*/
+void	ft_print_line(t_heads *line)
+{
+	t_heads	*temp;
+	int		i;
+
+	temp = line;
+	i = 0;
+	while (temp != NULL)
+	{
+		ft_print(line->cmd);
+		ft_print(line->infile);
+		ft_print(line->outfile);
+		i++;
+		temp = temp->next;
+	}
+}
