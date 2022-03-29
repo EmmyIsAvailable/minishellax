@@ -114,6 +114,8 @@ int	cmd_line_building(t_token **head)
 			ft_print(tmp.infile);
 			ft_print(tmp.outfile);
 			ft_add_back(&line, &tmp);
+			if (!line)
+				printf("ouspi line\n");
 		}
 		else if (j == 0)
 		{
@@ -121,6 +123,8 @@ int	cmd_line_building(t_token **head)
 			ft_print(tmp.infile);
 			ft_print(tmp.outfile);
 			ft_add_back(&line, &tmp);
+			if (!line)
+				printf("ouspi line\n");
 			//print tout line :
 			// ft_print_line(line); //fonctionne pas 
 			//ici lancer pipex
