@@ -105,7 +105,6 @@ int	cmd_line_building(t_token **head)
 		outfile = NULL;
 		cmd = NULL;
 		j  = check_token(head, &infile, &outfile, &cmd);
-		printf("j : %d\n", j);
 		if (j == -1)
 		{
 			printf("check token ok\n");
