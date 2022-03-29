@@ -96,8 +96,11 @@ int	ft_parse(char *str, t_token **head)
 	t_token *infile = NULL;
 	t_token *outfile = NULL;
 	t_token *cmd = NULL;	
-	t_token	*tmp;
+	t_token	*tmp = NULL;
+	t_token	*temp = NULL;
+
 	i = 0;
+	j = 0;
 	if (!str)
 		return (1);
 	while (str[i])
@@ -114,17 +117,32 @@ int	ft_parse(char *str, t_token **head)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	j  = check_token(head, infile, outfile, cmd);
-	if (j == 0)
-		printf("check token ok : %d\n", j);
-	else
-		printf("parsing error\n");
-/*	printf("cmd : \n");
-	ft_print(cmd);
-	printf("infile : \n");
-	ft_print(infile);
-	printf("outfile : \n");
-	ft_print(outfile);*/
+	while (1)
+	{
+		infile = NULL;
+		outfile = NULL;
+		cmd = NULL;
+		j  = check_token(head, infile, outfile, cmd);
+		printf("j : %d\n", j);
+		if (j == -1)
+		{
+			printf("check token ok\n");
+			temp = (*head); // se debarasser du pipe au debut de la liste
+			free(temp);
+			(*head) = (*head)->next;
+			//lancer programme depuis ici
+		}
+		else if (j == 0)
+		{
+			// pas de pipes une execution 
+			return (0);
+		}
+		else if (j == 1)
+		{
+			printf("parsing error\n");
+			return (1);
+		}
+	}
 	return (0);
 }
 
