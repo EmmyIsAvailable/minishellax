@@ -15,10 +15,6 @@
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = envp;
-	data->var = malloc(sizeof(char **) * 3);
-	data->var[0] = ft_strdup("oui=0");
-	data->var[1] = ft_strdup("non=1");
-	data->var[2] = NULL;
 	return (0);
 }
 
@@ -43,13 +39,13 @@ int main(int ac, char **av, char **envp)
 		history = readline("> ");
 		if (history == NULL) 
 			break ;
-		if (ft_parse(history, &head) == 1)
+		if (ft_parse(history, &head, &data) == 1)
 			exit(EXIT_FAILURE);
 	//	printf("head from main : \n");
 	//	ft_print(head);
 		add_history(history);
-		if ((dispatch_builtins(head, &data)) == 1)
-			ft_pipex(head, &data);
+	//	if ((dispatch_builtins(head, &data)) == 1)
+	//		ft_pipex(head, &data);
 //		ft_lst_clear(&head, free);
 	}
 	return (0);
