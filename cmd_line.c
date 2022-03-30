@@ -46,6 +46,8 @@ int	check_double_quote(t_token **tmp, t_token **infile, t_token **outfile, t_tok
 		push(tmp, cmd);
 		return (check_double_quote(tmp, infile, outfile, cmd));
 	}
+	if ((*tmp)->next->token == 0)
+		return (-1);
 	return (check_token(&(*tmp)->next, infile, outfile, cmd));
 }
 
@@ -59,6 +61,8 @@ int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cm
 		push(tmp, cmd);
 		return (check_quote(tmp, infile, outfile, cmd));
 	}
+	if ((*tmp)->next->token == 0)
+		return (-1);
 	return (check_token(&(*tmp)->next, infile, outfile, cmd));
 }
 
@@ -88,27 +92,51 @@ int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd
 
 int	check_infile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
+	t_token *temp;
+
+	temp = NULL;
 	if (!(*tmp)->next || (*tmp)->next->token != 9)
 		return (1);
 	else
 	{
-		push(&(*tmp)->next, infile);
-		return(check_word(&(*tmp)->next, infile, outfile, cmd));
+		temp = (*tmp);
+		(*tmp) = (*tmp)->next;
+		free(temp);
+		(*tmp)->token = 4;
+		push(&(*tmp), infile);
+		if ((*tmp)->token == 0)
+			return (-1);
+		return(check_word(&(*tmp), infile, outfile, cmd));
 	}
 }
 
 int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
+	t_token *temp;
+
+	temp = NULL;
 	if (!(*tmp)->next || (*tmp)->next->token != 9)
 		return (1);
 	else
 	{
 		if ((*tmp)->token == 5)
-			(*tmp)->next->token = 5;
+		{
+			temp = (*tmp);
+			(*tmp) = (*tmp)->next;
+			free(temp);
+			(*tmp)->token = 5;
+		}
 		else
-			(*tmp)->next->token = 7;
-		push(&(*tmp)->next, outfile);
-		return(check_word(&(*tmp)->next, infile, outfile, cmd));
+		{
+			temp = (*tmp);
+			(*tmp) = (*tmp)->next;
+			free(temp);
+			(*tmp)->token = 7;
+		}
+		push(&(*tmp), outfile);
+		if ((*tmp)->token == 0)
+			return (-1);
+		return(check_word(&(*tmp), infile, outfile, cmd));
 	}
 }
 

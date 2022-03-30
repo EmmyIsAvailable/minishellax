@@ -89,44 +89,34 @@ t_token	*scan_token(char *str)
 	return (NULL);
 }
 
-int	cmd_line_building(t_token **head)
+int	cmd_line_building(t_token **head, t_heads **line)
 {
 	int		j;
-	t_heads **line;
-	t_heads	tmp;
+	t_heads	*tmp = NULL;
 	t_token	*temp;
 
 	j = 0;
 	temp = NULL;
-	line = NULL;
 	while (1)
 	{
-		tmp.infile = NULL;
-		tmp.outfile = NULL;
-		tmp.cmd = NULL;	
-		j  = check_token(head, &tmp.infile, &tmp.outfile, &tmp.cmd);
+		tmp = malloc(sizeof(t_heads));
+		if (!tmp)
+			return (1);
+		tmp->infile = NULL;
+		tmp->outfile = NULL;
+		tmp->cmd = NULL;	
+		j  = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
 		if (j == -1)
 		{
 			temp = (*head);
 			(*head) = (*head)->next;
 			free(temp);
-			ft_print(tmp.cmd);
-			ft_print(tmp.infile);
-			ft_print(tmp.outfile);
-			ft_add_back(line, &tmp);
-			if (!line)
-				printf("ouspi line\n");
+			push_heads(&tmp, line);
 		}
 		else if (j == 0)
 		{
-			ft_print(tmp.cmd);
-			ft_print(tmp.infile);
-			ft_print(tmp.outfile);
-			ft_add_back(line, &tmp);
-			if (!line)
-				printf("ouspi line\n");
-			//print tout line :
-			// ft_print_line(line); //fonctionne pas 
+			push_heads(&tmp, line);
+			ft_print_line(line);
 			//ici lancer pipex
 			return (0);
 		}
@@ -143,6 +133,7 @@ int	ft_parse(char *str, t_token **head)
 {
 	int		i;
 	t_token	*tmp = NULL;
+	t_heads *line = NULL;
   
 	i = 0;
 	if (!str)
@@ -161,7 +152,7 @@ int	ft_parse(char *str, t_token **head)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	if (cmd_line_building(head) == 1)
+	if (cmd_line_building(head, &line) == 1)
 		return (1);
 	return (0);
 }
@@ -181,19 +172,20 @@ void	ft_print(t_token *head)
 	}
 }
 
-void	ft_print_line(t_heads *line)
+void	ft_print_line(t_heads **line)
 {
-	t_heads	*temp;
+	t_heads	**temp;
 	int		i;
 
 	temp = line;
 	i = 0;
-	while (temp != NULL)
+	while ((*temp) != NULL)
 	{
-		ft_print(line->cmd);
-		ft_print(line->infile);
-		ft_print(line->outfile);
+		printf("i : %d\n", i);
+		ft_print((*temp)->cmd);
+		ft_print((*temp)->infile);
+		ft_print((*temp)->outfile);
 		i++;
-		temp = temp->next;
+		(*temp) = (*temp)->next;
 	}
 }

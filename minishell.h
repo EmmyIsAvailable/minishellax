@@ -43,12 +43,12 @@
 
 /*_list_*/
 void	ft_lst_clear(t_token **lst, void (*del)(void *));
-void	ft_add_back(t_heads **alst, t_heads *new);
 void	ft_lst_add_back(t_token **alst, t_token *new);
 void	push(t_token **head, t_token **head_b);
+void	push_heads(t_heads **head, t_heads **head_b);
 
 /*_parsing_*/
-void	ft_print_line(t_heads *line);
+void	ft_print_line(t_heads **line);
 void	ft_print(t_token *head);
 int		ft_parse(char *str, t_token **head);
 int		check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);
