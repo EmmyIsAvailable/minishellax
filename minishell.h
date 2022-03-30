@@ -50,7 +50,7 @@ void	push_heads(t_heads **head, t_heads **head_b);
 /*_parsing_*/
 void	ft_print_line(t_heads **line);
 void	ft_print(t_token *head);
-int		ft_parse(char *str, t_token **head);
+int		ft_parse(char *str, t_token **head, t_data *data);
 int		check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);
 
 /*_recusive_parsing*/
@@ -92,7 +92,7 @@ char	**fill_token_tab(t_token *token);
 
 /*_pipex_*/
 void	ft_wait(t_data *data);
-int	ft_pipex(t_token *token, t_data *data);
-int	ft_pipex_bis(t_token *token, t_data *data);
+int	ft_pipex(t_heads *line, t_data *data);
+int	ft_pipex_bis(t_heads *line, t_data *data);
 
 #endif

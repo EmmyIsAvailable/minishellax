@@ -17,6 +17,7 @@ typedef struct s_token
 	token_type		token;
 	char 			*data;
 	size_t			data_size;
+//	int			fd;
 	struct s_token	*next;
 } t_token;
 

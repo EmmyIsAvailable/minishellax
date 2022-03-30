@@ -44,6 +44,7 @@ t_token	*fill_data(token_type token, int len, char *op)
 		new_token->data[i] = op[i];
 	new_token->data[len] = '\0';
 	new_token->data_size = len;
+//	new_token->fd = 0;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -89,7 +90,7 @@ t_token	*scan_token(char *str)
 	return (NULL);
 }
 
-int	cmd_line_building(t_token **head, t_heads **line)
+int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 {
 	int		j;
 	t_heads	*tmp = NULL;
@@ -116,8 +117,8 @@ int	cmd_line_building(t_token **head, t_heads **line)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-			ft_print_line(line);
-			//ici lancer pipex
+			//ft_print_line(line);
+			ft_pipex(*line, data);
 			return (0);
 		}
 		else if (j == 1)
@@ -129,7 +130,7 @@ int	cmd_line_building(t_token **head, t_heads **line)
 	return (0);
 }
 
-int	ft_parse(char *str, t_token **head)
+int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
 	t_token	*tmp = NULL;
@@ -152,7 +153,7 @@ int	ft_parse(char *str, t_token **head)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	if (cmd_line_building(head, &line) == 1)
+	if (cmd_line_building(head, &line, data) == 1)
 		return (1);
 	return (0);
 }
