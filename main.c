@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 15:26:08 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:07:46 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = envp;
+	data->exit = 0;
 	return (0);
 }
 
@@ -33,7 +34,7 @@ int main(int ac, char **av, char **envp)
 	}
 	init_data(&data, envp);
 	event_ctrl_c();
-	while (1)
+	while (data.exit == 0)
 	{
 		head = NULL;
 		history = readline("> ");
@@ -41,7 +42,7 @@ int main(int ac, char **av, char **envp)
 			break ;
 		if (ft_parse(history, &head, &data) == 1)
 			exit(EXIT_FAILURE);
-	//	printf("head from main : \n");
+//		printf("%d\n", data.exit);
 	//	ft_print(head);
 		add_history(history);
 	//	if ((dispatch_builtins(head, &data)) == 1)

@@ -9,6 +9,7 @@ typedef struct s_data {
 	int	pipe0[2];
 	int	pipe1[2];
 	int	*pipes[2];
+	int	exit;
 	pid_t	last_pid;
 } t_data;
 
