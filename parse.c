@@ -49,7 +49,7 @@ t_token	*fill_data(token_type token, int len, char *op)
 	return (new_token);
 }
 
-t_token	*other_token(char *str)
+t_token	*other_token(char *str, int io_here)
 {
 	int		i;
 	int		j;
@@ -59,8 +59,8 @@ t_token	*other_token(char *str)
 	j = -1;
 	while (str[++j] && find_token(str[j]) == -1 && str[j] != ' ')
 	{
-		if (ft_isalnum(str[j]) == 0 && ft_strchr("_$,=/.-", (int)str[j]) == NULL)
-			return (NULL);
+		if (!io_here && ft_isalnum(str[j]) == 0 && ft_strchr("_$,=/.-", (int)str[j]) == NULL)
+			return (NULL); 
 	}
 	data = malloc(sizeof(char) * j + 1);
 	if (data)
@@ -68,16 +68,16 @@ t_token	*other_token(char *str)
 		while (++i < j)
 			data[i] = str[i];
 		data[j] = '\0';
-		if (data[0] == '$' && ft_strchr((const char *)data, '=') == NULL)
+		if (!io_here && data[0] == '$' && ft_strchr((const char *)data, '=') == NULL)
 			return (fill_data(DOLLAR_SIGN, j, data));
-		else if (data[0] != '$' && ft_isalpha((int)data[0]) && ft_strchr((const char *)data, '=') != NULL) //pas trop sure la
+		else if (!io_here && data[0] != '$' && ft_isalpha((int)data[0]) && ft_strchr((const char *)data, '=') != NULL) //pas trop sure la
 			return (fill_data(ASSIGN, j, data));
 		return (fill_data(WORD, j, data));
 	}
 	return (NULL);
 }
 
-t_token	*scan_token(char *str)
+t_token	*scan_token(char *str, int io_here)
 {
 	 if (ft_strncmp((const char *)str, "<<", 2) == 0)
 		return (fill_data(HEREDOC, 2, "<<"));
@@ -86,7 +86,7 @@ t_token	*scan_token(char *str)
 	else if (find_token(str[0]) != -1)
 		return (fill_data(find_token(str[0]), 1, &str[0]));
 	else
-		return (other_token(str));
+		return (other_token(str, io_here));
 	return (NULL);
 }
 
@@ -134,10 +134,12 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
+	int		io_here_flag;
 	t_token	*tmp = NULL;
 	t_heads *line = NULL;
   
 	i = 0;
+	io_here_flag = 0;
 	if (!str)
 		return (1);
 	while (str[i])
@@ -145,12 +147,15 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
-		tmp = scan_token(&str[i]);
+		tmp = scan_token(&str[i], io_here_flag);
+		io_here_flag = 0;
 		if (!tmp)
 		{
 			ft_lst_clear(head, free);
 			return (1);
 		}
+		if (tmp->token == 8)
+			io_here_flag = 1;
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
