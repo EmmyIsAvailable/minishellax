@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/31 11:48:09 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/03/31 16:15:54 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,28 @@ int	check_in_outfile(t_heads **line)
 			perror("Open infile failed");
 			return (1);
 		}
+		else
+		{
+			dup2(tmp_in->fd, STDIN_FILENO);
+			close(tmp_in->fd);
+		}
 		tmp_in = tmp_in->next;
 	}
 	while (tmp_out)
 	{
 		if (tmp_out->token == 5)
-			tmp_out->fd = open(tmp_out->data, O_WRONLY, O_CREAT | O_TRUNC, 0664);
+			tmp_out->fd = open(tmp_out->data, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (tmp_out->token == 7)
-			tmp_out->fd = open (tmp_out->data, O_WRONLY, O_CREAT | O_APPEND, 0664);
+			tmp_out->fd = open (tmp_out->data, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
 			perror("Open outfile failed");
 			return (1);
+		}
+		else
+		{
+			dup2(tmp_out->fd, STDOUT_FILENO);
+			close(tmp_out->fd);
 		}
 		tmp_out = tmp_out->next;
 	}
@@ -64,16 +74,17 @@ int     ft_pipex(t_heads **line, t_data *data)
 {
 	pid_t	pid;
 
-	if (check_in_outfile(line) == 1)
-		return (1);
         data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;
-        if (pipe(data->pipes[0]) == -1)
+	if (pipe(data->pipes[0]) == -1)
 		return (1);
         pid = fork();
 	if (pid == 0)
         {
-                dup2(data->pipes[0][1], 0); 
+		if (check_in_outfile(line) == 1)
+			return (1);
+	//	if (((*line)->outfile && (*line)->outfile->fd > 0) || ((*line)->next))
+         //       	dup2(data->pipes[0][1], STDOUT_FILENO);
                 close(data->pipes[0][0]);
                 if (dispatch_builtins((*line)->cmd, data) == 1)
 			ft_exec((*line)->cmd, data);
@@ -97,8 +108,8 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
        	        pid = fork();
 		if (pid == 0)
        	        {
-               	        dup2(data->pipes[0][0], 0);
-               	        dup2(data->pipes[1][1], 0);
+               	        dup2(data->pipes[0][0], STDIN_FILENO);
+               	        dup2(data->pipes[1][1], STDOUT_FILENO);
               		close(data->pipes[1][0]);
 			if (dispatch_builtins((*line)->cmd, data) == 1)
 				ft_exec((*line)->cmd, data);
@@ -115,13 +126,18 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 		pid = fork();
 		if (pid == 0)
         	{
-                	dup2(data->pipes[1][0], 0);
+		/*	if (!(*line)->next->next)
+				dup2(data->pipes[0][0], STDIN_FILENO);
+			else
+                		dup2(data->pipes[1][0], STDIN_FILENO);*/
 			if (dispatch_builtins((*line)->next->cmd, data) == 1)
          	    		ft_exec((*line)->next->cmd, data);
         	}
 		else if (pid > 0)
 			data->last_pid = pid;
-        	close(data->pipes[1][0]);
+        //	close(data->pipes[1][0]);
+		close(data->pipes[0][0]);
+		close(data->pipes[0][1]);
 	}
 	ft_wait(data);
         return (0);
