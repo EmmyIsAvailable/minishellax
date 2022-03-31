@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 15:13:25 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/03/31 10:52:30 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**fill_token_tab(t_token *token);
 
 /*_pipex_*/
 void	ft_wait(t_data *data);
-int	ft_pipex(t_heads *line, t_data *data);
-int	ft_pipex_bis(t_heads *line, t_data *data);
+int	ft_pipex(t_heads **line, t_data *data);
+int	ft_pipex_bis(t_heads **line, t_data *data);
 
 #endif
