@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 14:31:44 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:48:09 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,45 @@ void	ft_wait(t_data *data)
 	} 
 }
 
-int	check_in_outfile(t_heads *line)
+int	check_in_outfile(t_heads **line)
 {
 	t_token	*tmp_in;
 	t_token	*tmp_out;
 
-	tmp_in = line->infile;
-	tmp_out = line->outfile;
+	tmp_in = (*line)->infile;
+	tmp_out = (*line)->outfile;
 	while (tmp_in)
 	{
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
+		if (tmp_in->fd < 0)
+		{
+			perror("Open infile failed");
+			return (1);
+		}
 		tmp_in = tmp_in->next;
 	}
 	while (tmp_out)
 	{
 		if (tmp_out->token == 5)
-			tmp_out->fd = open(tmp_out->data, O_WRONLY | O_CREAT | O_TRUNC);
+			tmp_out->fd = open(tmp_out->data, O_WRONLY, O_CREAT | O_TRUNC, 0664);
 		else if (tmp_out->token == 7)
-			tmp_out->fd = open (tmp_out->data, O_WRONLY | O_CREAT | O_APPEND);
+			tmp_out->fd = open (tmp_out->data, O_WRONLY, O_CREAT | O_APPEND, 0664);
+		if (tmp_out->fd < 0)
+		{
+			perror("Open outfile failed");
+			return (1);
+		}
 		tmp_out = tmp_out->next;
-	}
-	if (tmp_in->fd < 0 || tmp_out->fd < 0)
-	{
-		perror("Open infile or outfile failed\n");
-		return (1);
 	}
 	return (0);
 }
 
-int     ft_pipex(t_heads *line, t_data *data)
+int     ft_pipex(t_heads **line, t_data *data)
 {
 	pid_t	pid;
 
-	//if (check_in_outfile(line) == 1)
-	//	return (1);
+	if (check_in_outfile(line) == 1)
+		return (1);
         data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;
         if (pipe(data->pipes[0]) == -1)
@@ -70,8 +75,8 @@ int     ft_pipex(t_heads *line, t_data *data)
         {
                 dup2(data->pipes[0][1], 0); 
                 close(data->pipes[0][0]);
-                if (dispatch_builtins(line->cmd, data) == 1)
-			ft_exec(line->cmd, data);
+                if (dispatch_builtins((*line)->cmd, data) == 1)
+			ft_exec((*line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;
@@ -79,13 +84,15 @@ int     ft_pipex(t_heads *line, t_data *data)
 	return (ft_pipex_bis(line, data));
 }
 
-int	ft_pipex_bis(t_heads *line, t_data *data)
+int	ft_pipex_bis(t_heads **line, t_data *data)
 {
 	pid_t	pid;
 
-	while (line->next && line->next->next)
+	while ((*line)->next && (*line)->next->next)
        	{
-		line = line->next;
+		if (check_in_outfile(line) == 1)
+			return (1);
+		(*line) = (*line)->next;
        	        pipe(data->pipes[1]);
        	        pid = fork();
 		if (pid == 0)
@@ -93,22 +100,24 @@ int	ft_pipex_bis(t_heads *line, t_data *data)
                	        dup2(data->pipes[0][0], 0);
                	        dup2(data->pipes[1][1], 0);
               		close(data->pipes[1][0]);
-			if (dispatch_builtins(line->cmd, data) == 1)
-				ft_exec(line->cmd, data);
+			if (dispatch_builtins((*line)->cmd, data) == 1)
+				ft_exec((*line)->cmd, data);
        		}
 		else if (pid > 0)
 			data->last_pid = pid;
                	close(data->pipes[0][0]);
               	close(data->pipes[1][1]);
        	}
-	if (line->next)
-        {
+	if ((*line)->next)
+        {	
+		if (check_in_outfile(&(*line)->next) == 1)
+			return (1);
 		pid = fork();
 		if (pid == 0)
         	{
                 	dup2(data->pipes[1][0], 0);
-			if (dispatch_builtins(line->next->cmd, data) == 1)
-         	    		ft_exec(line->next->cmd, data);
+			if (dispatch_builtins((*line)->next->cmd, data) == 1)
+         	    		ft_exec((*line)->next->cmd, data);
         	}
 		else if (pid > 0)
 			data->last_pid = pid;

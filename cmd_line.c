@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/03/22 16:31:08 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/03/31 11:22:28 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	check_infile(t_token **tmp, t_token **infile, t_token **outfile, t_token **c
 		free(temp);
 		(*tmp)->token = 4;
 		push(&(*tmp), infile);
+		if (!(*tmp))
+			return (0);		
 		if ((*tmp)->token == 0)
 			return (-1);
 		return(check_word(&(*tmp), infile, outfile, cmd));
@@ -134,6 +136,8 @@ int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **
 			(*tmp)->token = 7;
 		}
 		push(&(*tmp), outfile);
+		if (!(*tmp))
+			return (0);
 		if ((*tmp)->token == 0)
 			return (-1);
 		return(check_word(&(*tmp), infile, outfile, cmd));

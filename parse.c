@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/03/22 15:25:51 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/03/31 11:17:21 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_token	*fill_data(token_type token, int len, char *op)
 		new_token->data[i] = op[i];
 	new_token->data[len] = '\0';
 	new_token->data_size = len;
-//	new_token->fd = 0;
+	new_token->fd = 0;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -117,8 +117,9 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-			//ft_print_line(line);
-			ft_pipex(*line, data);
+		//	ft_print_line(line);
+		//	printf("%s\n", data->envp[0]);
+			ft_pipex(line, data);
 			return (0);
 		}
 		else if (j == 1)
@@ -167,7 +168,7 @@ void	ft_print(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("i : %d, token : %u, data : %s, size : %zu\n", i, temp->token, temp->data, temp->data_size);
+		printf("i : %d, token : %u, data : %s, size : %zu, fd : %d\n", i, temp->token, temp->data, temp->data_size, temp->fd);
 		i++;
 		temp = temp->next;
 	}
