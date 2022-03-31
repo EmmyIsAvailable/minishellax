@@ -44,7 +44,7 @@ t_token	*fill_data(token_type token, int len, char *op)
 		new_token->data[i] = op[i];
 	new_token->data[len] = '\0';
 	new_token->data_size = len;
-	new_token->fd = 0;
+	new_token->fd = 1;
 	new_token->next = NULL;
 	return (new_token);
 }
