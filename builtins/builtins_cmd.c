@@ -76,7 +76,8 @@ int	ft_env(t_data *data)
 
 int	ft_pwd(void)
 {
-	displayOnTerm(getcwd(NULL, 0));
-	displayOnTerm("\n");
+	printf("%s\n", getcwd(NULL, 0));
+	//displayOnTerm(getcwd(NULL, 0));
+	//displayOnTerm("\n");
 	return (0);
 }
