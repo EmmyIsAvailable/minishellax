@@ -159,7 +159,7 @@ int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **
 int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd)
 {
 	if ((*head) == NULL)
-		return (-1);
+		return (0);
 	if ((*head)->token == 4)
 		return (check_infile(head, infile, outfile, cmd));
 	if ((*head)->token == 5 || (*head)->token == 7)
