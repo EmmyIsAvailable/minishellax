@@ -1,9 +1,0 @@
-cmd.o
-cmd_line.o
-exit_program.c
-exit_program.o
-list.o
-main.o
-out
-parse.o
-pipex.o
