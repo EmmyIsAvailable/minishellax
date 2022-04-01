@@ -101,13 +101,13 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 
 	while ((*line)->next && (*line)->next->next)
        	{
-		if (check_in_outfile(line) == 1)
-			return (1);
 		(*line) = (*line)->next;
        	        pipe(data->pipes[1]);
        	        pid = fork();
 		if (pid == 0)
-       	        {
+       	        {	
+			if (check_in_outfile(line) == 1)
+				return (1);
                	        dup2(data->pipes[0][0], STDIN_FILENO);
                	        dup2(data->pipes[1][1], STDOUT_FILENO);
               		close(data->pipes[1][0]);
@@ -121,14 +121,11 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
        	}
 	if ((*line)->next)
         {	
-		if (check_in_outfile(&(*line)->next) == 1)
-			return (1);
 		pid = fork();
 		if (pid == 0)
-        	{
-		/*	if (!(*line)->next->next)
-				dup2(data->pipes[0][0], STDIN_FILENO);
-			else*/
+        	{	
+			if (check_in_outfile(&(*line)->next) == 1)
+				return (1);
                 	dup2(data->pipes[0][0], STDIN_FILENO);
 			if (dispatch_builtins((*line)->next->cmd, data) == 1)
          	    		ft_exec((*line)->next->cmd, data);
@@ -136,9 +133,9 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 		else if (pid > 0)
 			data->last_pid = pid;
         	//close(data->pipes[1][0]);
-		close(data->pipes[1][1]);
-		//close(data->pipes[0][0]);
-		//close(data->pipes[0][1]);
+		//close(data->pipes[1][1]);
+		close(data->pipes[0][0]);
+		close(data->pipes[0][1]);
 	}
 	ft_wait(data);
         return (0);
