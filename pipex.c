@@ -121,7 +121,6 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 			data->last_pid = pid;
 		close(data->pipes[0][0]);
 		close(data->pipes[0][1]);
-		close(data->pipes[1][0]);
 	}
 	ft_wait(data);
         return (0);
