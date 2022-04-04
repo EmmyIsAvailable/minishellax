@@ -94,5 +94,6 @@ char	**fill_token_tab(t_token *token);
 void	ft_wait(t_data *data);
 int	ft_pipex(t_heads **line, t_data *data);
 int	ft_pipex_bis(t_heads **line, t_data *data);
+int	multiple_pipes(t_heads **line, t_data *data);
 
 #endif
