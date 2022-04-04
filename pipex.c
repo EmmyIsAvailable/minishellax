@@ -98,6 +98,38 @@ int     ft_pipex(t_heads **line, t_data *data)
 int	ft_pipex_bis(t_heads **line, t_data *data)
 {
 	pid_t	pid;
+	int	mult_pipes;
+
+	mult_pipes = 0;
+	if ((*line)->next && (*line)->next->next)
+		mult_pipes = multiple_pipes(line, data);
+	if ((*line)->next)
+        {	
+		pid = fork();
+		if (pid == 0)
+        	{	
+			if (check_in_outfile(&(*line)->next) == 1)
+				return (1);
+			if (mult_pipes == 0)
+                		dup2(data->pipes[0][0], STDIN_FILENO);
+			else if (mult_pipes == 1)
+				dup2(data->pipes[1][0], STDIN_FILENO);
+			if (dispatch_builtins((*line)->next->cmd, data) == 1)
+         	    		ft_exec((*line)->next->cmd, data);
+        	}
+		else if (pid > 0)
+			data->last_pid = pid;
+		close(data->pipes[0][0]);
+		close(data->pipes[0][1]);
+		close(data->pipes[1][0]);
+	}
+	ft_wait(data);
+        return (0);
+}
+
+int	multiple_pipes(t_heads **line, t_data *data)
+{
+	pid_t	pid;
 
 	while ((*line)->next && (*line)->next->next)
        	{
@@ -119,25 +151,5 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
                	close(data->pipes[0][0]);
               	close(data->pipes[1][1]);
        	}
-	if ((*line)->next)
-        {	
-		pid = fork();
-		if (pid == 0)
-        	{	
-			if (check_in_outfile(&(*line)->next) == 1)
-				return (1);
-                	dup2(data->pipes[0][0], STDIN_FILENO);
-			if (dispatch_builtins((*line)->next->cmd, data) == 1)
-         	    		ft_exec((*line)->next->cmd, data);
-        	}
-		else if (pid > 0)
-			data->last_pid = pid;
-        	//close(data->pipes[1][0]);
-		//close(data->pipes[1][1]);
-		close(data->pipes[0][0]);
-		close(data->pipes[0][1]);
-	}
-	ft_wait(data);
-        return (0);
+	return (1);
 }
-
