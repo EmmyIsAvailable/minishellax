@@ -57,14 +57,17 @@ int	check_double_quote(t_token **tmp, t_token **infile, t_token **outfile, t_tok
 			(*tmp)->token = 9;
 		push(tmp, cmd);
 		return (check_double_quote(tmp, infile, outfile, cmd));
-	}
+	} 
+	if (!(*tmp)->next)
+		return (0);
 	if ((*tmp)->next->token == 0)
 		return (-1);
-	return (check_token(&(*tmp)->next, infile, outfile, cmd));
+	return (check_word(&(*tmp)->next, infile, outfile, cmd));
 }
 
 int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
+
 	if ((*tmp) == NULL)
 		return (0);
 	if ((*tmp)->token != 3)
@@ -73,9 +76,11 @@ int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cm
 		push(tmp, cmd);
 		return (check_quote(tmp, infile, outfile, cmd));
 	}
+	if (!(*tmp)->next)
+		return (0);
 	if ((*tmp)->next->token == 0)
 		return (-1);
-	return (check_token(&(*tmp)->next, infile, outfile, cmd));
+	return (check_word(&(*tmp)->next, infile, outfile, cmd));
 }
 
 int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)

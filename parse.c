@@ -90,14 +90,22 @@ t_token	*scan_token(char *str, int io_here)
 	return (NULL);
 }
 
+void	ft_free(t_token **head)
+{
+	t_token	*tmp;
+
+	tmp = (*head);
+	(*head) = (*head)->next;
+	free(tmp->data);
+	free(tmp);
+}
+
 int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 {
 	int		j;
 	t_heads	*tmp = NULL;
-	t_token	*temp;
 
 	j = 0;
-	temp = NULL;
 	while (1)
 	{
 		tmp = malloc(sizeof(t_heads));
@@ -109,10 +117,10 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		j  = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
 		if (j == -1)
 		{
-			temp = (*head);
-			(*head) = (*head)->next;
-			free(temp);
 			push_heads(&tmp, line);
+			while ((*head)->token != 0)
+				ft_free(head);
+			ft_free(head);
 		}
 		else if (j == 0)
 		{
