@@ -117,9 +117,9 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-		//	ft_print_line(line);
-		//	printf("%d\n", data->exit);
-			ft_pipex(line, data);
+			ft_print_line(line);
+			printf("%d\n", data->exit);
+		//	ft_pipex(line, data);
 			return (0);
 		}
 		else if (j == 1)
