@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_lst_delone(t_token *lst, void (*del)(void *))
 {
@@ -98,5 +98,15 @@ void	push_heads(t_heads **head, t_heads **head_b)
 		ft_last(tmpb)->next = (*head);
 		(*head) = tmp;
 	}
+}
+
+void	ft_free(t_token **head)
+{
+	t_token	*tmp;
+
+	tmp = (*head);
+	(*head) = (*head)->next;
+	free(tmp->data);
+	free(tmp);
 }
 

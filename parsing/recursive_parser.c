@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_line.c                                         :+:      :+:    :+:   */
+/*   recursive_parser.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/03/31 13:54:43 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 11:29:13 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_dollar(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {

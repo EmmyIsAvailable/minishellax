@@ -3,8 +3,8 @@ NAME	= minishell
 SRCS	= main.c exit_program.c \
 		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/env_builtins.c \
 		cmd.c pipex.c\
-		parse.c cmd_line.c \
-		list.c
+		./parsing/parse.c ./parsing/cmd_line.c\
+		./parsing/list.c ./parsing/recursive_parser.c
 
 OBJS	= ${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/31 10:52:30 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/05 11:28:14 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "./libft/libft.h"
 
 //# include "define.h"
-# include "enum.h"
+# include "parsing/enum.h"
 # include "struct.h"
 
 
@@ -41,17 +41,21 @@
 
 /*_RACINE_*/
 
+/*_supp later_*/
+void	ft_print(t_token *head);
+void	ft_print_line(t_heads **line);
+
 /*_list_*/
 void	ft_lst_clear(t_token **lst, void (*del)(void *));
 void	ft_lst_add_back(t_token **alst, t_token *new);
 void	push(t_token **head, t_token **head_b);
 void	push_heads(t_heads **head, t_heads **head_b);
+void	ft_free(t_token **head);
 
 /*_parsing_*/
-void	ft_print_line(t_heads **line);
-void	ft_print(t_token *head);
-int		ft_parse(char *str, t_token **head, t_data *data);
-int		check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);
+int	ft_parse(char *str, t_token **head, t_data *data);//parse
+int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);//recursive_parser
+int	cmd_line_building(t_token **head, t_heads **line, t_data *data); //cmd_line
 
 /*_recusive_parsing*/
 int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
