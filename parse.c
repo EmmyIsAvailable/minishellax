@@ -27,6 +27,23 @@ int	find_token(char c)
 	return (-1);
 }
 
+void	ft_quote(char *data, token_type token, int len, char *op)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	if (!str)
+		return ;
+	while (str[++i] != 2 || str[i] != 3)
+	{
+		data
+
+	}
+}
+
+
 t_token	*fill_data(token_type token, int len, char *op)
 {
 	t_token	*new_token;
@@ -40,9 +57,14 @@ t_token	*fill_data(token_type token, int len, char *op)
 	new_token->data = malloc(sizeof(char) * len + 1);
 	if (!new_token->data)
 		return (NULL);
-	while (op[++i] && i < len)
-		new_token->data[i] = op[i];
-	new_token->data[len] = '\0';
+	if (token == SIMPLE_QUOTE || token == DOUBLE_QUOTE)
+		ft_quote(new_token->data, token, len, op);
+	else
+	{
+		while (op[++i] && i < len)
+			new_token->data[i] = op[i];
+			new_token->data[len] = '\0';
+	}
 	new_token->data_size = len;
 	new_token->fd = 1;
 	new_token->next = NULL;
@@ -77,9 +99,11 @@ t_token	*other_token(char *str, int io_here)
 	return (NULL);
 }
 
-t_token	*scan_token(char *str, int io_here)
+t_token	*scan_token(char *str, int io_here, int	space)
 {
-	 if (ft_strncmp((const char *)str, "<<", 2) == 0)
+	if ((find_token(str[0]) == 2 || find_token(str[0] == 3)) && !space)
+		return (fill_data_quote(find_token(str[0]), 1, &str[0]));////ouch
+	if (ft_strncmp((const char *)str, "<<", 2) == 0)
 		return (fill_data(HEREDOC, 2, "<<"));
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>"));
@@ -127,7 +151,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 			push_heads(&tmp, line);
 			ft_print_line(line);
 			printf("%d\n", data->exit);
-		//	ft_pipex(line, data);
+	//		ft_pipex(line, data);
 			return (0);
 		}
 		else if (j == 1)
@@ -143,19 +167,25 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
 	int		io_here_flag;
+	int		check_space;
 	t_token	*tmp = NULL;
 	t_heads *line = NULL;
   
 	i = 0;
 	io_here_flag = 0;
+	check_space = 0;
 	if (!str)
 		return (1);
 	while (str[i])
 	{
+		check_space = 0;
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
+		{
+			check_space = 1;
 			i++;
-		tmp = scan_token(&str[i], io_here_flag);
+		}
+		tmp = scan_token(&str[i], io_here_flag, check_space);
 		io_here_flag = 0;
 		if (!tmp)
 		{
