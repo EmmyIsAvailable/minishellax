@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/05 11:28:40 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 13:43:23 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
+		if (str[i] == '\0')
+			break;
 		tmp = scan_token(&str[i], io_here_flag);
 		io_here_flag = 0;
 		if (!tmp)
