@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:49 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/03/22 15:29:43 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:56:08 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef enum {
 	ASSIGN = 6,
 	DOUBLE_GREATER = 7,
 	HEREDOC = 8,
-	WORD = 9
+	WORD = 9,
+	SPACE = 10
 } token_type;
 
 #endif

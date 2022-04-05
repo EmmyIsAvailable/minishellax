@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/05 11:29:13 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 15:12:05 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,16 @@ int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cm
 
 int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
+	t_token	*temp;
+
 	if (!(*tmp))
 		return (0);
+	if ((*tmp)->token == 32)
+	{
+		temp = (*tmp);
+		(*tmp) = (*tmp)->next;
+		free(temp);
+	}
 	if ((*tmp)->token == 0)
 		return (-1);
 	if ((*tmp)->token == 9 || (*tmp)->token == 1)
@@ -163,6 +171,7 @@ int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **
 
 int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd)
 {
+	
 	if ((*head) == NULL)
 		return (0);
 	if ((*head)->token == 4)

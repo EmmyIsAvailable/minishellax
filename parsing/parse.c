@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/05 13:43:23 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 15:09:14 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_token	*other_token(char *str, int io_here)
 	j = -1;
 	while (str[++j] && find_token(str[j]) == -1 && str[j] != ' ')
 	{
-		if (!io_here && ft_isalnum(str[j]) == 0 && ft_strchr("_$,=/.-", (int)str[j]) == NULL)
+		if (!io_here && ft_isalnum(str[j]) == 0 && ft_strchr("_$,/.-=", (int)str[j]) == NULL)
 			return (NULL); 
 	}
 	data = malloc(sizeof(char) * j + 1);
@@ -70,8 +70,8 @@ t_token	*other_token(char *str, int io_here)
 		data[j] = '\0';
 		if (!io_here && data[0] == '$' && ft_strchr((const char *)data, '=') == NULL)
 			return (fill_data(DOLLAR_SIGN, j, data));
-		else if (!io_here && data[0] != '$' && ft_isalpha((int)data[0]) && ft_strchr((const char *)data, '=') != NULL) //pas trop sure la
-			return (fill_data(ASSIGN, j, data));
+//		else if (!io_here && ft_strchr((const char *)data, '=') != NULL)
+//			return (fill_data(ASSIGN, j, data));
 		return (fill_data(WORD, j, data));
 	}
 	return (NULL);
@@ -94,20 +94,28 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
 	int		io_here_flag;
+	int		space;
 	t_token	*tmp = NULL;
-	t_heads *line = NULL;
+//	t_heads *line = NULL;
   
+	(void)data;
 	i = 0;
 	io_here_flag = 0;
 	if (!str)
 		return (1);
 	while (str[i])
 	{
+		space = i;
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
 		if (str[i] == '\0')
 			break;
+		if (space != i && space != 0)
+		{
+			tmp = fill_data(SPACE, 1, " ");
+			ft_lst_add_back(head, tmp);
+		}
 		tmp = scan_token(&str[i], io_here_flag);
 		io_here_flag = 0;
 		if (!tmp)
@@ -120,7 +128,8 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	if (cmd_line_building(head, &line, data) == 1)
-		return (1);
+	ft_print(*head);
+//	if (cmd_line_building(head, &line, data) == 1)
+//		return (1);
 	return (0);
 }

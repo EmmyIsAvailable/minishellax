@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/05 11:28:28 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/05 14:59:52 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 			return (1);
 		tmp->infile = NULL;
 		tmp->outfile = NULL;
-		tmp->cmd = NULL;	
+		tmp->cmd = NULL;
 		j  = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
 		if (j == -1)
 		{
