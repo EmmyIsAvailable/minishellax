@@ -29,7 +29,7 @@ int	dispatch_builtins(t_token *token, t_data *data)
 	if (ft_strncmp(token->data, "exit", 6) == 0 && !token->next)
 	{
 		//free les futurs trucs a free
-		exit(0);
+		return (-1);
 	}
 //	if (ft_strncmp(token->data, "export", 7) == 0)
 //		return (ft_export(cmd, data));
