@@ -73,7 +73,9 @@ int	check_in_outfile(t_heads **line)
 int     ft_pipex(t_heads **line, t_data *data)
 {
 	pid_t	pid;
+	int	ex;
 
+	ex = 0;
         data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;
 	if (pipe(data->pipes[0]) == -1)
@@ -86,12 +88,15 @@ int     ft_pipex(t_heads **line, t_data *data)
 		if (((*line)->next))
                 	dup2(data->pipes[0][1], STDOUT_FILENO);
                 close(data->pipes[0][0]);
-                if (dispatch_builtins((*line)->cmd, data) == 1)
+               	ex = dispatch_builtins((*line)->cmd, data); 
+		 if (ex == 1)
 			ft_exec((*line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;
-        close(data->pipes[0][1]);
+	close(data->pipes[0][1]);
+	if (ex == -1)
+		return (-1);
 	return (ft_pipex_bis(line, data));
 }
 
@@ -104,7 +109,7 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 	if ((*line)->next && (*line)->next->next)
 		mult_pipes = multiple_pipes(line, data);
 	if ((*line)->next)
-        {	
+        {
 		pid = fork();
 		if (pid == 0)
         	{	

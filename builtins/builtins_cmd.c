@@ -7,7 +7,7 @@ int	displayOnTerm(char *str)
 	len = 0;
 	while (str[len])
 		len++;
-	write(1, str, len);
+	write(STDOUT_FILENO, str, len);
 	return (0);
 }
 
@@ -76,8 +76,8 @@ int	ft_env(t_data *data)
 
 int	ft_pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
-	//displayOnTerm(getcwd(NULL, 0));
-	//displayOnTerm("\n");
+	//printf("%s\n", getcwd(NULL, 0));
+	displayOnTerm(getcwd(NULL, 0));
+	displayOnTerm("\n");
 	return (0);
 }

@@ -15,7 +15,6 @@
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = envp;
-	data->exit = 0;
 	return (0);
 }
 
@@ -34,19 +33,18 @@ int main(int ac, char **av, char **envp)
 	}
 	init_data(&data, envp);
 	event_ctrl_c();
-	while (data.exit == 0)
+	while (data.exit != -1)
 	{
 		head = NULL;
+		if (history && ft_strncmp(history, "exit", 6) == 0)
+			break ;
 		history = readline("> ");
-		if (history == NULL) 
+		if (history == NULL)
 			break ;
 		if (ft_parse(history, &head, &data) == 1)
-			exit(EXIT_FAILURE);
-//		printf("%d\n", data.exit);
+			return (1);
 	//	ft_print(head);
 		add_history(history);
-	//	if ((dispatch_builtins(head, &data)) == 1)
-	//		ft_pipex(head, &data);
 //		ft_lst_clear(&head, free);
 	}
 	return (0);
