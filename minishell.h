@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/07 12:04:47 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:41:18 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	check_dollar(t_token **tmp, t_token **infile, t_token **outfile, t_token **c
 /*_main_*/
 //int	main(int ac, char **av);
 int	init_envp(t_data *data, char **envp);
+int	free_tab(char **tab);
 
 /*_exit_program_*/
 void	sig_int(int code);
@@ -84,10 +85,16 @@ int	variables_in_echo(char *params, t_data *data);
 int	dispatch_builtins(t_token *token, t_data *data);
 int	ft_cd(t_token *token, t_data *data);
 
-/*_env_builtins_*/
-int	ft_unset(char **cmd, t_data *data);
+/*_export_builtins_*/
 int	add_var_envp(char *str, t_data *data);
 int	ft_export(t_token *token, t_data *data);
+int	add_var_envp(char *str, t_data *data);
+int	browse_data_var(char *str, t_data *data);
+int	check_assign(char *assignment);
+
+/*_unset_builtins_*/
+int	check_existence(char *str, char *env);
+int	ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
 void	ft_exec(t_token *token, t_data *data);

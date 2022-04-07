@@ -1,7 +1,8 @@
 NAME	= minishell
 
 SRCS	= main.c exit_program.c \
-		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/env_builtins.c \
+		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/export_builtins.c \
+		./builtins/unset_builtins.c \
 		cmd.c pipex.c\
 		./parsing/parse.c ./parsing/cmd_line.c\
 		./parsing/list.c ./parsing/recursive_parser.c
