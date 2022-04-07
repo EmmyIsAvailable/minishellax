@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strjoin.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 11:12:39 by eruellan          #+#    #+#             */
-/*   Updated: 2021/11/25 14:43:41 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:28:48 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*join;
 	int		i;
 
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	i = -1;
@@ -33,5 +35,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (++i < len_s2)
 		join[len_s1 + i] = s2[i];
 	join[len_s1 + len_s2] = '\0';
+	free((void*)s1);
 	return (join);
 }

@@ -70,7 +70,7 @@ int	check_assign(char *assignment)
 	i = 0;
 	eq_sign = 0;
 	if (ft_isalpha(assignment[i]) == 0 && assignment[i] != '_')
-		return (1);i
+		return (1);
 	while (assignment[++i])
 	{
 		if (assignment[i] == '=')
