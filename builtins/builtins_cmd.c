@@ -5,6 +5,7 @@ int	displayOnTerm(char *str)
 	int	len;
 
 	len = 0;
+	close(STDIN_FILENO);
 	while (str[len])
 		len++;
 	write(STDOUT_FILENO, str, len);
@@ -67,10 +68,14 @@ int	ft_env(t_data *data)
 	char	**envp;
 	int	i;
 
-	i = -1;
+	i = 0;
 	envp = data->envp;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
+	while (envp[i])
+	{
+		displayOnTerm(envp[i]);
+		displayOnTerm("\n");
+		i++;
+	}
 	return (0);
 }
 

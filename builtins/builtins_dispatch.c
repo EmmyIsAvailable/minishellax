@@ -31,8 +31,8 @@ int	dispatch_builtins(t_token *token, t_data *data)
 		//free les futurs trucs a free
 		return (-1);
 	}
-//	if (ft_strncmp(token->data, "export", 7) == 0)
-//		return (ft_export(cmd, data));
+	if (ft_strncmp(token->data, "export", 7) == 0)
+		return (ft_export(token->next, data));
 	/*if (ft_strncmp(token->data, "unset", 6) == 0 && cmd[1] != NULL)
 	{	
 		return (ft_unset(cmd, data));
