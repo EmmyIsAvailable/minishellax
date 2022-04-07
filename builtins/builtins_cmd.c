@@ -65,14 +65,12 @@ int	ft_echo(t_token *token, t_data *data)
 
 int	ft_env(t_data *data)
 {
-	char	**envp;
 	int	i;
 
 	i = 0;
-	envp = data->envp;
-	while (envp[i])
+	while (data->envp[i])
 	{
-		displayOnTerm(envp[i]);
+		displayOnTerm(data->envp[i]);
 		displayOnTerm("\n");
 		i++;
 	}
