@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/07 15:39:12 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/07 16:25:00 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,28 @@ char	*ft_search_env(char *params, t_data *data)
 	return (NULL);
 }
 
+char	*ft_dup(int i, int diff, char *str)
+{
+	char	*tmp;
+	int	j;
+
+	j = 0;
+	tmp = malloc(sizeof(char) * (i - diff + 1));
+	while (j < i - diff)
+	{
+		tmp[j] = str[diff + j];
+		j++;
+	}
+	tmp[j] = '\0';
+	new_token->data = ft_strjoin(new_token->data, ft_dup(i, diff, str);
+	free(tmp);
+	tmp = NULL;
+
+
+
+
+}
+
 t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 {
 	t_token	*new_token;
@@ -116,14 +138,14 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 			}
 			else if (diff != i) //si on est sur un $ valable
 			{
-				tmp = malloc(sizeof(char) * (i - diff + 1));
+				tmp = 
 				while (j < i - diff)
 				{
 					tmp[j] = str[diff + j];
 					j++;
 				}
 				tmp[j] = '\0';
-				new_token->data = ft_strjoin(new_token->data, tmp);
+				new_token->data = ft_strjoin(new_token->data, ft_dup(i, diff, str)
 				free(tmp);
 				tmp = NULL;
 			}
@@ -175,9 +197,8 @@ t_token	*other_token(char *str, int io_here)
 	j = -1;
 	while (str[++j] && find_token(str[j]) == -1 && str[j] != ' ') //metttre tt isspae3
 	{
-		if (!io_here && ft_isalnum(str[j]) == 0 && ft_strchr("_$,/.-+=", (int)str[j]) == NULL) //liste arbitrairre de caracteres qui passent : peut etre tester tous les printable sauf isspace3
+		if (!io_here && ft_isalnum(str[j]) == 0 && ft_strchr("_,/.-+$=*", (int)str[j]) == NULL) //liste arbitrairre de caracteres qui passent : peut etre tester tous les printable sauf isspace3
 			break ;	
-		//return (NULL); 
 	}
 	if (j == 0)
 		return (NULL);
