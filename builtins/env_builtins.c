@@ -29,7 +29,7 @@ int     ft_unset(char **cmd, t_data *data)
         return (0);
 }
 
-void    add_var_envp(char *cmd, t_data *data)
+int    add_var_envp(char *str, t_data *data)
 {
         int     i;
         char    **envp;
@@ -38,8 +38,11 @@ void    add_var_envp(char *cmd, t_data *data)
         envp = data->envp;
         while (envp[i])
                 i++;
-        envp[i] = cmd;
+	envp[i] = ft_strdup(str);
+	if (!envp[i])
+		return (1);
         envp[i + 1] = NULL;
+	return (0);
 }
 
 int     browse_data_var(char *cmd, t_data *data)
@@ -59,28 +62,38 @@ int     browse_data_var(char *cmd, t_data *data)
         return (0);
 }
 
-int     ft_export(char **cmd, t_data *data)
+int	check_assign(char *assignment)
 {
-        int     i;
-        int     j;
-        int     is_var;
+	int	i;
+	int	eq_sign;
 
-        i = 1;
-        while (cmd[i])
+	i = 0;
+	eq_sign = 0;
+	if (ft_isalpha(assignment[i]) == 0 && assignment[i] != '_')
+		return (1);i
+	while (assignment[++i])
+	{
+		if (assignment[i] == '=')
+			eq_sign = 1;
+	}
+	if (eq_sign != 1)
+		return (1);
+	return (0);
+}
+
+int     ft_export(t_token *token, t_data *data)
+{
+	t_token	*tmp;
+
+	tmp = token;
+        while (tmp)
         {
-                j = 1;
-                is_var = 0;
-                while (cmd[i][j])
-                {
-                        if (cmd[i][j] == '=' && cmd[i][j + 1] != '\0')
-                                is_var = 1;
-                        j++;
+                if (check_assign(tmp->data) == 0)
+		{
+                	/*si la variable existe deja dans l'envp remplacer ancienne valeur par nouvelle*/
+			add_var_envp(tmp->data, data);
                 }
-                if (is_var == 0)
-                        browse_data_var(cmd[i], data);
-                if (is_var == 1)
-                        add_var_envp(cmd[i], data);
-                i++;
+		tmp = tmp->next;
         }
         return (0);
 }

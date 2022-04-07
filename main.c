@@ -6,15 +6,31 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/31 14:07:46 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:20:13 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_data(t_data *data, char **envp)
+int	init_envp(t_data *data, char **envp)
 {
-	data->envp = envp;
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	data->envp = (char **)malloc(sizeof(char *)* i + 1);
+	if (!data->envp)
+		return (1);
+	i = 0;
+	while (envp[i])
+	{
+		data->envp[i] = ft_strdup(envp[i]);
+		if (!data->envp[i])
+			return (1);
+		i++;
+	}
+	data->envp[i] = NULL;
 	return (0);
 }
 
@@ -31,7 +47,7 @@ int main(int ac, char **av, char **envp)
 		ft_putstr_fd("Error format : ./minishell\n", 1);
 		return (1);
 	}
-	init_data(&data, envp);
+	init_envp(&data, envp);
 	event_ctrl_c();
 	while (data.exit != -1)
 	{
