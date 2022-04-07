@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/31 16:15:54 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/07 11:11:26 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ int	check_in_outfile(t_heads **line)
 int     ft_pipex(t_heads **line, t_data *data)
 {
 	pid_t	pid;
-	int	ex;
 
-	ex = 0;
         data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;
 	if (pipe(data->pipes[0]) == -1)
@@ -86,17 +84,18 @@ int     ft_pipex(t_heads **line, t_data *data)
 		if (check_in_outfile(line) == 1)
 			return (1);
 		if (((*line)->next))
+		{
                 	dup2(data->pipes[0][1], STDOUT_FILENO);
-                close(data->pipes[0][0]);
-               	ex = dispatch_builtins((*line)->cmd, data); 
-		 if (ex == 1)
+                	close(data->pipes[0][0]);
+		}
+	//	else
+	//		close (STDIN_FILENO);
+               	if (dispatch_builtins((*line)->cmd, data) == 1)
 			ft_exec((*line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;
 	close(data->pipes[0][1]);
-	if (ex == -1)
-		return (-1);
 	return (ft_pipex_bis(line, data));
 }
 
