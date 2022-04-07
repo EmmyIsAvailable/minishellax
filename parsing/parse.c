@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/07 14:40:13 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:39:12 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,12 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 	t_token	*new_token;
 	int		i;
 	int		j;
+	int		diff;
+	char		*tmp;
 
 	i = 1;
 	j = 0;
+	diff = 1;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -102,7 +105,7 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 		if (str[i] == '$' && token == DOUBLE_QUOTE && ft_search_env(&str[i + 1], data))
 		{
 			j = 0;
-			if (i > 1 && !new_token->data) // tout ce qui est avant le $ est mis dans data 
+			if (i > 1 && !new_token->data)// tout ce qui est avant le $ est mis dans data 
 			{
 				new_token->data = malloc(sizeof(char) * (i));
 				if (!new_token->data)
@@ -111,22 +114,49 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 					new_token->data[j - 1] = str[j];
 				new_token->data[i - 1] = '\0';
 			}
-			new_token->data = ft_strjoin((const char *)new_token->data, (const char *)ft_search_env(&str[i + 1], data)); //free new_token precedemment alloue dans join
-			i += (1 + ft_name(&str[i + 1]));//passer tout le token $machin
+			else if (diff != i) //si on est sur un $ valable
+			{
+				tmp = malloc(sizeof(char) * (i - diff + 1));
+				while (j < i - diff)
+				{
+					tmp[j] = str[diff + j];
+					j++;
+				}
+				tmp[j] = '\0';
+				new_token->data = ft_strjoin(new_token->data, tmp);
+				free(tmp);
+				tmp = NULL;
+			}
+			new_token->data = ft_strjoin(new_token->data, (const char *)ft_search_env(&str[i + 1], data));
+			i += (1 + ft_name(&str[i + 1]));
+			diff = i;
 		}
 		else
 			i++;
 	}
-	if (!new_token->data)
+	if (!new_token->data) //sans var env
 	{
-		printf("i :%d\n", i);
 		new_token->data = malloc(sizeof(char) * (i));
 		if (!new_token->data)
 			return (NULL);
 		while (str[++j] && j < i)
 			new_token->data[j - 1] = str[j];
 		new_token->data[i - 1] = '\0';
-		printf("data :%s\n", new_token->data);
+	}
+	else if (diff != i) //si il reste des trucs a la fin 
+	{
+		j = 0;
+		tmp = malloc(sizeof(char) * (i - diff + 1));
+		if (!tmp)
+			return (NULL);
+		while (j < i - diff)
+		{
+			tmp[j] = str[diff + j];
+			j++;
+		}
+		tmp[j] = '\0';
+		new_token->data = ft_strjoin(new_token->data, tmp);
+		free(tmp);
 	}
 	new_token->data_size = i + 1;
 	printf("token size :%ld\n", new_token->data_size);
