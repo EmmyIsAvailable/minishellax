@@ -220,9 +220,9 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
 	int		io_here_flag;
-	int		space;
+//	int		space;
 	t_token	*tmp = NULL;
-//	t_heads *line = NULL;
+	t_heads *line = NULL;
   
 	(void)data;
 	i = 0;
@@ -231,17 +231,17 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		return (1);
 	while (str[i])
 	{
-		space = i;
+//		space = i;
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
 		if (str[i] == '\0')
 			break;
-		if (space != i && space != 0)
+/*		if (space != i && space != 0)
 		{
 			tmp = fill_data(SPACE, 1, " ", data);
 			ft_lst_add_back(head, tmp);
-		}
+		}*/
 		tmp = scan_token(&str[i], io_here_flag, data);
 		io_here_flag = 0;
 		if (!tmp)
@@ -255,7 +255,7 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		i += (int)tmp->data_size;
 	}
 	ft_print(*head);
-//	return (cmd_line_building(head, &line, data));
-//		return (1);
+	return (cmd_line_building(head, &line, data));
+		return (1);
 	return (0);
 }
