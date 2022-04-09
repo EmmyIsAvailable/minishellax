@@ -37,9 +37,10 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-	//		ft_print_line(line);
-	//		printf("%d\n", data->exit);
-			return (ft_pipex(line, data));
+			ft_print_line(line);
+			printf("%d\n", data->exit);
+			return (0);
+//			return (ft_pipex(line, data));
 		}
 		else if (j == 1)
 		{

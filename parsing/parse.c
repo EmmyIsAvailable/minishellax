@@ -144,9 +144,35 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 	return (new_token);
 }
 
+char	*ft_split_var(char *str)
+{
+	char	**data;
+	char	*tmp;
+	int		i;
+
+	i = -1;
+	data = ft_split(str, 32);
+	if (!str)
+		return (NULL);
+	while (data[++i] != NULL && data[i + 1] != NULL)
+	{
+		printf("%s\n", data[i]);
+		tmp = ft_strjoin(data[i], data[i + 1]); // il faut join en inserant un espce ! pas le cas ici
+		if (!tmp)
+		{
+			//free tout
+			return (NULL);
+		}
+	}
+	free(data);
+	return (tmp);
+}
+
+
 t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 {
 	t_token	*new_token;
+//	char	*tmp; // sert pour spliter les var dans "" mais bug
 	int		i;
 
 	i = -1;
@@ -154,6 +180,11 @@ t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 	if (token == DOLLAR_SIGN && ft_search_env(&op[1], data)) //$ en dehors quotes
 	{
 			new_token->data = ft_strdup((const char *)ft_search_env(&op[1], data));
+		/*	tmp = ft_strdup((const char *)ft_search_env(&op[1], data));
+			if (!tmp)
+				return (NULL);
+			new_token->data = ft_split_var(tmp);
+			free(tmp);*/
 			new_token->data_size = ft_name(&op[1]) + 1;
 			return (new_token);
 	}
@@ -220,7 +251,7 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
 	int		io_here_flag;
-//	int		space;
+	int		space;
 	t_token	*tmp = NULL;
 	t_heads *line = NULL;
   
@@ -231,17 +262,17 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		return (1);
 	while (str[i])
 	{
-//		space = i;
+		space = i;
 		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
 				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
 			i++;
 		if (str[i] == '\0')
 			break;
-/*		if (space != i && space != 0)
+		if (space != i && space != 0)
 		{
 			tmp = fill_data(SPACE, 1, " ", data);
 			ft_lst_add_back(head, tmp);
-		}*/
+		}
 		tmp = scan_token(&str[i], io_here_flag, data);
 		io_here_flag = 0;
 		if (!tmp)
