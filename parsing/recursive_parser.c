@@ -24,7 +24,6 @@ int	check_dollar(t_token **tmp, t_token **infile, t_token **outfile, t_token **c
 	return (check_word(tmp, infile, outfile, cmd));
 }
 
-
 int	check_heredoc(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
 	t_token *temp;
@@ -47,45 +46,8 @@ int	check_heredoc(t_token **tmp, t_token **infile, t_token **outfile, t_token **
 	}
 }
 
-/*int	check_double_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
-{
-	if ((*tmp) == NULL)
-		return (0);
-	if ((*tmp)->token != 2)
-	{
-		if ((*tmp)->token != 1)
-			(*tmp)->token = 9;
-		push(tmp, cmd);
-		return (check_double_quote(tmp, infile, outfile, cmd));
-	} 
-	if (!(*tmp)->next)
-		return (0);
-	if ((*tmp)->next->token == 0)
-		return (-1);
-	return (check_word(&(*tmp)->next, infile, outfile, cmd));
-}
-
-int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
-{
-
-	if ((*tmp) == NULL)
-		return (0);
-	if ((*tmp)->token != 3)
-	{
-		(*tmp)->token = 9;
-		push(tmp, cmd);
-		return (check_quote(tmp, infile, outfile, cmd));
-	}
-	if (!(*tmp)->next)
-		return (0);
-	if ((*tmp)->next->token == 0)
-		return (-1);
-	return (check_word(&(*tmp)->next, infile, outfile, cmd));
-}*/
-
 int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
-//	t_token	*temp;
 	char	*str;
 
 	str = NULL;
@@ -93,16 +55,10 @@ int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd
 		return (0);
 	if ((*tmp)->token == SPACE)
 		(*tmp) = (*tmp)->next;
-	/*if ((*tmp)->token == SPACE)
-	{
-		temp = (*tmp);
-		(*tmp) = (*tmp)->next;
-		free(temp);
-	}*/
 	if ((*tmp)->token == PIPE)
 		return (-1);
 	if ((*tmp)->token == WORD || (*tmp)->token == DOLLAR_SIGN ||
-		(*tmp)->token == DOUBLE_QUOTE || (*tmp)->token == SIMPLE_QUOTE)
+		(*tmp)->token == DOUBLE_QUOTE || (*tmp)->token == SIMPLE_QUOTE || (*tmp)->token == ASSIGN)
 	{
 		while (((*tmp) && (*tmp)->next) &&
 		(((*tmp)->token != SPACE || (*tmp)->token != PIPE)))
@@ -116,18 +72,12 @@ int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd
 		if (str)
 			(*tmp)->data = str;
 		push(tmp, cmd);
-		printf ("cmd: \n");
-		ft_print(*cmd);
 		return (check_word(tmp, infile, outfile, cmd));
 	}
 	if ((*tmp)->token == 4)
 		return (check_infile(tmp, infile, outfile, cmd));
 	if ((*tmp)->token == 5 || (*tmp)->token == 7)
 		return (check_outfile(tmp, infile, outfile, cmd));
-/*	if ((*tmp)->token == 3)
-		return (check_quote(&(*tmp)->next, infile, outfile, cmd));
-	if ((*tmp)->token == 2)
-		return (check_double_quote(&(*tmp)->next, infile, outfile, cmd));*/
 	if ((*tmp)->token == 8)
 		return (check_heredoc(&(*tmp)->next, infile, outfile, cmd));
 	return (1);
@@ -213,6 +163,6 @@ int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **c
 	if ((*head)->token == HEREDOC)
 		return (check_heredoc(head, infile, outfile, cmd));
 /*	if ((*head)->token == ASSIGN) //mettre dans une liste de d'assignations a mettre de cote 
-		return (check_heredoc(head, infile, outfile, cmd));*/
+		return (check_assign(head, infile, outfile, cmd));*/
 	return (1);
 }

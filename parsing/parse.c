@@ -168,7 +168,6 @@ char	*ft_split_var(char *str)
 	return (tmp);
 }
 
-
 t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 {
 	t_token	*new_token;
