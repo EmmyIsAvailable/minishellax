@@ -284,7 +284,7 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
-	ft_print(*head);
+//	ft_print(*head);
 	return (cmd_line_building(head, &line, data));
 		return (1);
 	return (0);

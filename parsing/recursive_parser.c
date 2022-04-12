@@ -61,7 +61,7 @@ int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd
 		(*tmp)->token == DOUBLE_QUOTE || (*tmp)->token == SIMPLE_QUOTE || (*tmp)->token == ASSIGN)
 	{
 		while (((*tmp) && (*tmp)->next) &&
-		(((*tmp)->token != SPACE || (*tmp)->token != PIPE)))
+		(((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
 		{
 			if ((*tmp)->token == WORD && (*tmp)->next->token != WORD)
 				break ;
@@ -113,38 +113,38 @@ int	check_infile(t_token **tmp, t_token **infile, t_token **outfile, t_token **c
 
 int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd)
 {
-	t_token *temp;
-
-	temp = NULL;
 	if (!(*tmp)->next)
 		return (1);
-	if ((*tmp)->next->token == SPACE)
+	if ((*tmp)->token == SPACE)
 		(*tmp) = (*tmp)->next;
-	if (!(*tmp)->next ||(*tmp)->next->token != 9)
-		return (1);
-	else
+	if ((*tmp)->next->token == 9 ||
+		((*tmp)->next->token == 10 && (*tmp)->next->next->token == 9))
 	{
 		if ((*tmp)->token == 5)
 		{
-			temp = (*tmp);
 			(*tmp) = (*tmp)->next;
-			free(temp);
-			(*tmp)->token = 5;
+			if ((*tmp)->token == SPACE)
+				(*tmp) = (*tmp)->next;
+			if ((*tmp)->token == 9)
+				(*tmp)->token = 5;
 		}
 		else
 		{
-			temp = (*tmp);
 			(*tmp) = (*tmp)->next;
-			free(temp);
-			(*tmp)->token = 7;
+			if ((*tmp)->token == SPACE)
+				(*tmp) = (*tmp)->next;
+			if ((*tmp)->token == 9)
+				(*tmp)->token = 7;
 		}
 		push(&(*tmp), outfile);
-		if (!(*tmp))
-			return (0);
-		if ((*tmp)->token == 0)
-			return (-1);
-		return(check_word(&(*tmp), infile, outfile, cmd));
 	}
+	else 
+		return (1);
+	if (!(*tmp))
+		return (0);
+	if ((*tmp)->token == 0)
+		return (-1);
+	return(check_word(&(*tmp), infile, outfile, cmd));
 }
 
 int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd)
