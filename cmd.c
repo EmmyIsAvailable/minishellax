@@ -96,10 +96,11 @@ void    ft_exec(t_token *token, t_data *data)
                 ft_error("Split failed");
         env_path = ft_split(getenv("PATH"), ':');
         binary = get_binary(cmd[0], env_path);
-        ft_free_tab(env_path);
+	ft_free_tab(env_path);
         if (execve(binary, cmd, data->envp) == -1)
         {
                 free (binary);
                 ft_free_tab(cmd);
+		printf("%s\n", (char *)NULL);
         }
 }
