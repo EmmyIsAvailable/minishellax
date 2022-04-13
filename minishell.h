@@ -99,9 +99,9 @@ int	ft_cd(t_token *token, t_data *data);
 /*_export_builtins_*/
 int	add_var_envp(char *str, t_data *data);
 int	ft_export(t_token *token, t_data *data);
-int	add_var_envp(char *str, t_data *data);
 int	browse_data_var(char *str, t_data *data);
 int	check_assign(char *assignment);
+int	ft_solo_export(t_data *data);
 
 /*_unset_builtins_*/
 int	check_existence(char *str, char *env);
