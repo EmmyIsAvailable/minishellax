@@ -48,8 +48,8 @@ int	dispatch_builtins(t_token *token, t_data *data)
 	}
 	if (ft_strncmp(token->data, "export", 7) == 0 && token->next)
 		return (ft_export(token->next, data));
-//	if (ft_strncmp(token->data, "export", 7) == 0 && !token->next)
-//		env dans l'ordre alpha
+	if (ft_strncmp(token->data, "export", 7) == 0 && !token->next)
+		return (ft_solo_export(data));
 	if (ft_strncmp(token->data, "unset", 6) == 0 && token->next)
 		return (ft_unset(token->next, data));
 	return (1);

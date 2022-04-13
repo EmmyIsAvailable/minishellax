@@ -90,3 +90,18 @@ int     ft_export(t_token *token, t_data *data)
         return (0);
 }
 
+int	ft_solo_export(t_data *data)
+{
+	char	**tmp;
+	int	i;
+
+	i = 0;
+	tmp = ft_sort_tab(data->envp);
+	while (tmp[i])
+	{
+		printf("%s\n", tmp[i]);
+		i++;
+	}
+	printf("%s\n", (char *)NULL);
+	return (0);
+}
