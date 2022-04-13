@@ -5,7 +5,7 @@ int	displayOnTerm(char *str)
 	int	len;
 
 	len = 0;
-	close(STDIN_FILENO);
+	//close(STDIN_FILENO);
 	while (str[len])
 		len++;
 	write(STDOUT_FILENO, str, len);
@@ -60,6 +60,7 @@ int	ft_echo(t_token *token, t_data *data)
 	}
 	if (option == 0)
 		displayOnTerm("\n");
+	printf("%s\n", (char *)NULL);
 	return (0);
 }
 
@@ -74,13 +75,14 @@ int	ft_env(t_data *data)
 		displayOnTerm("\n");
 		i++;
 	}
+	printf("%s\n", (char *)NULL);
 	return (0);
 }
 
 int	ft_pwd(void)
 {
-	//printf("%s\n", getcwd(NULL, 0));
 	displayOnTerm(getcwd(NULL, 0));
 	displayOnTerm("\n");
+	printf("%s\n", (char *)NULL);
 	return (0);
 }
