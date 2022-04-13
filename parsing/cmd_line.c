@@ -12,6 +12,27 @@
 
 #include "../minishell.h"
 
+int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
+{
+	if ((*head)->token == SPACE)
+		(*head) = (*head)->next;
+	if ((*head) == NULL)
+		return (0);
+	if ((*head)->token == REDIR_IN)
+		return (check_infile(head, inf, out, cmd));
+	if ((*head)->token == REDIR_OUT)
+		return (check_outfile(head, inf, out, cmd));
+	if ((*head)->token == DOUBLE_GREATER)
+		return (check_append(head, inf, out, cmd));
+	if ((*head)->token == WORD || (*head)->token == DOUBLE_QUOTE
+		|| (*head)->token == SIMPLE_QUOTE || (*head)->token == DOLLAR_SIGN
+		|| (*head)->token == ASSIGN)
+		return (check_word(head, inf, out, cmd));
+	if ((*head)->token == HEREDOC)
+		return (check_here(head, inf, out, cmd));
+	return (1);
+}
+
 int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 {
 	int		j;
