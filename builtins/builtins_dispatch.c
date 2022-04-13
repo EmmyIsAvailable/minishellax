@@ -26,7 +26,10 @@ int	dispatch_builtins(t_token *token, t_data *data)
 	if (ft_strncmp(token->data, "echo", 5) == 0)
 	{
 		if (!token->next)
-			return (displayOnTerm("\n"));
+		{
+			displayOnTerm("\n");
+			printf("%s\n", (char *)NULL);
+		}
 		return (ft_echo(token->next, data));
 	}
 	if (ft_strncmp(token->data, "pwd", 4) == 0 && !token->next)

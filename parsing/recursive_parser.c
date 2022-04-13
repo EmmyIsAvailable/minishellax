@@ -71,7 +71,7 @@ int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd
 			(*tmp)->data = str;	
 		}
 		push(tmp, cmd);
-		ft_print((*tmp));
+	//	ft_print((*tmp));
 		return (check_word(tmp, infile, outfile, cmd));
 	}
 	if ((*tmp)->token == 4)

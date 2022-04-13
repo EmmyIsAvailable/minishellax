@@ -156,7 +156,7 @@ char	*ft_split_var(char *str)
 		return (NULL);
 	while (data[++i] != NULL && data[i + 1] != NULL)
 	{
-		printf("%s\n", data[i]);
+	//	printf("%s\n", data[i]);
 		tmp = ft_strjoin(data[i], data[i + 1]); // il faut join en inserant un espce ! pas le cas ici
 		if (!tmp)
 		{
