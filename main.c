@@ -34,7 +34,7 @@ int	init_envp(t_data *data, char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	data->envp = (char **)malloc(sizeof(char *)* i + 1);
+	data->envp = (char **)malloc(sizeof(char *)* (i + 1));
 	if (!data->envp)
 		return (1);
 	i = 0;
@@ -72,7 +72,7 @@ int main(int ac, char **av, char **envp)
 		history = readline("> ");
 		if (history == NULL)
 			break ;
-		if (ft_parse(history, &head, &data) == 1)
+		if (ft_parse(history, &head, &data))
 			return (1);
 	//	ft_print(head);
 		add_history(history);
