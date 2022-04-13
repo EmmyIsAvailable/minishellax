@@ -53,9 +53,20 @@ void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
 
 /*_parsing_*/
-int	ft_parse(char *str, t_token **head, t_data *data);//parse
-int	check_token(t_token **head, t_token **infile, t_token **outfile, t_token **cmd);//recursive_parser
-int	cmd_line_building(t_token **head, t_heads **line, t_data *data); //cmd_line
+int	ft_parse(char *str, t_token **head, t_data *data);
+t_token	*scan_token(char *str, int io_here, t_data *data);
+int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	check_append(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	check_word(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	check_here(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int	cmd_line_building(t_token **head, t_heads **line, t_data *data);
+t_token *fill_data(token_type token, int len, char *op, t_data *data);
+t_token *fill_data_quotes(token_type token, char *str, char op, t_data *data);
+int ft_name(char *str);
+char    *ft_search_env(char *params, t_data *data);
+t_token	*ft_create_token(token_type token);
 
 /*_recusive_parsing*/
 int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
