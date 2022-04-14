@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/14 11:59:53 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/14 14:12:10 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
+	char *str = NULL;
 	if (!(*tmp)->next)
 		return (1);
 	if ((*tmp)->token == SPACE)
@@ -21,10 +22,24 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	if ((*tmp)->next)
 	{
 		(*tmp) = (*tmp)->next;
-		if ((*tmp)->token == SPACE)
+		if ((*tmp)->token == SPACE) //from l27 to l39 pattern de check word pour join les elem
 			(*tmp) = (*tmp)->next;
+		if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
+			|| (*tmp)->token == 3 || (*tmp)->token == 6)
+		{
+			while (((*tmp) && (*tmp)->next)
+				&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
+			{
+				if (((*tmp)->token == WORD && (*tmp)->next->token == WORD) || (*tmp)->next->token == SPACE)
+					break ;
+				str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
+				(*tmp)->token = SPACE;
+				(*tmp) = (*tmp)->next;
+				(*tmp)->data = str;
+			}
 		(*tmp)->token = 8;
-		push(&(*tmp), out);
+		push(tmp, cmd);
+		}
 	}
 	else
 		return (1);
@@ -32,7 +47,7 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		return (0);
 	if ((*tmp)->token == 0)
 		return (-1);
-	return (check_word(&(*tmp), inf, out, cmd));
+	return (check_word(tmp, inf, out, cmd));
 
 }
 
@@ -48,7 +63,7 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	if ((*tmp)->token == PIPE)
 		return (-1);
 	if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
-		|| (*tmp)->token == 3 || (*tmp)->token == 6)
+		|| (*tmp)->token == 3 || (*tmp)->token == 6 || (*tmp)->token == 8)
 	{
 		while (((*tmp) && (*tmp)->next)
 			&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))

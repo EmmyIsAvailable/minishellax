@@ -69,6 +69,21 @@ char	*ft_create_data(char *str, int i)
 	return (data);
 }
 
+int	find_op(char *str, char op)
+{
+	int	i;
+
+	i = -1;
+	if (!str)
+		return (0);
+	while (str[++i])
+	{
+		if (str[i] == op)
+			return (1);
+	}
+	return (0);
+}
+
 t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 {
 	t_token	*new_token;
@@ -77,26 +92,30 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 
 	i = 1;
 	diff = 1;
-	new_token = ft_create_token(token);
-	while (str[i] != op)
+	new_token = NULL;
+	if (find_op(&str[1], op))
 	{
-		if (str[i] == '$' && token == DOUBLE_QUOTE && ft_search_env(&str[i + 1], data))
+		new_token = ft_create_token(token);
+		while (str[i] != op)
 		{
-			if (i > 1 && !new_token->data)
-				new_token->data = ft_create_data(str, i);
-			else if (diff != i)
-				new_token->data = ft_dup(new_token->data, i, diff, str);
-			new_token->data = ft_strjoin(new_token->data, (const char *)ft_search_env(&str[i + 1], data));
-			i += (1 + ft_name(&str[i + 1]));
-			diff = i;
+			if (str[i] == '$' && token == DOUBLE_QUOTE && ft_search_env(&str[i + 1], data))
+			{
+				if (i > 1 && !new_token->data)
+					new_token->data = ft_create_data(str, i);
+				else if (diff != i)
+					new_token->data = ft_dup(new_token->data, i, diff, str);
+				new_token->data = ft_strjoin(new_token->data, (const char *)ft_search_env(&str[i + 1], data));
+				i += (1 + ft_name(&str[i + 1]));
+				diff = i;
+			}
+			else
+				i++;
 		}
-		else
-			i++;
+		if (!new_token->data)
+			new_token->data = ft_create_data(str, i);
+		else if (diff != i)
+			new_token->data = ft_dup(new_token->data, i, diff, str);
+		new_token->data_size = i + 1;
 	}
-	if (!new_token->data)
-		new_token->data = ft_create_data(str, i);
-	else if (diff != i)
-		new_token->data = ft_dup(new_token->data, i, diff, str);
-	new_token->data_size = i + 1;
 	return (new_token);
 }

@@ -1,5 +1,19 @@
 #include "../minishell.h"
 
+int	check_last_pipe(t_token **head)
+{
+	t_token	**tmp;
+
+	tmp = head;
+	if (!(*tmp))
+		return (1);	
+	while ((*tmp)->next != NULL)
+		(*tmp) = (*tmp)->next;
+	if ((*tmp)->token == PIPE)
+		return (1);
+	return (0);
+}
+
 int	ft_parse(char *str, t_token **head, t_data *data)
 {
 	int		i;
@@ -31,7 +45,6 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 			ft_lst_clear(head, free);
 			return (1);
 		}
-		printf("data : %s_\n", tmp->data);
 		if (tmp->token != 32)
 		{
 			if (tmp->token == 8)
@@ -43,7 +56,7 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		i += (int)tmp->data_size;
 	}
 	ft_print(*head);
-	if (!(*head))
+	if (!(*head) && check_last_pipe(head))
 		return (0);
 	else
 		return (cmd_line_building(head, &line, data));
