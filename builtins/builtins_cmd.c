@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 12:24:48 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:23:41 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	variables_in_echo(char *params, t_data *data)
 	return (0);
 }
 
-int	ft_echo(t_token *token, t_data *data)
+int	ft_echo(t_token *token)
 {
 	int	option;
 	int	print;
@@ -61,11 +61,8 @@ int	ft_echo(t_token *token, t_data *data)
 	while (token)
 	{
 		param = token->data;
-		if (param[0] == '$')
-			print = variables_in_echo(&param[1], data);
-		else
-			print = displayOnTerm(param);
-		if (token->next && print != 0)
+		print = displayOnTerm(param);
+		if (token->next && print == 0)
 			displayOnTerm(" ");
 		token = token->next;
 	}
