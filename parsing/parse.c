@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/07 16:25:00 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/14 12:31:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_token	*other_token(char *str, int io_here, t_data *datas)
 
 	i = -1;
 	j = -1;
+	io_here = 0;
 	if (!str)
 		return (NULL);
 	while (str[++j] && find_token(str[j]) == -1
@@ -108,10 +109,14 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
 	else if (ft_strncmp((const char *)str, "\'", 1) == 0)
 		return (fill_data_quotes(SIMPLE_QUOTE, str, '\'', data));
-	else if (ft_strncmp((const char *)str, "$", 1) == 0)
+	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here == 0)
 		return (fill_data(DOLLAR_SIGN, 0, &str[0], data));
-	else if (find_token(str[0]) != -1)
+	else if (find_token(str[0]) != -1) //eviter inerpretation $ quand <<
+	{
+		if (find_token(str[0]) == DOLLAR_SIGN && io_here)
+			return (other_token(str, io_here, data));
 		return (fill_data(find_token(str[0]), 1, &str[0], data));
+	}
 	else
 		return (other_token(str, io_here, data));
 	return (NULL);
