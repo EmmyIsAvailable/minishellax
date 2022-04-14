@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 12:28:02 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:41:50 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,27 @@ int main(int ac, char **av, char **envp)
 	}
 	init_envp(&data, envp);
 	event_ctrl_c();
-	data.exit = 1;
-	while (data.exit != -1)
+	data.shlvl = 1;
+	while (data.shlvl != -1)
 	{
-		printf("statut %d\n", data.exit);
 		head = NULL;
 		history = readline("> ");
-		if (data.exit == 1 && history == NULL)
-			break ;
-		else if (data.exit != 1 && history == NULL)
-			displayOnTerm("exit/n");
-		else if (data.exit == 1 && ft_strncmp(history, "exit", 6) == 0)
-			break ;
-		else if (ft_strncmp(history, "./minishell", 11) == 0)
-			data.exit++;
-		else if (data.exit > 1 && ft_strncmp(history, "exit", 6) == 0)
+		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1 && ft_strncmp(history, "exit", 6) == 0))
 		{
-			data.exit--;
-			displayOnTerm("exit\n\0");
-			//printf("%s\n)", (char *)NULL);
+			printf("exit\n");
+			break ;
 		}
-		if (ft_parse(history, &head, &data))
-			return (1);
+		else if (history && ft_strncmp(history, "./minishell", 12) == 0)
+			data.shlvl++;
+		else if (data.shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
+		{
+			data.shlvl--;
+			history = NULL;
+			printf("exit\n");
+		}
+		if (history)
+			if (ft_parse(history, &head, &data))
+				return (1);
 		add_history(history);
 	}
 	return (0);
