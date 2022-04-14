@@ -12,8 +12,6 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 	io_here_flag = 0;
 	tmp = NULL;
 	line = NULL;
-	if (!str)
-		return (1);
 	while (str[i])
 	{
 		space = i;
@@ -28,17 +26,23 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 			ft_lst_add_back(head, tmp);
 		}
 		tmp = scan_token(&str[i], io_here_flag, data);
-		io_here_flag = 0;
 		if (!tmp)
 		{
 			ft_lst_clear(head, free);
 			return (1);
 		}
-		if (tmp->token == 8)
-			io_here_flag = 1;
+		printf("data : %s_\n", tmp->data);
+		if (tmp->token != 32)
+		{
+			if (tmp->token == 8)
+				io_here_flag = 1;
+			else
+				io_here_flag = 0;
+		}
 		ft_lst_add_back(head, tmp);
 		i += (int)tmp->data_size;
 	}
+	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else
