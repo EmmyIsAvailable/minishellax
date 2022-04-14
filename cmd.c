@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:20:14 by eruellan          #+#    #+#             */
-/*   Updated: 2022/03/22 16:01:16 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:46:46 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ char    *get_binary(char *cmd, char **env_path)
         }
         return (NULL);
 }
+/*char	**fill_token_tab(t_token *token)
+{
+	t_token	*tmp;
+	char	**tab;
+	int	i;
+
+	tmp = token;
+	i = 0;
+	tab = NULL;
+	while (tmp)
+	{
+		tab[i] = ft_strdup(tmp->data);
+		if (!tab[i])
+			return (NULL);
+		i++;	
+		tmp = tmp->next;
+	}
+	tab[i] = NULL;
+	return (tab);
+}*/
 
 char	**fill_token_tab(t_token *token)
 {
@@ -74,10 +94,13 @@ char	**fill_token_tab(t_token *token)
 	i = 0;
 	while (token)
 	{
-		tab[i] = malloc(sizeof(char) * (ft_strlen(token->data)));
+		/*tab[i] = malloc(sizeof(char) * (ft_strlen(token->data) + 1));
 		if (!tab[i])
 			return (NULL);
-		tab[i] = token->data;
+		tab[i] = token->data;*/
+		tab[i] = ft_strdup(token->data);
+		if (!tab[i])
+			return (NULL);
 		token = token->next;
 		i++;
 	}

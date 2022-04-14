@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/07 15:41:00 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 14:41:50 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,33 @@ int main(int ac, char **av, char **envp)
 	history = NULL;
 	if (ac != 1)
 	{
-		ft_putstr_fd("Error format : ./minishell\n", 1);
+		ft_putstr_fd("./minishell: too many arguments\n", 1);
 		return (1);
 	}
 	init_envp(&data, envp);
 	event_ctrl_c();
-	while (data.exit != -1)
+	data.shlvl = 1;
+	while (data.shlvl != -1)
 	{
 		head = NULL;
-		if (history && ft_strncmp(history, "exit", 6) == 0)
-			break ;
 		history = readline("> ");
-		if (history == NULL)
+		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1 && ft_strncmp(history, "exit", 6) == 0))
+		{
+			printf("exit\n");
 			break ;
-		if (ft_parse(history, &head, &data))
-			return (1);
-	//	ft_print(head);
+		}
+		else if (history && ft_strncmp(history, "./minishell", 12) == 0)
+			data.shlvl++;
+		else if (data.shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
+		{
+			data.shlvl--;
+			history = NULL;
+			printf("exit\n");
+		}
+		if (history)
+			if (ft_parse(history, &head, &data))
+				return (1);
 		add_history(history);
-//		ft_lst_clear(&head, free);
 	}
 	return (0);
 }
