@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 15:16:34 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:31:29 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	dispatch_builtins(t_token *token, t_data *data)
 			displayOnTerm("\n");
 			printf("%s\n", (char *)NULL);
 		}
-		return (ft_echo(token->next, data));
+		return (ft_echo(token->next));
 	}
 	if (ft_strncmp(token->data, "pwd", 4) == 0 && !token->next)
 		return (ft_pwd());
@@ -60,7 +60,6 @@ int	dispatch_builtins(t_token *token, t_data *data)
 	if (ft_strncmp(token->data, "cd", 3) == 0)
 	{	
 		ft_cd(token, data); //attention return 1 si trop d'args mais return 1 = execve donc ?
-	//	printf("%s\n", (char *))
 		return (0);
 	}
 	if (ft_strncmp(token->data, "exit", 6) == 0 && !token->next)

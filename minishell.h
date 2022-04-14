@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/07 15:41:18 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:24:05 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	event_ctrl_c(void);
 
 /*_builtins_cmd_*/
 int	displayOnTerm(char *str);
-int	ft_echo(t_token *token, t_data *data);
+int	ft_echo(t_token *token);
 int	ft_pwd(void);
 int	ft_env(t_data *data);
 int	variables_in_echo(char *params, t_data *data);
