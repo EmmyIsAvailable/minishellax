@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
+/*   Updated: 2022/04/14 12:24:48 by eruellan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	displayOnTerm(char *str)
@@ -5,7 +17,6 @@ int	displayOnTerm(char *str)
 	int	len;
 
 	len = 0;
-	//close(STDIN_FILENO);
 	while (str[len])
 		len++;
 	write(STDOUT_FILENO, str, len);
