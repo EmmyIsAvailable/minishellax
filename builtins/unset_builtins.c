@@ -55,14 +55,13 @@ int     ft_unset(t_token *token, t_data *data)
 			{
 				if (check_existence(token->data, envp[i]) == 1)
 				{
-					while (envp[i++])
+					while (envp[i] && envp[i + 1])
 					{
-						free(envp[i]);
-						if (envp[i + 1])
-							envp[i] = ft_strdup(envp[i + 1]);
-						else
-							envp[i] = NULL;
-					}
+						envp[i] = ft_strdup(envp[i + 1]);
+						i++;
+					} 
+					free(envp[i]);
+					envp[i] = NULL;
 				}
 			}
 		}
