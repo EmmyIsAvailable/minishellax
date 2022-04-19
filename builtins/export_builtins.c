@@ -12,19 +12,30 @@
 
 #include "../minishell.h"
 
-int    add_var_envp(char *str, t_data *data)
+int	add_var_envp(char *str, t_data *data)
 {
-        int     i;
-        char    **envp;
+	int	i;
+	char	**envp;
 
-        i = 0;
-        envp = data->envp;
-        while (envp[i])
-                i++;
-	envp[i] = ft_strdup(str);
-	if (!envp[i])
+	i = 0;
+	envp = data->envp;
+	while (envp[i])
+		i++;
+	data->envp = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!data->envp)
 		return (1);
-        envp[i + 1] = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		data->envp[i] = ft_strdup(envp[i]);
+		if (!data->envp[i])
+			return (1);
+		i++;
+	}
+	data->envp[i] = ft_strdup(str);
+	if (!data->envp[i])
+		return (1);
+	data->envp[i + 1] = NULL;
 	return (0);
 }
 
@@ -76,7 +87,7 @@ int     ft_export(t_token *token, t_data *data)
 	t_token	*tmp;
 
 	tmp = token;
-        while (tmp)
+	while (tmp)
         {
                 if (check_assign(tmp->data) == 0)
 		{
