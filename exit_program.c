@@ -15,16 +15,21 @@
 void	sig_int(int code)
 {
 	(void)code;
-	write(1, "\n", 1);	
+	write(1, "\n", 1);
 	rl_on_new_line();
-//	rl_replace_line("", 1);
+	rl_replace_line("", 1);
+	return ;
 }
 
 void	event_ctrl_c(void)
 {
 	struct sigaction sa;
+	struct sigaction sig_quit;
 	
 	sa.sa_handler = sig_int; 
 	sa.sa_flags = 0;
+	sig_quit.sa_flags = 0;
+	sig_quit.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sig_quit, NULL);
 }
