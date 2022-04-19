@@ -95,6 +95,8 @@ int	variables_in_echo(char *params, t_data *data);
 /*_builtins_dispatch_*/
 int	dispatch_builtins(t_token *token, t_data *data);
 int	ft_cd(t_token *token, t_data *data);
+int	non_printable_builtins(t_token *token, t_data *data);
+int	is_non_print_builtins(t_token *token);
 
 /*_export_builtins_*/
 int	add_var_envp(char *str, t_data *data);
