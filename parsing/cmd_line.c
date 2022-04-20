@@ -26,7 +26,7 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 		return (check_append(head, inf, out, cmd));
 	if ((*head)->token == WORD || (*head)->token == DOUBLE_QUOTE
 		|| (*head)->token == SIMPLE_QUOTE || (*head)->token == DOLLAR_SIGN
-		|| (*head)->token == ASSIGN)
+		|| (*head)->token == ASSIGN || (*head)->token == ECHO)
 		return (check_word(head, inf, out, cmd));
 	if ((*head)->token == HEREDOC)
 		return (check_here(head, inf, out, cmd));
@@ -37,6 +37,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 {
 	int		j;
 	t_heads	*tmp = NULL;
+	(void)data;
 
 	j = 0;
 	while (1)
@@ -59,7 +60,6 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		{
 			push_heads(&tmp, line);
 			ft_print_line(line);
-			printf("%d\n", data->exit);
 			return (0);
 //			return (ft_pipex(line, data));
 		}

@@ -24,7 +24,8 @@ typedef enum {
 	DOUBLE_GREATER = 7,
 	HEREDOC = 8,
 	WORD = 9,
-	SPACE = 10
+	SPACE = 10,
+	ECHO = 11
 } token_type;
 
 #endif

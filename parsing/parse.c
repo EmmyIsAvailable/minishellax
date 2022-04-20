@@ -105,6 +105,8 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data(HEREDOC, 2, "<<", data));
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>", data));
+	else if (ft_strncmp((const char *)str, "$?", 2) == 0)
+		return (fill_data(ECHO, 2, "$?", data));
 	else if (ft_strncmp((const char *)str, "\"", 1) == 0)
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
 	else if (ft_strncmp((const char *)str, "\'", 1) == 0)

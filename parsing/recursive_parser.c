@@ -12,9 +12,26 @@
 
 #include "../minishell.h"
 
+int	join_data(t_token **tmp)
+{
+	char *str;
+
+	str = NULL;
+	while (((*tmp) && (*tmp)->next)
+		&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
+	{
+		if (((*tmp)->token == WORD && (*tmp)->next->token == WORD) || (*tmp)->next->token == SPACE)
+			break ;
+		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
+		(*tmp)->token = SPACE;
+		(*tmp) = (*tmp)->next;
+		(*tmp)->data = str;
+	}
+	return (0);
+}
+
 int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
-	char *str = NULL;
 	if (!(*tmp)->next)
 		return (1);
 	if ((*tmp)->token == SPACE)
@@ -22,23 +39,14 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	if ((*tmp)->next)
 	{
 		(*tmp) = (*tmp)->next;
-		if ((*tmp)->token == SPACE) //from l27 to l39 pattern de check word pour join les elem
+		if ((*tmp)->token == SPACE)
 			(*tmp) = (*tmp)->next;
 		if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
 			|| (*tmp)->token == 3 || (*tmp)->token == 6)
 		{
-			while (((*tmp) && (*tmp)->next)
-				&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
-			{
-				if (((*tmp)->token == WORD && (*tmp)->next->token == WORD) || (*tmp)->next->token == SPACE)
-					break ;
-				str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-				(*tmp)->token = SPACE;
-				(*tmp) = (*tmp)->next;
-				(*tmp)->data = str;
-			}
-		(*tmp)->token = 8;
-		push(tmp, cmd);
+			join_data(tmp);
+			(*tmp)->token = 8;
+			push(tmp, cmd);
 		}
 	}
 	else
@@ -48,33 +56,25 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	if ((*tmp)->token == 0)
 		return (-1);
 	return (check_word(tmp, inf, out, cmd));
-
 }
 
 int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
-	char	*str;
-
-	str = NULL;
 	if (!(*tmp))
 		return (0);
 	if ((*tmp)->token == SPACE)
 		(*tmp) = (*tmp)->next;
 	if ((*tmp)->token == PIPE)
 		return (-1);
+	if ((*tmp)->token == ECHO)
+	{
+		push(tmp, cmd);
+		return (0);
+	}
 	if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
 		|| (*tmp)->token == 3 || (*tmp)->token == 6 || (*tmp)->token == 8)
 	{
-		while (((*tmp) && (*tmp)->next)
-			&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
-		{
-			if (((*tmp)->token == WORD && (*tmp)->next->token == WORD) || (*tmp)->next->token == SPACE)
-				break ;
-			str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-			(*tmp)->token = SPACE;
-			(*tmp) = (*tmp)->next;
-			(*tmp)->data = str;
-		}
+		join_data(tmp);
 		push(tmp, cmd);
 		return (check_word(tmp, inf, out, cmd));
 	}
