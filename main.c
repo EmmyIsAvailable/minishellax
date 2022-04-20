@@ -46,44 +46,64 @@ int	init_envp(t_data *data, char **envp)
 		i++;
 	}
 	data->envp[i] = NULL;
+	data->shlvl = 1;
+	data->prev = NULL;
+	data->next = NULL;
 	return (0);
+}
+
+t_data	*add_shlvl_envp(t_data *data)
+{
+	t_data	*new;
+
+	new = NULL;
+	init_envp(new, data->envp);
+	new->shlvl = data->shlvl + 1;
+	new->prev = data;
+	new->next = NULL;
+	data->next = new;
+	return (new);
 }
 
 int main(int ac, char **av, char **envp)
 {
 	char	*history;
-	t_data	data;
 	t_token	*head;
+	t_data	data;
+	t_data	*current;
 
 	(void)av;
 	history = NULL;
+	current = NULL;
 	if (ac != 1)
 	{
 		ft_putstr_fd("./minishell: too many arguments\n", 1);
 		return (1);
 	}
 	init_envp(&data, envp);
+	current = &data;
 	event_ctrl_c();
-	data.shlvl = 1;
-	while (data.shlvl != -1)
+	while (current->shlvl != -1)
 	{
+		printf("%d\n", current->shlvl);
 		head = NULL;
 		history = readline("> ");
-		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1 && ft_strncmp(history, "exit", 6) == 0))
+		if ((current->shlvl == 1 && history == NULL) || (history && current->shlvl == 1 && ft_strncmp(history, "exit", 6) == 0))
 		{
 			printf("exit\n");
 			break ;
 		}
-		else if (history && ft_strncmp(history, "./minishell", 12) == 0)
-			data.shlvl++;
-		else if (data.shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
+		else if (history && ft_strncmp(history, getenv("_"), ft_strlen(getenv("_")) + 1) == 0)
+			current = add_shlvl_envp(current);
+		else if (current->shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
 		{
-			data.shlvl--;
+			current = current->prev; // et il faut free l'envp qu'on quitte
+			//current.shlvl--;
 			history = NULL;
 			printf("exit\n");
 		}
 		if (history)
-			if (ft_parse(history, &head, &data))
+			if (ft_parse(history, &head, current))
 				return (1);
 		add_history(history);
 	}
