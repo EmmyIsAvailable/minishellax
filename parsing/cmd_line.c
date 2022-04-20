@@ -12,6 +12,25 @@
 
 #include "../minishell.h"
 
+int	join_data(t_token **tmp)
+{
+	char	*str;
+
+	str = NULL;
+	while (((*tmp) && (*tmp)->next)
+		&& (((*tmp)->token != SPACE || (*tmp)->token != PIPE)))
+	{
+		if (((*tmp)->token == WORD && (*tmp)->next->token == WORD)
+			|| (*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
+			break ;
+		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
+		(*tmp)->token = SPACE;
+		(*tmp) = (*tmp)->next;
+		(*tmp)->data = str;
+	}
+	return (0);
+}
+
 int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
 	if ((*head)->token == SPACE)
@@ -65,7 +84,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		}
 		else if (j == 1)
 		{
-			printf("parsing error\n");
+			printf("parsing error ici\n");
 			return (1);
 		}
 	}

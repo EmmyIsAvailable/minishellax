@@ -12,24 +12,6 @@
 
 #include "../minishell.h"
 
-int	join_data(t_token **tmp)
-{
-	char *str;
-
-	str = NULL;
-	while (((*tmp) && (*tmp)->next)
-		&& (((*tmp)->token != SPACE && (*tmp)->token != PIPE)))
-	{
-		if (((*tmp)->token == WORD && (*tmp)->next->token == WORD) || (*tmp)->next->token == SPACE)
-			break ;
-		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-		(*tmp)->token = SPACE;
-		(*tmp) = (*tmp)->next;
-		(*tmp)->data = str;
-	}
-	return (0);
-}
-
 int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)

@@ -47,8 +47,8 @@ int	init_envp(t_data *data, char **envp)
 	}
 	data->envp[i] = NULL;
 	data->shlvl = 1;
-	data->prev = NULL;
-	data->next = NULL;
+//	data->prev = NULL;
+//	data->next = NULL;
 	return (0);
 }
 
@@ -59,9 +59,9 @@ t_data	*add_shlvl_envp(t_data *data)
 	new = NULL;
 	init_envp(new, data->envp);
 	new->shlvl = data->shlvl + 1;
-	new->prev = data;
-	new->next = NULL;
-	data->next = new;
+//	new->prev = data;
+//	new->next = NULL;
+//	data->next = new;
 	return (new);
 }
 
@@ -97,7 +97,7 @@ int main(int ac, char **av, char **envp)
 			current = add_shlvl_envp(current);
 		else if (current->shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
 		{
-			current = current->prev; // et il faut free l'envp qu'on quitte
+			//current = current->prev; // et il faut free l'envp qu'on quitte
 			//current.shlvl--;
 			history = NULL;
 			printf("exit\n");

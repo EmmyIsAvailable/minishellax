@@ -55,6 +55,7 @@ void	ft_free(t_token **head);
 /*_parsing_*/
 int	ft_parse(char *str, t_token **head, t_data *data);
 t_token	*scan_token(char *str, int io_here, t_data *data);
+int	join_data(t_token **tmp);
 int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int	check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int	check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
