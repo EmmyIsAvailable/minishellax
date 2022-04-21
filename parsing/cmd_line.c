@@ -33,10 +33,10 @@ int	join_data(t_token **tmp)
 
 int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
-	if ((*head)->token == SPACE)
-		(*head) = (*head)->next;
 	if ((*head) == NULL)
 		return (0);
+	if ((*head)->token == SPACE)
+		(*head) = (*head)->next;
 	if ((*head)->token == REDIR_IN)
 		return (check_infile(head, inf, out, cmd));
 	if ((*head)->token == REDIR_OUT)
@@ -52,28 +52,50 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 	return (1);
 }
 
+t_heads	*tmp_init(void)
+{
+	t_heads	*tmp;
+
+	tmp = malloc(sizeof(t_heads));
+	if (!tmp)
+		return (NULL);
+	tmp->infile = NULL;
+	tmp->outfile = NULL;
+	tmp->cmd = NULL;
+	return (tmp);
+}
+
+void	clear_head(t_token **head)
+{
+	while ((*head) && (*head)->token != 0)
+		ft_free(head);
+	ft_free(head);
+}
+
+int	ft_parsing_error(char *str)
+{
+	printf("%s", str);
+	return (1);
+}
+
 int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 {
 	int		j;
-	t_heads	*tmp = NULL;
-	(void)data;
+	t_heads	*tmp;
 
-	j = 0;
+	(void)data;
 	while (1)
 	{
-		tmp = malloc(sizeof(t_heads));
+		j = 1;
+		tmp = tmp_init();
 		if (!tmp)
-			return (1);
-		tmp->infile = NULL;
-		tmp->outfile = NULL;
-		tmp->cmd = NULL;
-		j  = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
+			break ;
+		if ((*head)->token != PIPE)
+			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
 		if (j == -1)
 		{
 			push_heads(&tmp, line);
-			while ((*head)->token != 0)
-				ft_free(head);
-			ft_free(head);
+			clear_head(head);
 		}
 		else if (j == 0)
 		{
@@ -83,12 +105,9 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 //			return (ft_pipex(line, data));
 		}
 		else if (j == 1)
-		{
-			printf("parsing error ici\n");
-			return (1);
-		}
+			return (ft_parsing_error("parsing error\n"));
 	}
-	return (0);
+	return (1);
 }
 
 void	ft_print(t_token *head)

@@ -46,7 +46,7 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		return (0);
 	if ((*tmp)->token == SPACE)
 		(*tmp) = (*tmp)->next;
-	if ((*tmp)->token == PIPE)
+	if ((*tmp)->token == PIPE && (*tmp)->next != NULL)
 		return (-1);
 	if ((*tmp)->token == ECHO)
 	{

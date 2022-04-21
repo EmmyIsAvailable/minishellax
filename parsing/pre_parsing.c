@@ -1,39 +1,39 @@
 #include "../minishell.h"
 
-int	check_last_pipe(t_token **head)
+int	ft_heredoc(t_token *tmp)
 {
-	t_token	**tmp;
-
-	tmp = head;
-	if (!(*tmp))
-		return (1);	
-	while ((*tmp)->next != NULL)
-		(*tmp) = (*tmp)->next;
-	if ((*tmp)->token == PIPE)
-		return (1);
+	if (tmp->token != 32)
+	{
+		if (tmp->token == 8)
+			return (1);
+		else
+			return (0);
+	}
 	return (0);
 }
 
-int	ft_parse(char *str, t_token **head, t_data *data)
+int	jump_spaces(char *str, int i)
+{
+	while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
+		i++;
+	return (i);
+}
+
+void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 {
 	int		i;
-	int		io_here_flag;
 	int		space;
 	t_token	*tmp;
-	t_heads *line;
 
 	i = 0;
-	io_here_flag = 0;
 	tmp = NULL;
-	line = NULL;
 	while (str[i])
 	{
 		space = i;
-		while (str[i] && (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
-				|| str[i] == '\r' || str[i] == '\f' || str[i] == 32))
-			i++;
+		i = jump_spaces(str, i);
 		if (str[i] == '\0')
-			break;
+			break ;
 		if (space != i && space != 0)
 		{
 			tmp = fill_data(SPACE, 1, " ", data);
@@ -41,22 +41,23 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 		}
 		tmp = scan_token(&str[i], io_here_flag, data);
 		if (!tmp)
-		{
-			ft_lst_clear(head, free);
-			return (1);
-		}
-		if (tmp->token != 32)
-		{
-			if (tmp->token == 8)
-				io_here_flag = 1;
-			else
-				io_here_flag = 0;
-		}
+			return (ft_lst_clear(head, free));
 		ft_lst_add_back(head, tmp);
+		io_here_flag = ft_heredoc(tmp);
 		i += (int)tmp->data_size;
 	}
+}
+
+int	ft_parse(char *str, t_token **head, t_data *data)
+{
+	t_heads	*line;
+	int		here_flag;
+
+	line = NULL;
+	here_flag = 0;
+	create_tokens(str, head, data, here_flag);
 	ft_print(*head);
-	if (!(*head) && check_last_pipe(head))
+	if (!(*head))
 		return (0);
 	else
 		return (cmd_line_building(head, &line, data));

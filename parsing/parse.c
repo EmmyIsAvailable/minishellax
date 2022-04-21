@@ -78,8 +78,6 @@ t_token	*other_token(char *str, int io_here, t_data *datas)
 	i = -1;
 	j = -1;
 	io_here = 0;
-	if (!str)
-		return (NULL);
 	while (str[++j] && find_token(str[j]) == -1
 		&& (str[j] != '\t' || str[j] != '\v' || str[j] != '\n'
 			|| str[j] != '\r' || str[j] != '\f' || str[j] != 32))
