@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/22 13:58:44 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/22 14:49:59 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,11 @@ t_token	*other_token(char *str, int io_here, t_data *datas)
 	char	*data;
 
 	i = -1;
-	j = -1;
 	io_here = 0;
-	while (str[++j] && find_token(str[j]) == -1
-		&& (str[j] != '\t' || str[j] != '\v' || str[j] != '\n'
-			|| str[j] != '\r' || str[j] != '\f' || str[j] != 32))
-	{
-		if (!io_here && ft_isalnum(str[j]) == 0
-			&& ft_strchr("_,/.-+=*", (int)str[j]) == NULL)
-			break ;
-	}
+	j = 0;
+	while (str[j] && find_token(str[j]) == -1 && ft_isprint((int)str[j])
+		&& ft_strchr("\t\v\n\r ", (int)str[j]) == NULL)
+		j++;
 	data = malloc(sizeof(char) * j + 1);
 	if (!data)
 		return (NULL);
