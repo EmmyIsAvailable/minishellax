@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 14:41:50 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:36:35 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ t_data	*add_shlvl_envp(t_data *data)
 	return (new);
 }
 
+int	ft_cmp_line(char *history, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (history[i] == ' ' || history[i] == '\n' || history[i] == '\f' || history[i] == '\r' || history [i] == '\t' || history[i] == '\v')
+		i++;
+	if (ft_strncmp(&history[i], str, ft_strlen(str)) != 0)
+		return (1);
+	i += ft_strlen(str);
+	while (history[i] == ' ' || history[i] == '\n' || history[i] == '\f' || history[i] == '\r' || history [i] == '\t' || history[i] == '\v')
+		i++;
+	if (history[i] != '\0')
+		return (1);
+	return (0);
+}
+
 int main(int ac, char **av, char **envp)
 {
 	char	*history;
@@ -88,14 +105,14 @@ int main(int ac, char **av, char **envp)
 		printf("%d\n", current->shlvl);
 		head = NULL;
 		history = readline("> ");
-		if ((current->shlvl == 1 && history == NULL) || (history && current->shlvl == 1 && ft_strncmp(history, "exit", 6) == 0))
+		if ((current->shlvl == 1 && history == NULL) || (history && current->shlvl == 1 && ft_cmp_line(history, "exit") == 0))
 		{
 			printf("exit\n");
 			break ;
 		}
-		else if (history && ft_strncmp(history, getenv("_"), ft_strlen(getenv("_")) + 1) == 0)
+		else if (history && ft_cmp_line(history, getenv("_")) == 0)
 			current = add_shlvl_envp(current);
-		else if (current->shlvl > 1 && ((history && ft_strncmp(history, "exit", 6) == 0) || history == NULL))
+		else if (current->shlvl > 1 && ((history && ft_cmp_line(history, "exit") == 0) || history == NULL))
 		{
 			//current = current->prev; // et il faut free l'envp qu'on quitte
 			//current.shlvl--;
