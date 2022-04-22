@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/14 14:35:44 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/22 13:15:29 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,59 @@ t_token	*ft_create_token(token_type token)
 	return (new_token);
 }
 
+int	check_spaces(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '\t' || str[i] == '\v' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\f' || str[i] == 32)
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_len(char **str)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = 0;
+	while (str[++i])
+		len++;
+	return (len);
+}
+
+t_token	*split_env(t_token *new_token, char *op, t_data *data)
+{
+	char	*tmp;
+	char	**spaceless;
+	int	i;
+
+	i = 0;
+	tmp = ft_strdup((const char *)ft_search_env(&op[1], data));
+	if (!check_spaces(tmp))
+		new_token->data = tmp;
+	else
+	{
+		spaceless = ft_split_bis(tmp, "\t\v\n\r\f ");
+		free(tmp);
+		tmp = NULL;
+		while (spaceless[i])
+		{
+			new_token->data = ft_strjoin(new_token->data, spaceless[i]);
+			if (i < ft_len(spaceless) - 1)
+				new_token->data = ft_strjoin(new_token->data, " ");
+			i++;
+		}
+	}
+	new_token->data_size = ft_name(&op[1]) + 1;
+	return (new_token);
+}
+
 t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 {
 	t_token	*new_token;
@@ -51,12 +104,7 @@ t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 	i = -1;
 	new_token = ft_create_token(token);
 	if (token == DOLLAR_SIGN && ft_search_env(&op[1], data))
-	{
-		//attention splitter les var avec espaces
-		new_token->data = ft_strdup((const char *)ft_search_env(&op[1], data));
-		new_token->data_size = ft_name(&op[1]) + 1;
-		return (new_token);
-	}
+		return (split_env(new_token, op, data));
 	if (token == DOLLAR_SIGN)
 		len = ft_name(&op[1]) + 1;
 	new_token->data = malloc(sizeof(char) * len + 1);

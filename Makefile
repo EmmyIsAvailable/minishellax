@@ -6,7 +6,8 @@ SRCS	= main.c exit_program.c \
 		cmd.c pipex.c\
 		./parsing/parse.c ./parsing/cmd_line.c\
 		./parsing/list.c ./parsing/recursive_parser.c \
-		./parsing/parse_quotes.c ./parsing/pre_parsing.c
+		./parsing/parse_quotes.c ./parsing/pre_parsing.c \
+		./parsing/split_bis.c
 
 OBJS	= ${SRCS:.c=.o}
 

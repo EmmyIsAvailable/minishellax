@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/14 14:12:10 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/22 11:08:08 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		(*tmp) = (*tmp)->next;
 	if ((*tmp)->token == PIPE && (*tmp)->next != NULL)
 		return (-1);
-	if ((*tmp)->token == ECHO)
+	if ((*tmp)->token == ECHO) //temporaire
 	{
 		push(tmp, cmd);
 		return (0);
 	}
 	if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
-		|| (*tmp)->token == 3 || (*tmp)->token == 6 || (*tmp)->token == 8)
+		|| (*tmp)->token == 3 || (*tmp)->token == 6)
 	{
 		join_data(tmp);
 		push(tmp, cmd);

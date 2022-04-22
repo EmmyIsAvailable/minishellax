@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 16:24:05 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:10:55 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
 
 /*_parsing_*/
+char	**ft_split_bis(char const *s, char *c);
 int	ft_parse(char *str, t_token **head, t_data *data);
 t_token	*scan_token(char *str, int io_here, t_data *data);
 int	join_data(t_token **tmp);
