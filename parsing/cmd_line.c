@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/14 15:53:18 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/04/22 13:48:38 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-			ft_print_line(line);
-			return (0);
-//			return (ft_pipex(line, data));
+		//	ft_print_line(line);
+			return (ft_pipex(line, data));
 		}
 		else if (j == 1)
 			return (ft_parsing_error("parsing error\n"));
