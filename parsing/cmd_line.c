@@ -111,8 +111,6 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 	count = 0;
 	tmp = NULL;
 	cmd_env = NULL;
-//	(void)shlvl;
-//	(void)data;
 	while (1)
 	{
 		j = 1;
@@ -129,7 +127,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 		}
 		else if (j == 0)
 		{
-			if (count == 0 && ft_bool(tmp->cmd->data) != -1)
+			if (count == 0 && tmp->cmd && ft_bool(tmp->cmd->data) != -1)
 			{
 				printf("bool : %d\n", ft_bool(tmp->cmd->data));
 				cmd_env = ft_duplicate(&tmp->cmd->next, data->shlvl, ft_bool(tmp->cmd->data));
@@ -139,7 +137,6 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 			}
 			push_heads(&tmp, line);
 			ft_print_line(line);
-			//ft_print_line(line);
 			//is_heredoc(line);
 //			return (ft_pipex(line, data, shlvl));
 			return (0);		
