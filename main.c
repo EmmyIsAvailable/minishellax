@@ -71,10 +71,12 @@ int main(int ac, char **av, char **envp)
 {
 	char	*history;
 	t_token	*head;
+	t_shlvl	*shlvl;
 	t_data	data;
 
 	(void)av;
 	history = NULL;
+	shlvl = NULL;
 	if (ac != 1)
 	{
 		ft_putstr_fd("./minishell: too many arguments\n", 1);
@@ -100,7 +102,7 @@ int main(int ac, char **av, char **envp)
 			printf("exit\n");
 		}
 		if (history)
-			if (ft_parse(history, &head, &data))
+			if (ft_parse(history, &head, &data, &shlvl))
 				return (1);
 		add_history(history);
 	}
