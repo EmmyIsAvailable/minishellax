@@ -87,7 +87,7 @@ int main(int ac, char **av, char **envp)
 	while (data.shlvl != -1)
 	{
 		head = NULL;
-		history = readline("> ");
+		history = readline("$> ");
 		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1 && ft_cmp_line(history, "exit") == 0))
 		{
 			printf("exit\n");

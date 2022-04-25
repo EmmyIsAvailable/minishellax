@@ -100,7 +100,8 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		else if (j == 0)
 		{
 			push_heads(&tmp, line);
-		//	ft_print_line(line);
+			//ft_print_line(line);
+			//is_heredoc(line);
 			return (ft_pipex(line, data));
 		}
 		else if (j == 1)
