@@ -71,12 +71,13 @@ int main(int ac, char **av, char **envp)
 {
 	char	*history;
 	t_token	*head;
-	t_shlvl	*shlvl;
+	t_token	*shlvl;
 	t_data	data;
 
 	(void)av;
 	history = NULL;
 	shlvl = NULL;
+	head = NULL;
 	if (ac != 1)
 	{
 		ft_putstr_fd("./minishell: too many arguments\n", 1);
@@ -87,7 +88,7 @@ int main(int ac, char **av, char **envp)
 	while (data.shlvl != -1)
 	{
 		head = NULL;
-		history = readline("> ");
+		history = readline("$> ");
 		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1 && ft_cmp_line(history, "exit") == 0))
 		{
 			printf("exit\n");

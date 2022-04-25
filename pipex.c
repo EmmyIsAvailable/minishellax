@@ -70,9 +70,10 @@ int	check_in_outfile(t_heads **line)
 	return (0);
 }
 
-int     ft_pipex(t_heads **line, t_data *data)
+int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 {
 	pid_t	pid;
+	(void)shlvl;
 
         data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;

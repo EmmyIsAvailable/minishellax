@@ -60,7 +60,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 	}
 }
 
-int	ft_parse(char *str, t_token **head, t_data *data)
+int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl) 
 {
 	t_heads	*line;
 	int		here_flag;
@@ -72,5 +72,5 @@ int	ft_parse(char *str, t_token **head, t_data *data)
 	if (!(*head))
 		return (0);
 	else
-		return (cmd_line_building(head, &line, data));
+		return (cmd_line_building(head, &line, data, shlvl));
 }

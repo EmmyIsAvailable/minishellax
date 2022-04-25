@@ -78,12 +78,41 @@ int	ft_parsing_error(char *str)
 	return (1);
 }
 
-int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
+t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env)
 {
-	int		j;
-	t_heads	*tmp;
+	t_token	*new;
 
-	(void)data;
+	new = ft_create_token((*cmd)->token);
+	if (!new)
+		return (NULL);
+	new->data = ft_strdup((*cmd)->data);
+	new->data_size = (*cmd)->data_size;
+	new->shlvl = shell_lvl;
+	new->cmd_env = cmd_env;
+	return (new);
+}
+
+int	ft_bool(char *str)
+{
+	if (!ft_strncmp(str, "export", ft_strlen(str)))
+		return (0);
+	if (!ft_strncmp(str, "unset", ft_strlen(str)))
+		return (1);
+	return (-1);
+}
+
+int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
+{
+	int			j;
+	int			count;
+	t_heads		*tmp;
+	t_token		*cmd_env;
+
+	count = 0;
+	tmp = NULL;
+	cmd_env = NULL;
+//	(void)shlvl;
+//	(void)data;
 	while (1)
 	{
 		j = 1;
@@ -96,12 +125,22 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data)
 		{
 			push_heads(&tmp, line);
 			clear_head(head);
+			count++;
 		}
 		else if (j == 0)
 		{
+			if (count == 0 && ft_bool(tmp->cmd->data) != -1)
+			{
+				printf("bool : %d\n", ft_bool(tmp->cmd->data));
+				cmd_env = ft_duplicate(&tmp->cmd->next, data->shlvl, ft_bool(tmp->cmd->data));
+				push(&cmd_env, shlvl);
+				printf("shlvl: \n");
+				ft_print(*shlvl);
+			}
 			push_heads(&tmp, line);
-		//	ft_print_line(line);
-			return (ft_pipex(line, data));
+			ft_print_line(line);
+//			return (ft_pipex(line, data, shlvl));
+			return (0);
 		}
 		else if (j == 1)
 			return (ft_parsing_error("parsing error\n"));
@@ -126,18 +165,18 @@ void	ft_print(t_token *head)
 
 void	ft_print_line(t_heads **line)
 {
-	t_heads	**temp;
+	t_heads	*temp;
 	int		i;
 
-	temp = line;
+	temp = (*line);
 	i = 0;
-	while ((*temp) != NULL)
+	while (temp != NULL)
 	{
 		printf("i : %d\n", i);
-		ft_print((*temp)->cmd);
-		ft_print((*temp)->infile);
-		ft_print((*temp)->outfile);
+		ft_print(temp->cmd);
+		ft_print(temp->infile);
+		ft_print(temp->outfile);
 		i++;
-		(*temp) = (*temp)->next;
+		temp = temp->next;
 	}
 }

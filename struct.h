@@ -18,8 +18,11 @@ typedef struct s_token
 	token_type		token;
 	char 			*data;
 	size_t			data_size;
-	int			fd;
+	int				fd;
+	int				shlvl;
+	int				cmd_env; // export = 0, unset = 1
 	struct s_token	*next;
+	struct s_token	*prev;
 } t_token;
 
 typedef struct s_heads

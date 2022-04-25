@@ -18,6 +18,12 @@
 # include "./libft/libft.h"
 
 //# include "define.h"
+/*typedef struct s_cmd
+{
+	t_token		cmd;
+	s_cmd		*next;
+}t_cmd;*/
+
 # include "parsing/enum.h"
 # include "struct.h"
 
@@ -54,7 +60,7 @@ void	ft_free(t_token **head);
 
 /*_parsing_*/
 char	**ft_split_bis(char const *s, char *c);
-int	ft_parse(char *str, t_token **head, t_data *data);
+int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
 t_token	*scan_token(char *str, int io_here, t_data *data);
 int	join_data(t_token **tmp);
 int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
@@ -63,7 +69,7 @@ int	check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int	check_append(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int	check_word(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int	check_here(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	cmd_line_building(t_token **head, t_heads **line, t_data *data);
+int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 t_token *fill_data(token_type token, int len, char *op, t_data *data);
 t_token *fill_data_quotes(token_type token, char *str, char op, t_data *data);
 int ft_name(char *str);
@@ -119,7 +125,7 @@ char	**fill_token_tab(t_token *token);
 
 /*_pipex_*/
 void	ft_wait(t_data *data);
-int	ft_pipex(t_heads **line, t_data *data);
+int	ft_pipex(t_heads **line, t_data *data, t_token **shlvl);
 int	ft_pipex_bis(t_heads **line, t_data *data);
 int	multiple_pipes(t_heads **line, t_data *data);
 
