@@ -91,7 +91,7 @@ int main(int ac, char **av, char **envp)
 			printf("exit\n");
 			break ;
 		}
-		else if (history && ft_cmp_line(history, getenv("_")) == 0)
+		else if (history && ft_cmp_line(history, "./minishell") == 0)
 			data.shlvl++;
 		else if (data.shlvl > 1 && ((history && ft_cmp_line(history, "exit") == 0) || history == NULL))
 		{
