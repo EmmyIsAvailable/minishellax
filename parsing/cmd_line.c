@@ -139,8 +139,10 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 			}
 			push_heads(&tmp, line);
 			ft_print_line(line);
+			//ft_print_line(line);
+			//is_heredoc(line);
 //			return (ft_pipex(line, data, shlvl));
-			return (0);
+			return (0);		
 		}
 		else if (j == 1)
 			return (ft_parsing_error("parsing error\n"));

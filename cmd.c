@@ -86,7 +86,6 @@ char	**fill_token_tab(t_token *token)
 	while (tmp)
 	{
 		tmp = tmp->next;
-		i++;
 	}
 	tab = (char **)malloc(sizeof(char *) * i + 1);
 	if (!tab)
@@ -94,15 +93,16 @@ char	**fill_token_tab(t_token *token)
 	i = 0;
 	while (token)
 	{
-		/*tab[i] = malloc(sizeof(char) * (ft_strlen(token->data) + 1));
-		if (!tab[i])
-			return (NULL);
-		tab[i] = token->data;*/
-		tab[i] = ft_strdup(token->data);
-		if (!tab[i])
-			return (NULL);
-		token = token->next;
+		if (token->token == 9)
+		{	
+			tab[i] = ft_strdup(token->data);
+			if (!tab[i])
+				return (NULL);
+		}
+		else if (token->token == 8)
+			tab[i] = ft_strdup(is_heredoc(token->data));
 		i++;
+		token = token->next;
 	}
 	tab[i] = NULL;
 	return (tab);
@@ -122,6 +122,8 @@ void    ft_exec(t_token *token, t_data *data)
 	ft_free_tab(env_path);
         if (execve(binary, cmd, data->envp) == -1)
         {
+	//	if (stat("./tmp", NULL) == 0)
+	//		unlink("./tmp");
                 free (binary);
                 ft_free_tab(cmd);
 		printf("%s\n", (char *)NULL);
