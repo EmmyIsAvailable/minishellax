@@ -85,6 +85,7 @@ char	**fill_token_tab(t_token *token)
 	i = 0;
 	while (tmp)
 	{
+		i++;
 		tmp = tmp->next;
 	}
 	tab = (char **)malloc(sizeof(char *) * i + 1);
@@ -94,13 +95,9 @@ char	**fill_token_tab(t_token *token)
 	while (token)
 	{
 		if (token->token == 9)
-		{	
 			tab[i] = ft_strdup(token->data);
-			if (!tab[i])
-				return (NULL);
-		}
-		else if (token->token == 8)
-			tab[i] = ft_strdup(is_heredoc(token->data));
+		if (!tab[i])
+			return (NULL);
 		i++;
 		token = token->next;
 	}
