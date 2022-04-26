@@ -75,13 +75,13 @@ char    *get_binary(char *cmd, char **env_path)
 	return (tab);
 }*/
 
-char	**fill_token_tab(t_token **token)
+char	**fill_token_tab(t_token *token)
 {
 	char	**tab;
 	int	i;
 	t_token	*tmp;
 
-	tmp = *token;
+	tmp = token;
 	i = 0;
 	while (tmp)
 	{
@@ -92,20 +92,20 @@ char	**fill_token_tab(t_token **token)
 	if (!tab)
 		return (NULL);
 	i = 0;
-	while ((*token))
+	while (token)
 	{
-		if ((*token)->token == 9)
-			tab[i] = ft_strdup((*token)->data);
+		if (token->token == 9)
+			tab[i] = ft_strdup(token->data);
 		if (!tab[i])
 			return (NULL);
 		i++;
-		(*token) = (*token)->next;
+		token = token->next;
 	}
 	tab[i] = NULL;
 	return (tab);
 }
 
-void    ft_exec(t_token **token, t_data *data)
+void    ft_exec(t_token *token, t_data *data)
 {
         char    **env_path;
         char    *binary;
