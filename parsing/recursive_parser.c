@@ -28,7 +28,7 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		{
 			join_data(tmp);
 			(*tmp)->token = 8;
-			push(tmp, cmd);
+			push(tmp, inf);
 		}
 	}
 	else
