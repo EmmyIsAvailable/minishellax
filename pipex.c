@@ -36,6 +36,8 @@ int	check_in_outfile(t_heads **line)
 	tmp_out = (*line)->outfile;
 	while (tmp_in)
 	{
+		if (tmp_in->token == 8)
+			is_heredoc(tmp_in->data);
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{
@@ -46,6 +48,8 @@ int	check_in_outfile(t_heads **line)
 		{
 			dup2(tmp_in->fd, STDIN_FILENO);
 			close(tmp_in->fd);
+			if (tmp_in->token == 8)
+				unlink(tmp_in->data);
 		}
 		tmp_in = tmp_in->next;
 	}
