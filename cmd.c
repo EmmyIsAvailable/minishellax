@@ -54,26 +54,6 @@ char    *get_binary(char *cmd, char **env_path)
         }
         return (NULL);
 }
-/*char	**fill_token_tab(t_token *token)
-{
-	t_token	*tmp;
-	char	**tab;
-	int	i;
-
-	tmp = token;
-	i = 0;
-	tab = NULL;
-	while (tmp)
-	{
-		tab[i] = ft_strdup(tmp->data);
-		if (!tab[i])
-			return (NULL);
-		i++;	
-		tmp = tmp->next;
-	}
-	tab[i] = NULL;
-	return (tab);
-}*/
 
 char	**fill_token_tab(t_token *token)
 {
@@ -94,8 +74,7 @@ char	**fill_token_tab(t_token *token)
 	i = 0;
 	while (token)
 	{
-		if (token->token == 9)
-			tab[i] = ft_strdup(token->data);
+		tab[i] = ft_strdup(token->data);
 		if (!tab[i])
 			return (NULL);
 		i++;
@@ -114,13 +93,11 @@ void    ft_exec(t_token *token, t_data *data)
         cmd = fill_token_tab(token);
         if (!cmd)
                 ft_error("Split failed");
-        env_path = ft_split(getenv("PATH"), ':');
+	env_path = ft_split(getenv("PATH"), ':');
         binary = get_binary(cmd[0], env_path);
 	ft_free_tab(env_path);
         if (execve(binary, cmd, data->envp) == -1)
         {
-	//	if (stat("./tmp", NULL) == 0)
-	//		unlink("./tmp");
                 free (binary);
                 ft_free_tab(cmd);
 		printf("%s\n", (char *)NULL);

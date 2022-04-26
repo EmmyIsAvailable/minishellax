@@ -130,6 +130,6 @@ int	ft_pipex_bis(t_heads **line, t_data *data);
 int	multiple_pipes(t_heads **line, t_data *data);
 
 /*_heredoc_*/
-char	*is_heredoc(char *deli);
+int	is_heredoc(char *deli);
 
 #endif

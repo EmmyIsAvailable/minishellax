@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*is_heredoc(char *deli)
+int	is_heredoc(char *deli)
 {
 	char	*tmp;
 	int	heredoc;
@@ -8,7 +8,9 @@ char	*is_heredoc(char *deli)
 
 	tmp = NULL;
 	buffer = NULL;
-	heredoc = open("./tmp", O_WRONLY | O_CREAT, 0664);
+	heredoc = open(deli, O_WRONLY | O_RDONLY | O_CREAT, 0777);
+	if (heredoc < 0)
+		perror("Heredoc failed");
 	tmp = readline("> ");
 	while (1)
 	{
@@ -19,6 +21,6 @@ char	*is_heredoc(char *deli)
 		tmp = readline("> ");
 	}
 	write(heredoc, buffer, ft_strlen(buffer));
-	close(heredoc);	
-	return ("./tmp");
+	close(heredoc);
+	return (0);
 }
