@@ -27,7 +27,7 @@ void	ft_wait(t_data *data)
 	} 
 }
 
-int	check_in_outfile(t_heads **line)
+int	check_in_outfile(t_heads **line, t_data *data)
 {
 	t_token	*tmp_in;
 	t_token	*tmp_out;
@@ -37,7 +37,7 @@ int	check_in_outfile(t_heads **line)
 	while (tmp_in)
 	{
 		if (tmp_in->token == 8)
-			is_heredoc(tmp_in->data);
+			is_heredoc(tmp_in->data, data);
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{
@@ -96,7 +96,7 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 	pid = fork();
 	if (pid == 0)
         {
-		if (check_in_outfile(line) == 1)
+		if (check_in_outfile(line, data) == 1)
 			return (1);
 		if (((*line)->next))
 		{
@@ -125,7 +125,7 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 		pid = fork();
 		if (pid == 0)
         	{	
-			if (check_in_outfile(&(*line)->next) == 1)
+			if (check_in_outfile(&(*line)->next, data) == 1)
 				return (1);
 			if (mult_pipes == 0)
                 		dup2(data->pipes[0][0], STDIN_FILENO);
@@ -154,7 +154,7 @@ int	multiple_pipes(t_heads **line, t_data *data)
        	        pid = fork();
 		if (pid == 0)
        	        {	
-			if (check_in_outfile(line) == 1)
+			if (check_in_outfile(line, data) == 1)
 				return (1);
                	        dup2(data->pipes[0][0], STDIN_FILENO);
                	        dup2(data->pipes[1][1], STDOUT_FILENO);
