@@ -76,7 +76,7 @@ t_token	*split_env(t_token *new_token, char *op, t_data *data)
 {
 	char	*tmp;
 	char	**spaceless;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = ft_strdup((const char *)ft_search_env(&op[1], data));
