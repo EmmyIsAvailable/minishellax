@@ -122,3 +122,12 @@ void	ft_free(t_token **head)
 	free(tmp);
 }
 
+void	ft_lst_add(t_token **alst, t_token *new)
+{
+	if (alst)
+	{
+		if (*alst)
+			new -> next = *alst;
+		*alst = new;
+	}
+}

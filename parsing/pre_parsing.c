@@ -32,6 +32,24 @@ int	jump_spaces(char *str, int i)
 	return (i);
 }
 
+void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
+{
+	char	**spaceless;
+	t_token	*tmp;
+	int		i;
+
+	spaceless = NULL;
+	i= 0;
+	spaceless = ft_split(cmd->data, 32);
+	while (spaceless[i]) 
+	{
+		tmp = fill_data(WORD, ft_strlen(spaceless[i]), spaceless[i], data);
+		ft_lst_add_back(head, tmp);
+		i++;
+	}
+	// free cmd
+}
+
 void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 {
 	int		i;
@@ -54,7 +72,10 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 		tmp = scan_token(&str[i], io_here_flag, data);
 		if (!tmp)
 			return (ft_lst_clear(head, free));
-		ft_lst_add_back(head, tmp);
+		if (ft_strchr(tmp->data, 32) && tmp->token == 1)
+			ft_split_token(head, tmp, data);
+		else
+			ft_lst_add_back(head, tmp);
 		io_here_flag = ft_heredoc(tmp);
 		i += (int)tmp->data_size;
 	}
@@ -68,7 +89,7 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	line = NULL;
 	here_flag = 0;
 	create_tokens(str, head, data, here_flag);
-//	ft_print(*head);
+	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else

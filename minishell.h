@@ -54,6 +54,7 @@ void	ft_print_line(t_heads **line);
 /*_list_*/
 void	ft_lst_clear(t_token **lst, void (*del)(void *));
 void	ft_lst_add_back(t_token **alst, t_token *new);
+void	ft_lst_add(t_token **alst, t_token *new);
 void	push(t_token **head, t_token **head_b);
 void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);

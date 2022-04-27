@@ -47,8 +47,8 @@ int	variables_in_echo(char *params, t_data *data)
 
 int	ft_echo(t_token *token)
 {
-	int	option;
-	int	print;
+	int		option;
+	int		print;
 	char	*param;
 
 	option = 0;

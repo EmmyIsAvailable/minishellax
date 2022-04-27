@@ -40,7 +40,7 @@ t_token	*ft_create_token(token_type token)
 	new_token->data = NULL;
 	new_token->fd = 1;
 	new_token->next = NULL;
-	new_token->prev = NULL;
+//	new_token->prev = NULL;
 	new_token->shlvl = 0;
 	new_token->cmd_env = -1;
 	return (new_token);

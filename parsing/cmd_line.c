@@ -106,40 +106,6 @@ int	ft_bool(char *str)
 	return (-1);
 }
 
-t_token *split_cmd(t_token **cmd, t_data *data)
-{
-	t_token *new_cmd;
-	t_token	*tmp;
-	t_token *command;
-	char	**spaceless;
-	int		i;
-
-	tmp = (*cmd);
-	i = -1;
-	new_cmd = NULL;
-	command = NULL;
-	while (tmp != NULL)
-	{
-		command = NULL;
-		if (tmp->token == 1 && ft_strncmp(tmp->data, " ", ft_strlen(tmp->data)))
-		{
-			spaceless = ft_split(tmp->data, 32);
-			while (spaceless[++i])
-			{
-				command = fill_data(WORD, ft_strlen(spaceless[i]), spaceless[i], data);
-				push(&command, &new_cmd);
-			}
-		}
-		tmp = tmp->next;
-	}
-	//free tmp->cmd
-	i = -1;
-	while (spaceless[++i])
-		free(spaceless[i]);
-	free(spaceless);
-	return (new_cmd);
-}
-
 int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 {
 	int			j;
@@ -158,7 +124,6 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 			break ;
 		if ((*head)->token != PIPE)
 			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
-	//	tmp->cmd = split_cmd(&tmp->cmd, data); // PB HERE
 		if (j == -1)
 		{
 			push_heads(&tmp, line);
@@ -170,13 +135,12 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 			if (count == 0 && tmp->cmd && ft_bool(tmp->cmd->data) != -1)
 			{
 				cmd_env = ft_duplicate(&tmp->cmd->next, data->shlvl, ft_bool(tmp->cmd->data));
-				push(&cmd_env, shlvl);
-				printf("shlvl: \n");
-				ft_print(*shlvl);
+				ft_lst_add(shlvl, cmd_env);
+				//printf("shlvl: \n");
+				//ft_print(*shlvl);
 			}
 			push_heads(&tmp, line);
 			ft_print_line(line);
-//			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 			{
 				is_heredoc((*line)->infile->data);
@@ -184,7 +148,6 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 				return (0);
 			}
 			return (ft_pipex(line, data, shlvl));
-//			return (0);		
 		}
 		else if (j == 1)
 			return (ft_parsing_error("bash : syntax error\n"));
@@ -201,7 +164,7 @@ void	ft_print(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("i : %d, token : %u, data : %s, size : %zu, fd : %d\n", i, temp->token, temp->data, temp->data_size, temp->fd);
+		printf("i : %d, token : %u, data : %s, shlvl : %d, cmd_env : %d\n", i, temp->token, temp->data, temp->shlvl, temp->cmd_env);
 		i++;
 		temp = temp->next;
 	}
