@@ -139,7 +139,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 //			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 			{
-				is_heredoc((*line)->infile->data);
+				is_heredoc((*line)->infile->data, data);
 				unlink((*line)->infile->data);
 				return (0);
 			}
