@@ -22,6 +22,7 @@ typedef struct s_token
 	int				shlvl;
 	int				cmd_env; // export = 0, unset = 1
 	struct s_token	*next;
+	struct s_token	*prev;
 } t_token;
 
 typedef struct s_heads

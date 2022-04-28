@@ -39,8 +39,10 @@ void	ft_lst_clear(t_token **lst, void (*del)(void *))
 
 t_token	*ft_lst_last(t_token *lst)
 {
-	while (lst -> next)
-		lst = lst -> next;
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
 	return (lst);
 }
 
