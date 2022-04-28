@@ -37,14 +37,23 @@ void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
 	char	**spaceless;
 	t_token	*tmp;
 	int		i;
+	int		len;
 
 	spaceless = NULL;
 	i= 0;
+	len = 0;
 	spaceless = ft_split(cmd->data, 32);
+	while (spaceless[len])
+		len++;
 	while (spaceless[i]) 
 	{
 		tmp = fill_data(WORD, ft_strlen(spaceless[i]), spaceless[i], data);
 		ft_lst_add_back(head, tmp);
+		if (i < len - 1)
+		{
+			tmp = fill_data(SPACE, 1, " ", data);
+			ft_lst_add_back(head, tmp);
+		}
 		i++;
 	}
 	// free cmd
@@ -89,7 +98,7 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	line = NULL;
 	here_flag = 0;
 	create_tokens(str, head, data, here_flag);
-	ft_print(*head);
+//	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else

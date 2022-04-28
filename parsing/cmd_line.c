@@ -24,8 +24,7 @@ int	join_data(t_token **tmp)
 	{
 		if ((*tmp)->token == DOLLAR_SIGN)
 			var_env = 1;
-		if (((*tmp)->token == WORD && (*tmp)->next->token == WORD)
-			|| (*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
+		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
 			break ;
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
 		(*tmp)->token = SPACE;//a laisser ! pour clear history
@@ -137,11 +136,11 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 				cmd_env = ft_duplicate(&tmp->cmd->next, data->shlvl, ft_bool(tmp->cmd->data));
 				cmd_env->prev = ft_lst_last(*shlvl);
 				ft_lst_add(shlvl, cmd_env);
-				printf("shlvl: \n");
-				ft_print(*shlvl);
+//				printf("shlvl: \n");
+//				ft_print(*shlvl);
 			}
 			push_heads(&tmp, line);
-//			ft_print_line(line);
+			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 			{
 				is_heredoc((*line)->infile->data, data);
