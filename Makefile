@@ -1,6 +1,6 @@
 NAME	= minishell
 
-SRCS	= main.c exit_program.c \
+SRCS	= main.c exit_program.c shlvl.c\
 		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/export_builtins.c \
 		./builtins/unset_builtins.c \
 		cmd.c pipex.c heredoc.c\
