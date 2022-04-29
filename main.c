@@ -98,7 +98,7 @@ int main(int ac, char **av, char **envp)
 			data.shlvl++;
 		else if (data.shlvl > 1 && ((history && ft_cmp_line(history, "exit") == 0) || history == NULL))
 		{
-			data.shlvl--; // et il faut free l'envp qu'on quitte
+			ft_prev_envp(shlvl, &data); // et il faut free l'envp qu'on quitte
 			history = NULL;
 			printf("exit\n");
 		}
@@ -106,6 +106,7 @@ int main(int ac, char **av, char **envp)
 			if (ft_parse(history, &head, &data, &shlvl))
 				return (1);
 		add_history(history);
+		ft_print(shlvl);
 	}
 	return (0);
 }
