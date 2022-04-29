@@ -40,12 +40,12 @@ void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
 	int		len;
 
 	spaceless = NULL;
-	i= 0;
+	i = 0;
 	len = 0;
 	spaceless = ft_split(cmd->data, 32);
 	while (spaceless[len])
 		len++;
-	while (spaceless[i]) 
+	while (spaceless[i])
 	{
 		tmp = fill_data(WORD, ft_strlen(spaceless[i]), spaceless[i], data);
 		ft_lst_add_back(head, tmp);
@@ -74,10 +74,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 		if (str[i] == '\0')
 			break ;
 		if (space != i && space != 0)
-		{
-			tmp = fill_data(SPACE, 1, " ", data);
-			ft_lst_add_back(head, tmp);
-		}
+			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
 		tmp = scan_token(&str[i], io_here_flag, data);
 		if (!tmp)
 			return (ft_lst_clear(head, free));
@@ -90,7 +87,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 	}
 }
 
-int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl) 
+int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 {
 	t_heads	*line;
 	int		here_flag;
@@ -98,7 +95,7 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	line = NULL;
 	here_flag = 0;
 	create_tokens(str, head, data, here_flag);
-//	ft_print(*head);
+	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else

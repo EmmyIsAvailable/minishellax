@@ -57,15 +57,6 @@ void	ft_lst_add_back(t_token **alst, t_token *new)
 	}
 }
 
-t_heads	*ft_last(t_heads *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
-		lst = lst -> next;
-	return (lst);
-}
-
 void	push(t_token **head, t_token **head_b)
 {
 	t_token	*tmp;
@@ -90,41 +81,7 @@ void	push(t_token **head, t_token **head_b)
 	}
 }
 
-void	push_heads(t_heads **head, t_heads **head_b)
-{
-	t_heads	*tmp;
-	t_heads	*tmpb;
-
-	if (*head == NULL)
-		return ;
-	tmpb = NULL;
-	tmp = (*head)->next;
-	if (*head_b == NULL)
-	{
-		(*head_b) = (*head);
-		(*head_b)->next = tmpb;
-		(*head) = tmp;
-	}
-	else
-	{
-		tmpb = (*head_b);
-		(*head)->next = NULL;
-		ft_last(tmpb)->next = (*head);
-		(*head) = tmp;
-	}
-}
-
-void	ft_free(t_token **head)
-{
-	t_token	*tmp;
-
-	tmp = (*head);
-	(*head) = (*head)->next;
-	free(tmp->data);
-	free(tmp);
-}
-
-void	ft_lst_add(t_token **alst, t_token *new)
+void	ft_lst_add(t_token **alst, t_token *new) //add front
 {
 	if (alst)
 	{
