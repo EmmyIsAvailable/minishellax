@@ -1,0 +1,69 @@
+#include "./minishell.h"
+
+int	ft_export_prev(char *str, t_token *shlvl, t_data *data)
+{
+	t_token	*tmp;
+
+	tmp = shlvl;
+	while (tmp)
+	{
+		if (tmp->cmd_env == 0 && (int)ft_strlen(str) == ft_name(tmp->data))
+			if (ft_strncmp(tmp->data, str, ft_strlen(str)) == 0)
+			{
+				ft_export(tmp, data);
+				break ;
+			}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_unset_prev(char *str, t_data *data)
+{
+	int	i;
+	char	**envp;
+	char	*to_export;
+
+	i = 0;
+	to_export = (char *)malloc(sizeof(char) * (ft_name(str) + 1));
+	if (!to_export)
+		return (1);
+	while (str[i] != '=')
+	{
+		to_export[i] = str[i];
+		i++;
+	}
+	to_export[i] = '\0';
+	envp = data->envp;
+	i = -1;
+	while (envp[++i])
+	{
+		if (check_existence(to_export, envp[i]) == 1)
+		{
+			while (envp[i] && envp[i + 1])
+			{
+				envp[i] = ft_strdup(envp[i + 1]);
+				i++;
+			}
+			free(envp[i]);
+			envp[i] = NULL;
+		}
+	}
+	free(to_export);
+	return (0);
+}
+
+int	ft_prev_envp(t_token *shlvl, t_data *data)
+{
+	while (shlvl->shlvl == data->shlvl)
+	{
+		printf("ici\n");
+		if (shlvl->cmd_env == 0)
+			ft_unset_prev(shlvl->data, data);
+		else if (shlvl->cmd_env == 1)
+			ft_export_prev(shlvl->data, shlvl, data);
+		shlvl = shlvl->next;
+	}
+	data->shlvl--;
+	return (0);
+}
