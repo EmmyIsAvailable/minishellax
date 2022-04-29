@@ -56,44 +56,10 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 	return (1);
 }
 
-t_heads	*tmp_init(void)
-{
-	t_heads	*tmp;
-
-	tmp = malloc(sizeof(t_heads));
-	if (!tmp)
-		return (NULL);
-	tmp->infile = NULL;
-	tmp->outfile = NULL;
-	tmp->cmd = NULL;
-	return (tmp);
-}
-
-void	clear_head(t_token **head)
-{
-	while ((*head) && (*head)->token != 0)
-		ft_free(head);
-	ft_free(head);
-}
-
 int	ft_parsing_error(char *str)
 {
 	printf("%s", str);
 	return (1);
-}
-
-t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env)
-{
-	t_token	*new;
-
-	new = ft_create_token((*cmd)->token);
-	if (!new)
-		return (NULL);
-	new->data = ft_strdup((*cmd)->data);
-	new->data_size = (*cmd)->data_size;
-	new->shlvl = shell_lvl;
-	new->cmd_env = cmd_env;
-	return (new);
 }
 
 int	ft_bool(char *str)
@@ -140,7 +106,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 //				ft_print(*shlvl);
 			}
 			push_heads(&tmp, line);
-//			ft_print_line(line);
+			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 			{
 				is_heredoc((*line)->infile->data, data);
