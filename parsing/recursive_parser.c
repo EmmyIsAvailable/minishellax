@@ -66,7 +66,7 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	return (1);
 }
 
-int	check_infile(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
+int	check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (1);
@@ -87,7 +87,7 @@ int	check_infile(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	}
 }
 
-int	check_outfile(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
+int	check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (1);
@@ -112,7 +112,7 @@ int	check_outfile(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	return (check_word(&(*tmp), inf, out, cmd));
 }
 
-int	check_append(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
+int	check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (1);

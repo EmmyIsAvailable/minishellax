@@ -16,17 +16,8 @@
 /*_INCLUDE_*/
 
 # include "./libft/libft.h"
-
-//# include "define.h"
-/*typedef struct s_cmd
-{
-	t_token		cmd;
-	s_cmd		*next;
-}t_cmd;*/
-
 # include "parsing/enum.h"
 # include "struct.h"
-
 
 # include <stdio.h>
 # include <unistd.h>
@@ -72,13 +63,6 @@ int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
 t_token	*scan_token(char *str, int io_here, t_data *data);
 int		jump_spaces(char *str, int i);
 int		join_data(t_token **tmp);
-int		check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		check_append(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		check_word(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		check_here(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int		cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 t_token	*fill_data(token_type token, int len, char *op, t_data *data);
 t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data);
 int		ft_name(char *str);
@@ -86,45 +70,45 @@ char	*ft_search_env(char *params, t_data *data);
 t_token	*ft_create_token(token_type token);
 
 /*_recusive_parsing*/
-int	check_quote(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
-int	check_word(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
-int	check_infile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
-int	check_outfile(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
-int	check_dollar(t_token **tmp, t_token **infile, t_token **outfile, t_token **cmd);
-//int	check_heredoc(t_token *tmp, t_heads *list);
+int		check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		check_token(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 
 /*_main_*/
-//int	main(int ac, char **av);
-int	init_envp(t_data *data, char **envp);
-int	free_tab(char **tab);
+int		init_envp(t_data *data, char **envp);
+int		free_tab(char **tab);
 
 /*_exit_program_*/
 void	sig_int(int code);
 void	event_ctrl_c(void);
 
 /*_builtins_cmd_*/
-int	displayOnTerm(char *str);
-int	ft_echo(t_token *token);
-int	ft_pwd(void);
-int	ft_env(t_data *data);
-int	variables_in_echo(char *params, t_data *data);
+int		displayOnTerm(char *str);
+int		ft_echo(t_token *token);
+int		ft_pwd(void);
+int		ft_env(t_data *data);
+int		variables_in_echo(char *params, t_data *data);
 
 /*_builtins_dispatch_*/
-int	dispatch_builtins(t_token *token, t_data *data);
-int	ft_cd(t_token *token, t_data *data);
-int	non_printable_builtins(t_token *token, t_data *data);
-int	is_non_print_builtins(t_token *token);
+int		dispatch_builtins(t_token *token, t_data *data);
+int		ft_cd(t_token *token, t_data *data);
+int		non_printable_builtins(t_token *token, t_data *data);
+int		is_non_print_builtins(t_token *token);
 
 /*_export_builtins_*/
-int	add_var_envp(char *str, t_data *data);
-int	ft_export(t_token *token, t_data *data);
-int	browse_data_var(char *str, t_data *data);
-int	check_assign(char *assignment);
-int	ft_solo_export(t_data *data);
+int		add_var_envp(char *str, t_data *data);
+int		ft_export(t_token *token, t_data *data);
+int		browse_data_var(char *str, t_data *data);
+int		check_assign(char *assignment);
+int		ft_solo_export(t_data *data);
 
 /*_unset_builtins_*/
-int	check_existence(char *str, char *env);
-int	ft_unset(t_token *token, t_data *data);
+int		check_existence(char *str, char *env);
+int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
 void	ft_exec(t_token *token, t_data *data);
@@ -134,16 +118,16 @@ char	**fill_token_tab(t_token *token);
 
 /*_pipex_*/
 void	ft_wait(t_data *data);
-int	ft_pipex(t_heads **line, t_data *data, t_token **shlvl);
-int	ft_pipex_bis(t_heads **line, t_data *data);
-int	multiple_pipes(t_heads **line, t_data *data);
+int		ft_pipex(t_heads **line, t_data *data, t_token **shlvl);
+int		ft_pipex_bis(t_heads **line, t_data *data);
+int		multiple_pipes(t_heads **line, t_data *data);
 
 /*_heredoc_*/
-int	is_heredoc(char *deli, t_data *data);
+int		is_heredoc(char *deli, t_data *data);
 char	*env_in_heredoc(int heredoc, char *buffer, t_data *data);
 
 /*_shlvl_*/
-int	ft_prev_envp(t_token *shlvl, t_data *data);
-int	ft_export_prev(char *str, t_token *shlvl, t_data *data);
+int		ft_prev_envp(t_token *shlvl, t_data *data);
+int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 
 #endif

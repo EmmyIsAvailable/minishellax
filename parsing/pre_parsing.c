@@ -99,5 +99,5 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	if (!(*head))
 		return (0);
 	else
-		return (cmd_line_building(head, &line, data, shlvl));
+		return (cmd_line(head, &line, data, shlvl));
 }

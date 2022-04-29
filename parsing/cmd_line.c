@@ -42,11 +42,11 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 	if ((*head)->token == SPACE)
 		(*head) = (*head)->next;
 	if ((*head)->token == REDIR_IN)
-		return (check_infile(head, inf, out, cmd));
+		return (check_inf(head, inf, out, cmd));
 	if ((*head)->token == REDIR_OUT)
-		return (check_outfile(head, inf, out, cmd));
+		return (check_out(head, inf, out, cmd));
 	if ((*head)->token == DOUBLE_GREATER)
-		return (check_append(head, inf, out, cmd));
+		return (check_out_b(head, inf, out, cmd));
 	if ((*head)->token == WORD || (*head)->token == DOUBLE_QUOTE
 		|| (*head)->token == SIMPLE_QUOTE || (*head)->token == DOLLAR_SIGN
 		|| (*head)->token == ASSIGN || (*head)->token == ECHO)
@@ -62,7 +62,7 @@ int	ft_parsing_error(char *str)
 	return (1);
 }
 
-int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
+int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 {
 	int			j;
 	int			count;
