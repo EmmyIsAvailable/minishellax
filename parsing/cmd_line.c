@@ -62,25 +62,14 @@ int	ft_parsing_error(char *str)
 	return (1);
 }
 
-int	ft_bool(char *str)
-{
-	if (!ft_strncmp(str, "export", ft_strlen(str)))
-		return (0);
-	if (!ft_strncmp(str, "unset", ft_strlen(str)))
-		return (1);
-	return (-1);
-}
-
 int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 {
 	int			j;
 	int			count;
 	t_heads		*tmp;
-	t_token		*cmd_env;
 
 	count = 0;
 	tmp = NULL;
-	cmd_env = NULL;
 	while (1)
 	{
 		j = 1;
@@ -97,16 +86,10 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 		}
 		else if (j == 0)
 		{
-			if (count == 0 && tmp->cmd && ft_bool(tmp->cmd->data) != -1)
-			{
-				cmd_env = ft_duplicate(&tmp->cmd->next, data->shlvl, ft_bool(tmp->cmd->data));
-				cmd_env->prev = ft_lst_last(*shlvl);
-				ft_lst_add(shlvl, cmd_env);
-//				printf("shlvl: \n");
-//				ft_print(*shlvl);
-			}
+			if (count == 0 && tmp->cmd && tmp->cmd->next)
+				create_shlvl_list(&tmp->cmd->next, data, shlvl);
 			push_heads(&tmp, line);
-			ft_print_line(line);
+//			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 			{
 				is_heredoc((*line)->infile->data, data);
@@ -121,7 +104,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 	return (1);
 }
 
-void	ft_print(t_token *head)
+/*void	ft_print(t_token *head)
 {
 	t_token	*temp;
 	int		i;
@@ -152,4 +135,4 @@ void	ft_print_line(t_heads **line)
 		i++;
 		temp = temp->next;
 	}
-}
+}*/

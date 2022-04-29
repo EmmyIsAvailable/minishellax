@@ -104,4 +104,3 @@ char	**ft_split_bis(char const *s, char *c)
 	split[words] = NULL;
 	return (split);
 }
-
