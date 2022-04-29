@@ -70,6 +70,7 @@ t_token	*split_env(t_token *new_token, char *op, t_data *data);
 char	**ft_split_bis(char const *s, char *c);
 int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
 t_token	*scan_token(char *str, int io_here, t_data *data);
+int		jump_spaces(char *str, int i);
 int		join_data(t_token **tmp);
 int		check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
 int		check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
