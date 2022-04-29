@@ -61,21 +61,25 @@ void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
 
 /*_parsing_*/
+t_heads	*tmp_init(void);
+void	clear_head(t_token **head);
+t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
+t_token	*split_env(t_token *new_token, char *op, t_data *data);
 char	**ft_split_bis(char const *s, char *c);
-int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
+int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
 t_token	*scan_token(char *str, int io_here, t_data *data);
-int	join_data(t_token **tmp);
-int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	check_append(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	check_word(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	check_here(t_token **head, t_token **inf, t_token **out, t_token **cmd);
-int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
-t_token *fill_data(token_type token, int len, char *op, t_data *data);
-t_token *fill_data_quotes(token_type token, char *str, char op, t_data *data);
-int ft_name(char *str);
-char    *ft_search_env(char *params, t_data *data);
+int		join_data(t_token **tmp);
+int		check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		check_infile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		check_outfile(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		check_append(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		check_word(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		check_here(t_token **head, t_token **inf, t_token **out, t_token **cmd);
+int		cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
+t_token	*fill_data(token_type token, int len, char *op, t_data *data);
+t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data);
+int		ft_name(char *str);
+char	*ft_search_env(char *params, t_data *data);
 t_token	*ft_create_token(token_type token);
 
 /*_recusive_parsing*/
