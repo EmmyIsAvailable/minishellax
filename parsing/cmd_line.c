@@ -87,7 +87,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 		else if (j == 0)
 		{
 			if (count == 0 && tmp->cmd && tmp->cmd->next)
-				create_shlvl_list(&tmp->cmd->next, data, shlvl);
+				create_shlvl_list(&tmp->cmd, data, shlvl);
 			push_heads(&tmp, line);
 //			ft_print_line(line);
 			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
@@ -104,7 +104,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 	return (1);
 }
 
-/*void	ft_print(t_token *head)
+void	ft_print(t_token *head)
 {
 	t_token	*temp;
 	int		i;
@@ -119,7 +119,7 @@ int	cmd_line_building(t_token **head, t_heads **line, t_data *data, t_token **sh
 	}
 }
 
-void	ft_print_line(t_heads **line)
+/*void	ft_print_line(t_heads **line)
 {
 	t_heads	*temp;
 	int		i;

@@ -43,13 +43,32 @@ t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env)
 void	create_shlvl_list(t_token **cmd, t_data *data, t_token **shlvl)
 {
 	t_token	*cmd_env;
+	t_token *tmp;
+	t_token	*to_erase;
 
+	to_erase = NULL;
 	cmd_env = NULL;
+	tmp = *shlvl;
 	if (ft_bool((*cmd)->data) != -1)
 	{
-		cmd_env = ft_duplicate(cmd, data->shell_lvl, ft_bool((*cmd)->data));
+		cmd_env = ft_duplicate(&(*cmd)->next, data->shlvl, ft_bool((*cmd)->data));
 		if (!cmd_env)
 			clear_head(shlvl);
+		while (tmp)
+		{
+			to_erase = tmp->next;
+			if (!ft_strncmp(cmd_env->data, tmp->data, ft_name((*cmd)->next->data))
+				&& cmd_env->shlvl == tmp->shlvl)
+			{
+				if (tmp->prev != NULL)
+					(tmp->prev)->next = tmp->next;
+				else
+					(*shlvl) = tmp->next;
+				(tmp->next)->prev = tmp->prev;
+				ft_lst_delone(tmp, free);
+			}
+			tmp = to_erase;
+		}
 		cmd_env->prev = ft_lst_last(*shlvl);
 		ft_lst_add(shlvl, cmd_env);
 	}

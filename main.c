@@ -106,7 +106,8 @@ int main(int ac, char **av, char **envp)
 			if (ft_parse(history, &head, &data, &shlvl))
 				return (1);
 		add_history(history);
-//		ft_print(shlvl);
+		printf("shlvl:\n");
+		ft_print(shlvl);
 	}
 	return (0);
 }
