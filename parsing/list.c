@@ -14,7 +14,7 @@
 
 void	ft_lst_delone(t_token *lst, void (*del)(void *))
 {
-	if (!del)
+	if (!del || !lst)
 		return ;
 	if (lst)
 	{
