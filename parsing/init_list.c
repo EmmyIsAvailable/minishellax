@@ -40,36 +40,72 @@ t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env)
 	return (new);
 }
 
+int	size_shlvl(t_token *shlvl)
+{
+	int len = 0;
+	t_token *tmp;
+	tmp= shlvl;
+	if (tmp)
+	{
+		while (tmp)
+		{
+			tmp = tmp->next;
+			len ++;
+		}
+	}
+	return (len);
+}
+void	ft_clear_shlvl(t_token **cmd, t_token **shlvl, t_token *cmd_env)
+{
+	t_token *tmp;
+	t_token	*to_erase;
+	t_token	*previous;
+	t_token	*next_elem;
+	int		i = 0;
+
+	to_erase = NULL;
+	previous = NULL;
+	next_elem = NULL;
+	tmp = *shlvl;
+	while (tmp != NULL)
+	{
+		to_erase = tmp->next;
+		previous = tmp->prev;
+		next_elem = tmp->next;
+		if (!ft_strncmp(cmd_env->data, tmp->data, ft_name((*cmd)->next->data))
+						&& cmd_env->shlvl == tmp->shlvl && (tmp->cmd_env == 0 && (*cmd)->cmd_env == 0)) // derniere condition peut varier en fonction de ce qu'on veut
+		{
+				if (!previous)
+					(*shlvl) = next_elem;
+				else if (!next_elem)
+					previous->next= NULL;
+				else
+				{
+					previous->next = next_elem;
+					next_elem->prev = previous;
+				}
+				ft_lst_delone(tmp, free);
+		}
+		tmp = to_erase;
+		i++;
+	}
+}
+
 void	create_shlvl_list(t_token **cmd, t_data *data, t_token **shlvl)
 {
 	t_token	*cmd_env;
-//	t_token *tmp;
-//	t_token	*to_erase;
+	int		ex_or_unset;
 
-//	to_erase = NULL;
 	cmd_env = NULL;
-//	tmp = *shlvl;
-	if (ft_bool((*cmd)->data) != -1)
+	ex_or_unset = ft_bool((*cmd)->data);
+	if (ex_or_unset == 0 || (ft_search_env((*cmd)->next->data, data) && ex_or_unset))
 	{
-		cmd_env = ft_duplicate(&(*cmd)->next, data->shlvl, ft_bool((*cmd)->data));
+		cmd_env = ft_duplicate(&(*cmd)->next, data->shlvl, ex_or_unset);
 		if (!cmd_env)
 			clear_head(shlvl);
-/*		while (tmp)
-		{
-			to_erase = tmp->next;
-			if (!ft_strncmp(cmd_env->data, tmp->data, ft_name((*cmd)->next->data))
-				&& cmd_env->shlvl == tmp->shlvl)
-			{
-				if (tmp->prev != NULL)
-					(tmp->prev)->next = tmp->next;
-				else
-					(*shlvl) = tmp->next;
-				(tmp->next)->prev = tmp->prev;
-				ft_lst_delone(tmp, free);
-			}
-			tmp = to_erase;
-		}*/
-		cmd_env->prev = ft_lst_last(*shlvl);
+		ft_clear_shlvl(cmd, shlvl, cmd_env);
+		if (*shlvl)
+			(*shlvl)->prev = cmd_env;;
 		ft_lst_add(shlvl, cmd_env);
 	}
 }

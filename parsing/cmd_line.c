@@ -111,11 +111,14 @@ void	ft_print(t_token *head)
 
 	temp = head;
 	i = 0;
-	while (temp != NULL)
+	if (temp)
 	{
-		printf("i : %d, token : %u, data : %s, shlvl : %d, cmd_env : %d\n", i, temp->token, temp->data, temp->shlvl, temp->cmd_env);
-		i++;
-		temp = temp->next;
+			while (temp != NULL)
+			{
+					printf("i : %d, token : %u, data : %s, shlvl : %d, cmd_env : %d\n", i, temp->token, temp->data, temp->shlvl, temp->cmd_env);
+					i++;
+					temp = temp->next;
+			}
 	}
 }
 
