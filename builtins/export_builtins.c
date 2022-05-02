@@ -105,12 +105,24 @@ int	ft_solo_export(t_data *data)
 {
 	char	**tmp;
 	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	tmp = ft_sort_tab(data->envp);
 	while (tmp[i])
 	{
-		printf("%s\n", tmp[i]);
+		j = ft_strlen(tmp[i]);
+		k = ft_name(tmp[i]) + 1;
+		write(1, "declare -x ", 11);
+		write(1, tmp[i], k);
+		write(1, "\"", 1);
+		while (k < j)
+		{
+			write(1, &tmp[i][k], 1);
+			k++;
+		}
+		write(1, "\"\n", 2);
 		i++;
 	}
 	printf("%s\n", (char *)NULL);
