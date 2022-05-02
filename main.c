@@ -47,6 +47,7 @@ int	init_envp(t_data *data, char **envp)
 	}
 	data->envp[i] = NULL;
 	data->shlvl = 1;
+	data->exit_status = 0;
 	return (0);
 }
 

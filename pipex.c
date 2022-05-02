@@ -79,7 +79,7 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 	pid_t	pid;
 	(void)shlvl;
 
-        data->pipes[0] = data->pipe0;
+	data->pipes[0] = data->pipe0;
         data->pipes[1] = data->pipe1;
 	if (pipe(data->pipes[0]) == -1)
 		return (1);
@@ -104,7 +104,7 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
                 	close(data->pipes[0][0]);
 		}
                	if (dispatch_builtins((*line)->cmd, data) == 1)
-			ft_exec((*line)->cmd, data);
+			data->exit_status = ft_exec((*line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;

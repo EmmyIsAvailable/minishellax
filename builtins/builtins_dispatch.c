@@ -51,7 +51,7 @@ int	dispatch_builtins(t_token *token, t_data *data)
 			displayOnTerm("\n");
 			printf("%s\n", (char *)NULL);
 		}
-		return (ft_echo(token->next));
+		return (ft_echo(token->next, data));
 	}
 	if (ft_strncmp(token->data, "pwd", 4) == 0 && !token->next)
 		return (ft_pwd());

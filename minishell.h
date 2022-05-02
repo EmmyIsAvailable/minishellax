@@ -88,7 +88,7 @@ void	event_ctrl_c(void);
 
 /*_builtins_cmd_*/
 int		displayOnTerm(char *str);
-int		ft_echo(t_token *token);
+int		ft_echo(t_token *token, t_data *data);
 int		ft_pwd(void);
 int		ft_env(t_data *data);
 int		variables_in_echo(char *params, t_data *data);
@@ -111,7 +111,7 @@ int		check_existence(char *str, char *env);
 int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
-void	ft_exec(t_token *token, t_data *data);
+int	ft_exec(t_token *token, t_data *data);
 void	**ft_free_tab(char **data);
 char	*get_binary(char *cmd, char **env_path);
 char	**fill_token_tab(t_token *token);
