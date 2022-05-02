@@ -55,9 +55,10 @@ int	ft_unset_prev(char *str, t_data *data)
 
 int	ft_prev_envp(t_token *shlvl, t_data *data)
 {
+	t_token	*tmp;
+
 	while (shlvl->shlvl == data->shlvl)
 	{
-		printf("ici\n");
 		if (shlvl->cmd_env == 0)
 			ft_unset_prev(shlvl->data, data);
 		else if (shlvl->cmd_env == 1)
@@ -65,5 +66,13 @@ int	ft_prev_envp(t_token *shlvl, t_data *data)
 		shlvl = shlvl->next;
 	}
 	data->shlvl--;
+	tmp = shlvl;
+	while (tmp && tmp->shlvl == data->shlvl)
+	{
+		if (tmp->cmd_env == 0)
+			if (browse_data_var(tmp->data, data) == 1)
+				add_var_envp(tmp->data, data);
+		tmp = tmp->next;
+	}
 	return (0);
 }
