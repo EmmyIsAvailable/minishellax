@@ -45,7 +45,7 @@ int	variables_in_echo(char *params, t_data *data)
 	return (0);
 }
 
-int	ft_echo(t_token *token)
+int	ft_echo(t_token *token, t_data *data)
 {
 	int		option;
 	int		print;
@@ -60,7 +60,10 @@ int	ft_echo(t_token *token)
 	}
 	while (token)
 	{
-		param = token->data;
+		if (ft_strncmp(token->data, "$?", 2) == 0)
+			displayOnTerm(ft_itoa(data->exit_status));
+		else
+			param = token->data;
 		print = displayOnTerm(param);
 		if (token->next && print == 0)
 			displayOnTerm(" ");
