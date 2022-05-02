@@ -10,6 +10,7 @@ typedef struct s_data {
 	int	pipe1[2];
 	int	*pipes[2];
 	int	shlvl;
+	int	exit_status;
 	pid_t	last_pid;
 } t_data;
 

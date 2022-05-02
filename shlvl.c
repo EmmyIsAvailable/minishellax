@@ -56,8 +56,9 @@ int	ft_unset_prev(char *str, t_data *data)
 int	ft_prev_envp(t_token *shlvl, t_data *data)
 {
 	t_token	*tmp;
+	char	*new;
 
-	while (shlvl->shlvl == data->shlvl)
+	while (shlvl && shlvl->shlvl == data->shlvl)
 	{
 		if (shlvl->cmd_env == 0)
 			ft_unset_prev(shlvl->data, data);
@@ -66,6 +67,8 @@ int	ft_prev_envp(t_token *shlvl, t_data *data)
 		shlvl = shlvl->next;
 	}
 	data->shlvl--;
+	new = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
+	browse_data_var(new, data);
 	tmp = shlvl;
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
@@ -74,5 +77,16 @@ int	ft_prev_envp(t_token *shlvl, t_data *data)
 				add_var_envp(tmp->data, data);
 		tmp = tmp->next;
 	}
+	free (new);
+	return (0);
+}
+
+int	upgrade_shlvl(t_data *data)
+{
+	char	*shlvl;
+
+	data->shlvl++;
+	shlvl = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
+	browse_data_var(shlvl, data);
 	return (0);
 }
