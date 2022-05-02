@@ -47,6 +47,7 @@ int	init_envp(t_data *data, char **envp)
 	}
 	data->envp[i] = NULL;
 	data->shlvl = 1;
+	data->exit_status = 0;
 	return (0);
 }
 
@@ -81,7 +82,7 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 			break ;
 		}
 		else if (history && ft_cmp_line(history, "./minishell") == 0)
-			data.shlvl++;
+			upgrade_shlvl(&data);
 		else if (data.shlvl > 1 && ((history
 					&& ft_cmp_line(history, "exit") == 0) || history == NULL))
 		{

@@ -84,7 +84,7 @@ char	**fill_token_tab(t_token *token)
 	return (tab);
 }
 
-void    ft_exec(t_token *token, t_data *data)
+int	ft_exec(t_token *token, t_data *data)
 {
         char    **env_path;
         char    *binary;
@@ -98,8 +98,10 @@ void    ft_exec(t_token *token, t_data *data)
 	ft_free_tab(env_path);
         if (execve(binary, cmd, data->envp) == -1)
         {
+		printf("-bash: %s: command not found\n", cmd[0]);
                 free (binary);
                 ft_free_tab(cmd);
-		printf("%s\n", (char *)NULL);
+		return (127);
         }
+	return (0);
 }
