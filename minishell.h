@@ -53,9 +53,9 @@ void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
 
 /*_parsing_*/
-void	create_shlvl_list(t_token **cmd, t_data *data, t_token **shlvl);
+void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
 t_heads	*tmp_init(void);
-void	clear_head(t_token **head);
+int		clear_head(t_token **head);
 t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
 char	**ft_split_bis(char const *s, char *c);
