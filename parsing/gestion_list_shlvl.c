@@ -54,8 +54,9 @@ void	create_shlvl_list(t_token **cmd, t_data *data, t_token **shlvl)
 
 	cmd_env = NULL;
 	ex_or_unset = ft_bool((*cmd)->data);
-	if (ex_or_unset == 0 || (ft_search_env((*cmd)->next->data, data)
-			&& ex_or_unset == 1))
+	if ((ex_or_unset == 0 && ((*cmd)->next->data[ft_name((*cmd)->next->data)] == '='
+			&& ft_isalpha((*cmd)->next->data[0])))
+			|| (ft_search_env((*cmd)->next->data, data) && ex_or_unset == 1))
 	{
 		cmd_env = ft_create_token((*cmd)->next->token);
 		if (!cmd)
