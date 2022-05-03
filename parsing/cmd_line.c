@@ -92,7 +92,7 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 		else if (j == 0)
 			return (no_pipe(count, line, data, shlvl));
 		else
-			break;
+			break ;
 	}
 	return (1);
 }
