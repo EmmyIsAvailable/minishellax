@@ -88,7 +88,7 @@ int		minishell(t_data data, t_token *head, t_token *shlvl);
 void	sig_int(int code);
 int	event_ctrl_c(t_data *data);
 int	ft_message_exit(char *history, char *str, t_data *data);
-void	data_exit(char i, int vrai, t_data *data);
+void	data_exit(char i, char j, int vrai, t_data *data);
 
 /*_builtins_cmd_*/
 int		displayOnTerm(char *str);

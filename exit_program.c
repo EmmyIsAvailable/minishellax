@@ -39,14 +39,19 @@ int	event_ctrl_c(t_data *data)
 	return (0);
 }
 
-void	data_exit(char i, int vrai, t_data *data)
+void	data_exit(char i, char j, int vrai, t_data *data)
 {
-        if (i != '\0' && vrai == 1)
+        if (i == ' ' && vrai == 1)
         {
                 printf("exit\n-bash: exit: too many arguments\n");
                 data->exit_status = 1;
         }
-        else if (!ft_isdigit(i) && vrai == 0 && i != '\0')
+	else if (vrai == 0 && i == '-' && ft_isdigit(j))
+	{
+		printf("exit\n");
+		data->exit_status = 255;
+	}
+        else if (!ft_isdigit(i) && i != '\0')
         {
 	        printf("exit\n-bash: exit: numeric argument required\n");
         	data->exit_status = 2;
@@ -69,10 +74,12 @@ int	ft_message_exit(char *history, char *str, t_data *data)
 		return (1);
 	i += ft_strlen(str);
 	i = jump_spaces(history, i);
-	while (ft_isdigit(history[i++]))
+	while (ft_isdigit(history[i]))
+	{
+		i++;
 		vrai = 1;
-	i = jump_spaces(history, i);
-	data_exit(history[i], vrai, data);
+	}
+	data_exit(history[i], history[i + 1], vrai, data);
 	return (0);
 }
 
