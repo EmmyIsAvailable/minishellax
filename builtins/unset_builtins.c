@@ -68,10 +68,7 @@ int     ft_unset(t_token *token, t_data *data)
 			}
 		}
 		else
-		{
-			printf("unset: %s invalid parameter name\n", token->data);
 			ret = 1;
-		}
 		token = token->next;
 	}
 	return (ret);

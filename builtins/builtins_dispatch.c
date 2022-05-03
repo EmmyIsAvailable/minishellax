@@ -21,11 +21,6 @@ int	ft_cd(t_token *token, t_data *data)
 	new_path = NULL;
 	old_path = NULL;
 	ret = 0;
-	if (token->next && token->next->next)
-	{	
-		printf("-bash: cd: too many arguments\n");
-		return (1);
-	}
 	old_path = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
 	browse_data_var(old_path, data);
 	if (token->next)
@@ -33,10 +28,7 @@ int	ft_cd(t_token *token, t_data *data)
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
-	{
-		printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 		return (1);
-	}
 	new_path = ft_strjoin("PWD=", getcwd(NULL, 0));
 	browse_data_var(new_path, data);
 	return (0);
@@ -73,13 +65,44 @@ int	non_printable_builtins(t_token *token, t_data *data)
 	return (1);
 }
 
+int	error_export(t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (check_assign(tmp->data) != 0)
+			printf("-bash: export: '%s': not a valid identifier\n", tmp->data);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	is_non_print_builtins(t_token *token)
 {
+	t_token	*tmp;
+
+	tmp = token;
 	if (ft_strncmp(token->data, "cd", 3) == 0)
+	{
+		if (token->next && token->next->next)
+			printf("-bash: cd: too many arguments\n");
+		else if (stat(token->next->data, NULL) == -1)
+			printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 		return (0);
+	}
 	if (ft_strncmp(token->data, "export", 7) == 0 && token->next)
-		return (0);
+		return (error_export(token->next));
 	if (ft_strncmp(token->data, "unset", 6) == 0 && token->next)
+	{
+		while (tmp)
+		{
+			if (check_unset(token->next->data) != 0)
+				printf("-bash: unset: '%s': not a valid identifier\n", token->next->data);
+			tmp = tmp->next;
+		}
 		return (0);
+	}
 	return (1);
 }
