@@ -48,6 +48,8 @@ int	init_envp(t_data *data, char **envp)
 	data->envp[i] = NULL;
 	data->shlvl = 1;
 	data->exit_status = 0;
+	data->pipes[0] = data->pipe0;
+	data->pipes[1] = data->pipe1;
 	return (0);
 }
 
