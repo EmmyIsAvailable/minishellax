@@ -10,11 +10,12 @@ void	ft_free(t_token **head)
 	free(tmp);
 }
 
-void	clear_head(t_token **head)
+int	clear_head(t_token **head)
 {
 	while ((*head) && (*head)->token != 0)
 		ft_free(head);
 	ft_free(head);
+	return (1);
 }
 
 t_heads	*ft_last(t_heads *lst)

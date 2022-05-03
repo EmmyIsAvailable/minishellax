@@ -27,7 +27,7 @@ int	join_data(t_token **tmp)
 		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
 			break ;
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-		(*tmp)->token = SPACE;//a laisser ! pour clear history
+		(*tmp)->token = SPACE;
 		(*tmp) = (*tmp)->next;
 		(*tmp)->data = str;
 		(*tmp)->token = var_env;
@@ -56,10 +56,16 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 	return (1);
 }
 
-int	ft_parsing_error(char *str)
+int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 {
-	printf("%s", str);
-	return (1);
+	create_shlvl(count, &(*line)->cmd, data, shlvl);
+	if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
+	{
+		is_heredoc((*line)->infile->data, data);
+		unlink((*line)->infile->data);
+		return (0);
+	}
+	return (ft_pipex(line, data, shlvl));
 }
 
 int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
@@ -78,12 +84,12 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 			break ;
 		if ((*head)->token != PIPE)
 			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
-		if (j == -1)
-		{
+		if (j == -1 || j == 0)
 			push_heads(&tmp, line);
-			clear_head(head);
-			count++;
-		}
+		else
+			break ;
+		if (j == -1)
+			count += clear_head(head);
 		else if (j == 0)
 		{
 			if (count == 0 && tmp->cmd && tmp->cmd->next)
@@ -100,7 +106,7 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 			return (0);
 		}
 		else if (j == 1)
-			return (ft_parsing_error("-bash: syntax error\n"));
+			return (no_pipe(count, line, data, shlvl));
 	}
 	return (1);
 }
@@ -114,12 +120,13 @@ void	ft_print(t_token *head)
 	i = 0;
 	if (temp)
 	{
-			while (temp != NULL)
-			{
-					printf("i : %d, token : %u, data : %s, shlvl : %d, cmd_env : %d\n", i, temp->token, temp->data, temp->shlvl, temp->cmd_env);
-					i++;
-					temp = temp->next;
-			}
+		while (temp != NULL)
+		{	
+			printf("i : %d, tok : %u, data : %s, ", i, temp->token, temp->data);
+			printf("shlvl : %d, cmd_env : %d\n", temp->shlvl, temp->cmd_env);
+			i++;
+			temp = temp->next;
+		}
 	}
 }
 

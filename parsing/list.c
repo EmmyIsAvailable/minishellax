@@ -81,7 +81,7 @@ void	push(t_token **head, t_token **head_b)
 	}
 }
 
-void	ft_lst_add(t_token **alst, t_token *new) //add front
+void	ft_lst_add(t_token **alst, t_token *new)
 {
 	if (alst)
 	{
