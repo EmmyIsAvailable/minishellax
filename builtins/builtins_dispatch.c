@@ -23,7 +23,7 @@ int	ft_cd(t_token *token, t_data *data)
 	ret = 0;
 	if (token->next && token->next->next)
 	{	
-		printf("cd: too many arguments\n");
+		printf("-bash: cd: too many arguments\n");
 		return (1);
 	}
 	old_path = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
@@ -34,7 +34,7 @@ int	ft_cd(t_token *token, t_data *data)
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
 	{
-		printf("cd: %s: No such file or directory\n", token->next->data);
+		printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 		return (1);
 	}
 	new_path = ft_strjoin("PWD=", getcwd(NULL, 0));
@@ -65,10 +65,7 @@ int	dispatch_builtins(t_token *token, t_data *data)
 int	non_printable_builtins(t_token *token, t_data *data)
 {	
 	if (ft_strncmp(token->data, "cd", 3) == 0)
-	{	
-		ft_cd(token, data); //attention return 1 si trop d'args mais return 1 = execve donc ?
-		return (0);
-	}
+		return (ft_cd(token, data));
 	if (ft_strncmp(token->data, "export", 7) == 0 && token->next)
 		return (ft_export(token->next, data));
 	if (ft_strncmp(token->data, "unset", 6) == 0 && token->next)

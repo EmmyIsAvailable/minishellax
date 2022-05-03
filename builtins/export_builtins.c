@@ -85,8 +85,10 @@ int	check_assign(char *assignment)
 int     ft_export(t_token *token, t_data *data)
 {
 	t_token	*tmp;
+	int	ret;
 
 	tmp = token;
+	ret = 0;
 	while (tmp)
         {
                 if (check_assign(tmp->data) == 0)
@@ -95,10 +97,13 @@ int     ft_export(t_token *token, t_data *data)
 				add_var_envp(tmp->data, data);
                 }
 		else
+		{
 			printf("export: '%s': not a valid identifier\n", tmp->data);
+			ret = 1;
+		}
 		tmp = tmp->next;
         }
-        return (0);
+        return (ret);
 }
 
 int	ft_solo_export(t_data *data)

@@ -44,8 +44,10 @@ int     ft_unset(t_token *token, t_data *data)
 {
 	int	i;
 	char	**envp;
+	int	ret;
 
 	envp = data->envp;
+	ret = 0;
         while (token)
         {
                 i = -1;
@@ -66,10 +68,13 @@ int     ft_unset(t_token *token, t_data *data)
 			}
 		}
 		else
+		{
 			printf("unset: %s invalid parameter name\n", token->data);
+			ret = 1;
+		}
 		token = token->next;
 	}
-	return (0);
+	return (ret);
 }
 
 

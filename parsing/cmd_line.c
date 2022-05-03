@@ -91,6 +91,21 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 		if (j == -1)
 			count += clear_head(head);
 		else if (j == 0)
+		{
+			if (count == 0 && tmp->cmd && tmp->cmd->next)
+				create_shlvl_list(&tmp->cmd, data, shlvl);
+			push_heads(&tmp, line);
+//			ft_print_line(line);
+			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
+			{
+				is_heredoc((*line)->infile->data, data);
+				unlink((*line)->infile->data);
+				return (0);
+			}
+			data->exit_status = ft_pipex(line, data, shlvl);
+			return (0);
+		}
+		else if (j == 1)
 			return (no_pipe(count, line, data, shlvl));
 	}
 	return (1);
