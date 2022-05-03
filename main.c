@@ -86,7 +86,7 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 			ft_prev_envp(shlvl, &data); // et il faut free l'envp qu'on quitte
 			history = "";
 		}
-		if (history && ft_strnstr(history, "exit", 4) != 0 && ft_cmp_line(history, "./minishell") != 0)
+		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, &data, &shlvl);
 		add_history(history);
 	}

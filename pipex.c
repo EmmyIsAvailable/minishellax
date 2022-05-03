@@ -92,6 +92,8 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 	}
 	if (get_binary((*line)->cmd->data, ft_split(getenv("PATH"), ':')) == NULL)
 	{
+		if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
+			return (1);
 		printf("-bash: %s: command not found\n", (*line)->cmd->data);
 		if ((*line)->next)
 			(*line) = (*line)->next;
