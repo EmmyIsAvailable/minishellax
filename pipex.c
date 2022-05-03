@@ -27,13 +27,11 @@ void	ft_wait(t_data *data)
 	} 
 }
 
-int	check_in_outfile(t_heads **line, t_data *data)
+int	check_infile(t_heads **line, t_data *data)
 {
 	t_token	*tmp_in;
-	t_token	*tmp_out;
 
 	tmp_in = (*line)->infile;
-	tmp_out = (*line)->outfile;
 	while (tmp_in)
 	{
 		if (tmp_in->token == 8)
@@ -53,6 +51,14 @@ int	check_in_outfile(t_heads **line, t_data *data)
 		}
 		tmp_in = tmp_in->next;
 	}
+	return (0);
+}
+
+int	check_outfile(t_heads **line)
+{
+	t_token	*tmp_out;
+
+	tmp_out = (*line)->outfile;
 	while (tmp_out)
 	{
 		if (tmp_out->token == 5)
@@ -74,15 +80,8 @@ int	check_in_outfile(t_heads **line, t_data *data)
 	return (0);
 }
 
-int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
+int	ft_no_fork(t_heads **line, t_data *data)
 {
-	pid_t	pid;
-	(void)shlvl;
-
-	data->pipes[0] = data->pipe0;
-        data->pipes[1] = data->pipe1;
-	if (pipe(data->pipes[0]) == -1)
-		return (1);
 	if (is_non_print_builtins((*line)->cmd) == 0)
 	{
 		if (!(*line)->next)
@@ -100,10 +99,25 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 		else
 			return (127);
 	}
+	return (2);
+}
+
+int     ft_pipex(t_heads **line, t_data *data, __attribute__((unused))t_token **shlvl)
+{
+	pid_t	pid;
+	int	ret;
+
+	data->pipes[0] = data->pipe0;
+        data->pipes[1] = data->pipe1;
+	if (pipe(data->pipes[0]) == -1)
+		return (1);
+	ret = ft_no_fork(line, data);
+	if (ret != 2)
+		return (ret);
 	pid = fork();
 	if (pid == 0)
         {
-		if (check_in_outfile(line, data) == 1)
+		if (check_infile(line, data) || check_outfile(line))
 			return (1);
 		if (((*line)->next))
 		{
@@ -132,7 +146,7 @@ int	ft_pipex_bis(t_heads **line, t_data *data)
 		pid = fork();
 		if (pid == 0)
         	{	
-			if (check_in_outfile(&(*line)->next, data) == 1)
+			if (check_infile(&(*line)->next, data) || check_outfile(&(*line)->next))
 				return (1);
 			if (mult_pipes == 0)
                 		dup2(data->pipes[0][0], STDIN_FILENO);
@@ -161,7 +175,7 @@ int	multiple_pipes(t_heads **line, t_data *data)
        	        pid = fork();
 		if (pid == 0)
        	        {	
-			if (check_in_outfile(line, data) == 1)
+			if (check_infile(line, data) || check_outfile(line))
 				return (1);
                	        dup2(data->pipes[0][0], STDIN_FILENO);
                	        dup2(data->pipes[1][1], STDOUT_FILENO);
