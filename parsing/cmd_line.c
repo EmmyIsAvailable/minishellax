@@ -65,7 +65,8 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		unlink((*line)->infile->data);
 		return (0);
 	}
-	return (ft_pipex(line, data, shlvl));
+	data->exit_status = ft_pipex(line, data, shlvl);
+	return (0);
 }
 
 int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
@@ -86,27 +87,12 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
 		if (j == -1 || j == 0)
 			push_heads(&tmp, line);
-		else
-			break ;
 		if (j == -1)
 			count += clear_head(head);
 		else if (j == 0)
-		{
-			if (count == 0 && tmp->cmd && tmp->cmd->next)
-				create_shlvl_list(&tmp->cmd, data, shlvl);
-			push_heads(&tmp, line);
-//			ft_print_line(line);
-			if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
-			{
-				is_heredoc((*line)->infile->data, data);
-				unlink((*line)->infile->data);
-				return (0);
-			}
-			data->exit_status = ft_pipex(line, data, shlvl);
-			return (0);
-		}
-		else if (j == 1)
 			return (no_pipe(count, line, data, shlvl));
+		else
+			break;
 	}
 	return (1);
 }
