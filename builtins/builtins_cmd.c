@@ -60,7 +60,7 @@ int	ft_echo(t_token *token, t_data *data)
 	}
 	while (token)
 	{
-		if (ft_strncmp(token->data, "$?", 2) == 0)
+		if (token->token == ECHO)
 			displayOnTerm(ft_itoa(data->exit_status));
 		else
 			param = token->data;

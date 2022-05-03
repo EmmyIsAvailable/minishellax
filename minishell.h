@@ -81,10 +81,13 @@ int		cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 /*_main_*/
 int		init_envp(t_data *data, char **envp);
 int		free_tab(char **tab);
+int		ft_cmp_line(char *history, char *str);
+int		minishell(t_data data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
 void	sig_int(int code);
-void	event_ctrl_c(t_data *data);
+int	event_ctrl_c(t_data *data);
+int	ft_message_exit(char *history, char *str);
 
 /*_builtins_cmd_*/
 int		displayOnTerm(char *str);
