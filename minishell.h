@@ -53,6 +53,7 @@ void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
 
 /*_parsing_*/
+int		find_op(char *str, char op);
 void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
 t_heads	*tmp_init(void);
 int		clear_head(t_token **head);
