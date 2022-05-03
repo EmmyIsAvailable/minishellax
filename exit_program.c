@@ -21,7 +21,7 @@ void	sig_int(int code)
 	return ;
 }
 
-void	event_ctrl_c(void)
+void	event_ctrl_c(t_data *data)
 {
 	struct sigaction sa;
 	struct sigaction sig_quit;
@@ -30,6 +30,7 @@ void	event_ctrl_c(void)
 	sa.sa_flags = 0;
 	sig_quit.sa_flags = 0;
 	sig_quit.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sa, NULL);
+	if (sigaction(SIGINT, &sa, NULL) == 0)
+		data->exit_status = 130;
 	sigaction(SIGQUIT, &sig_quit, NULL);
 }

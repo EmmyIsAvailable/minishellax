@@ -70,7 +70,7 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 	char	*history;
 
 	history = NULL;
-	event_ctrl_c();
+	event_ctrl_c(&data);
 	while (data.shlvl != -1)
 	{
 		head = NULL;
@@ -91,11 +91,10 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 			printf("exit\n");
 		}
 		if (history)
-			if (ft_parse(history, &head, &data, &shlvl))
-				return (1);
+			ft_parse(history, &head, &data, &shlvl);
+				//return (1);
 		add_history(history);
-		printf("shlvl:\n");
-		ft_print(shlvl);
+		//ft_print(shlvl);
 	}
 	return (0);
 }

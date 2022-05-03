@@ -84,7 +84,7 @@ int		free_tab(char **tab);
 
 /*_exit_program_*/
 void	sig_int(int code);
-void	event_ctrl_c(void);
+void	event_ctrl_c(t_data *data);
 
 /*_builtins_cmd_*/
 int		displayOnTerm(char *str);

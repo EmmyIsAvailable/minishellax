@@ -86,12 +86,17 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
 	if (is_non_print_builtins((*line)->cmd) == 0)
 	{
 		if (!(*line)->next)
-		{
-			non_printable_builtins((*line)->cmd, data);
-        		return (0);
-		}
+			return (non_printable_builtins((*line)->cmd, data));
 		else
 			(*line) = (*line)->next;
+	}
+	if (get_binary((*line)->cmd->data, ft_split(getenv("PATH"), ':')) == NULL)
+	{
+		printf("-bash: %s: command not found\n", (*line)->cmd->data);
+		if ((*line)->next)
+			(*line) = (*line)->next;
+		else
+			return (127);
 	}
 	pid = fork();
 	if (pid == 0)
@@ -104,7 +109,7 @@ int     ft_pipex(t_heads **line, t_data *data, t_token **shlvl)
                 	close(data->pipes[0][0]);
 		}
                	if (dispatch_builtins((*line)->cmd, data) == 1)
-			data->exit_status = ft_exec((*line)->cmd, data);
+			ft_exec((*line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;

@@ -96,10 +96,11 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 				unlink((*line)->infile->data);
 				return (0);
 			}
-			return (ft_pipex(line, data, shlvl));
+			data->exit_status = ft_pipex(line, data, shlvl);
+			return (0);
 		}
 		else if (j == 1)
-			return (ft_parsing_error("bash : syntax error\n"));
+			return (ft_parsing_error("-bash: syntax error\n"));
 	}
 	return (1);
 }
