@@ -87,7 +87,8 @@ int		minishell(t_data data, t_token *head, t_token *shlvl);
 /*_exit_program_*/
 void	sig_int(int code);
 int	event_ctrl_c(t_data *data);
-int	ft_message_exit(char *history, char *str);
+int	ft_message_exit(char *history, char *str, t_data *data);
+void	data_exit(char i, int vrai, t_data *data);
 
 /*_builtins_cmd_*/
 int		displayOnTerm(char *str);
@@ -126,7 +127,7 @@ int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data);
 
 /*_pipex_*/
-int		ft_pipex(t_heads **line, t_data *data, t_token **shlvl);
+int		ft_pipex(t_heads **line, t_data *data);
 int		ft_pipex_bis(t_heads **line, t_data *data);
 int		multiple_pipes(t_heads **line, t_data *data);
 

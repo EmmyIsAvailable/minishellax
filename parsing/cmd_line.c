@@ -65,7 +65,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		unlink((*line)->infile->data);
 		return (0);
 	}
-	data->exit_status = ft_pipex(line, data, shlvl);
+	data->exit_status = ft_pipex(line, data);
 	return (0);
 }
 

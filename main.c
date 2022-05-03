@@ -78,12 +78,12 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 		head = NULL;
 		history = readline("$> ");
 		if ((data.shlvl == 1 && history == NULL) || (history
-				&& data.shlvl == 1 && ft_message_exit(history, "exit") == 0))
+				&& data.shlvl == 1 && ft_message_exit(history, "exit", &data) == 0))
 			break ;
 		else if (history && ft_cmp_line(history, "./minishell") == 0)
 			upgrade_shlvl(&data);
 		else if (data.shlvl > 1 && ((history
-					&& ft_message_exit(history, "exit") == 0) || history == NULL))
+					&& ft_message_exit(history, "exit", &data) == 0) || history == NULL))
 		{
 			ft_prev_envp(shlvl, &data); // et il faut free l'envp qu'on quitte
 			history = "";
