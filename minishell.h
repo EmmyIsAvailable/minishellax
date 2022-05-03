@@ -102,6 +102,7 @@ int		dispatch_builtins(t_token *token, t_data *data);
 int		ft_cd(t_token *token, t_data *data);
 int		non_printable_builtins(t_token *token, t_data *data);
 int		is_non_print_builtins(t_token *token);
+int		error_export(t_token *token);
 
 /*_export_builtins_*/
 int		add_var_envp(char *str, t_data *data);
@@ -112,6 +113,7 @@ int		ft_solo_export(t_data *data);
 
 /*_unset_builtins_*/
 int		check_existence(char *str, char *env);
+int		check_unset(char *str);
 int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
