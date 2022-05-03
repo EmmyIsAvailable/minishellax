@@ -120,8 +120,13 @@ void	**ft_free_tab(char **data);
 char	*get_binary(char *cmd, char **env_path);
 char	**fill_token_tab(t_token *token);
 
-/*_pipex_*/
+/*_pipex_utils_*/
 void	ft_wait(t_data *data);
+int		check_infile(t_heads **line, t_data *data);
+int		check_outfile(t_heads **line);
+int		ft_no_fork(t_heads **line, t_data *data);
+
+/*_pipex_*/
 int		ft_pipex(t_heads **line, t_data *data, t_token **shlvl);
 int		ft_pipex_bis(t_heads **line, t_data *data);
 int		multiple_pipes(t_heads **line, t_data *data);
