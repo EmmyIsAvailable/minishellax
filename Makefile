@@ -9,7 +9,7 @@ SRCS	= main.c exit_program.c shlvl.c\
 		./parsing/parse_quotes.c ./parsing/pre_parsing.c \
 		./parsing/split_bis.c ./parsing/split_env.c \
 		./parsing/gestion_list_shlvl.c ./parsing/heads_init.c \
-		./parsing/list_bis.c
+		./parsing/list_bis.c ./parsing/search_env.c
 
 OBJS	= ${SRCS:.c=.o}
 

@@ -2,14 +2,14 @@
 
 void	free_elem_heads(t_heads **lst)
 {
-	t_heads *tmp;
+	t_heads	*tmp;
 
-	tmp  = *lst;
+	tmp = *lst;
 	if ((*lst))
 	{
 		if ((*lst)->next)
 			*lst = (*lst)->next;
-		else 
+		else
 			*lst = NULL;
 		if (tmp->cmd)
 			ft_lst_clear(&tmp->cmd, free);

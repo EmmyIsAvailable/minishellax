@@ -38,41 +38,62 @@
 
 /*_RACINE_*/
 
-/*_supp later_*/
+/*_cmd_line_*/
+int		check_token(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
+int		cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
+int		join_data(t_token **tmp);
 void	ft_print(t_token *head);
 void	ft_print_line(t_heads **line);
 
-/*_list_*/
-t_token	*ft_lst_last(t_token *lst);
-void	ft_lst_delone(t_token *lst, void (*del)(void *));
-void	ft_lst_clear(t_token **lst, void (*del)(void *));
-void	ft_lst_add_back(t_token **alst, t_token *new);
-void	ft_lst_add(t_token **alst, t_token *new);
-void	push(t_token **head, t_token **head_b);
-void	ft_free(t_token **head);
+/*_gestion_shlvl_list_*/
+void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
+void	ft_clear_shlvl(t_token **cmd, t_token **shlvl, t_token *cmp);
 
 /*_heads_init_*/
-t_heads	*tmp_init(void);
+t_heads	*tmp_init(void); //malloc
 void	push_heads(t_heads **head, t_heads **head_b);
 void	free_elem_heads(t_heads **lst);
 void	clear_all_heads(t_heads **lst);
 
-/*_parsing_*/
-int		find_op(char *str, char op);
-void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
+/*_list_*/
+t_token	*ft_lst_last(t_token *lst);
+void	ft_lst_add_back(t_token **alst, t_token *new);
+void	ft_lst_add(t_token **alst, t_token *new);
+void	push(t_token **head, t_token **head_b);
+
+/*_list_bis_*/
+void	ft_lst_delone(t_token *lst, void (*del)(void *));
+void	ft_lst_clear(t_token **lst, void (*del)(void *));
 int		clear_head(t_token **head);
-t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
-t_token	*split_env(t_token *new_token, char *op, t_data *data);
-char	**ft_split_bis(char const *s, char *c);
-int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
+void	ft_free(t_token **head);
+
+
+/*_parse_*/
 t_token	*scan_token(char *str, int io_here, t_data *data);
-int		jump_spaces(char *str, int i);
-int		join_data(t_token **tmp);
-t_token	*fill_data(token_type token, int len, char *op, t_data *data);
-t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data);
+t_token	*fill_data(token_type token, int len, char *op, t_data *data);//malloc
+t_token	*ft_create_token(token_type token); //malloc
+
+/*_search_env_*/
 int		ft_name(char *str);
 char	*ft_search_env(char *params, t_data *data);
-t_token	*ft_create_token(token_type token);
+
+/*_parse_quotes_*/
+t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data);
+int		find_op(char *str, char op);
+
+/*_pre_parsing_*/
+int		jump_spaces(char *str, int i);
+int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
+
+
+/*_split_bis_*/
+char	**ft_split_bis(char const *s, char *c);
+
+
+/*_split_env*/
+t_token	*split_env(t_token *new_token, char *op, t_data *data);
+
+//t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
 
 /*_recusive_parsing*/
 int		check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
@@ -80,8 +101,6 @@ int		check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
-int		check_token(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
-int		cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 
 /*_main_*/
 int		init_envp(t_data *data, char **envp);

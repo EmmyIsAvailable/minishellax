@@ -35,6 +35,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (++i < len_s2)
 		join[len_s1 + i] = s2[i];
 	join[len_s1 + len_s2] = '\0';
-	//free((void*)s1);
 	return (join);
 }

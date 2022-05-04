@@ -98,9 +98,11 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data(DOUBLE_GREATER, 2, ">>", data));
 	else if (ft_strncmp((const char *)str, "$?", 2) == 0)
 		return (fill_data(ECHO, 2, "$?", data));
-	else if (ft_strncmp((const char *)str, "\"", 1) == 0 && find_op(&str[1], '\"'))
+	else if (ft_strncmp((const char *)str, "\"", 1) == 0
+		&& find_op(&str[1], '\"'))
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
-	else if (ft_strncmp((const char *)str, "\'", 1) == 0 && find_op(&str[1], '\''))
+	else if (ft_strncmp((const char *)str, "\'", 1) == 0
+		&& find_op(&str[1], '\''))
 		return (fill_data_quotes(SIMPLE_QUOTE, str, '\'', data));
 	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here == 0)
 		return (fill_data(DOLLAR_SIGN, 0, &str[0], data));
