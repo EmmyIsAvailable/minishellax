@@ -63,32 +63,30 @@ int	find_op(char *str, char op)
 	return (0);
 }
 
-/*int	dollar_in_quotes(int i, int	diff, char *str, t_data *data)
+int	no_data(t_token **new_token, int i, char *str)
 {
+	if (i > 1 && !(*new_token)->data)
+	{
+		(*new_token)->data = ft_create_data(str, i);
+		return (1);
+	}
+	return (0);
+}
 
-
-}*/
-
-t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
+int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 {
-	t_token	*new_token;
-	int		i;
-	int		diff;
+	int	i;
+	int	diff;
 
 	i = 1;
 	diff = 1;
-	new_token = NULL;
-	new_token = ft_create_token(token);
 	while (str[i] != op)
 	{
-		if (str[i] == '$' && token == DOUBLE_QUOTE
-			&& ft_search_env(&str[i + 1], data))
+		if (str[i] == '$' && ft_search_env(&str[i + 1], data))
 		{
-			if (i > 1 && !new_token->data)
-				new_token->data = ft_create_data(str, i);
-			else if (diff != i)
-				new_token->data = ft_dup(new_token->data, i, diff, str);
-			new_token->data = ft_strjoin(new_token->data,
+			if (!no_data(&(*new_token), i, str) && diff != i)
+				(*new_token)->data = ft_dup((*new_token)->data, i, diff, str);
+			(*new_token)->data = ft_strjoin((*new_token)->data,
 					(const char *)ft_search_env(&str[i + 1], data));
 			i += (1 + ft_name(&str[i + 1]));
 			diff = i;
@@ -96,10 +94,25 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 		else
 			i++;
 	}
-	if (!new_token->data)
+	if (!no_data(&(*new_token), i, str) && diff != i)
+		(*new_token)->data = ft_dup((*new_token)->data, i, diff, str);
+	return (i);
+}
+
+t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
+{
+	t_token	*new_token;
+	int		i;
+
+	new_token = NULL;
+	new_token = ft_create_token(token);
+	if (token == DOUBLE_QUOTE)
+		i = dollar_in_quotes(&new_token, str, op, data);
+	else
+	{
+		i = ft_strlen(&str[1]);
 		new_token->data = ft_create_data(str, i);
-	else if (diff != i)
-		new_token->data = ft_dup(new_token->data, i, diff, str);
+	}
 	new_token->data_size = i + 1;
 	return (new_token);
 }
