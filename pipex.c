@@ -3,11 +3,14 @@
 int     ft_pipex(t_heads **line, t_data *data)
 {
 	pid_t	pid;
+	t_heads *final_line;
 	int	ret;
 
+	final_line = NULL;
 	if (pipe(data->pipes[0]) == -1)
 		return (1);
-	ret = ft_no_fork(line, data);
+	ret = ft_no_fork(line, data, &final_line);
+	//je pense qu'il faudrait utiliser final_line
 	if (ret != 2)
 		return (ret);
 	pid = fork();
