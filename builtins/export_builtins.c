@@ -97,10 +97,7 @@ int     ft_export(t_token *token, t_data *data)
 				add_var_envp(tmp->data, data);
                 }
 		else
-		{
-			printf("export: '%s': not a valid identifier\n", tmp->data);
 			ret = 1;
-		}
 		tmp = tmp->next;
         }
         return (ret);
