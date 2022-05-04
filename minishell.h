@@ -49,13 +49,17 @@ void	ft_lst_clear(t_token **lst, void (*del)(void *));
 void	ft_lst_add_back(t_token **alst, t_token *new);
 void	ft_lst_add(t_token **alst, t_token *new);
 void	push(t_token **head, t_token **head_b);
-void	push_heads(t_heads **head, t_heads **head_b);
 void	ft_free(t_token **head);
+
+/*_heads_init_*/
+t_heads	*tmp_init(void);
+void	push_heads(t_heads **head, t_heads **head_b);
+void	free_elem_heads(t_heads **lst);
+void	clear_all_heads(t_heads **lst);
 
 /*_parsing_*/
 int		find_op(char *str, char op);
 void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
-t_heads	*tmp_init(void);
 int		clear_head(t_token **head);
 t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
@@ -127,7 +131,7 @@ char	**fill_token_tab(t_token *token);
 void	ft_wait(t_data *data);
 int		check_infile(t_heads **line, t_data *data);
 int		check_outfile(t_heads **line);
-int		ft_no_fork(t_heads **line, t_data *data);
+int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
 
 /*_pipex_*/
 int		ft_pipex(t_heads **line, t_data *data);

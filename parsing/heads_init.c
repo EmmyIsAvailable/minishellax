@@ -1,21 +1,37 @@
 #include "../minishell.h"
 
-void	ft_free(t_token **head)
+void	free_elem_heads(t_heads **lst)
 {
-	t_token	*tmp;
+	t_heads *tmp;
 
-	tmp = (*head);
-	(*head) = (*head)->next;
-	free(tmp->data);
+	tmp  = *lst;
+	if ((*lst))
+	{
+		if ((*lst)->next)
+			*lst = (*lst)->next;
+		else 
+			*lst = NULL;
+		if (tmp->cmd)
+			ft_lst_clear(&tmp->cmd, free);
+		if (tmp->infile)
+			ft_lst_clear(&tmp->infile, free);
+		if (tmp->outfile)
+			ft_lst_clear(&tmp->outfile, free);
+	}
 	free(tmp);
 }
 
-int	clear_head(t_token **head)
+void	clear_all_heads(t_heads **lst)
 {
-	while ((*head) && (*head)->token != 0)
-		ft_free(head);
-	ft_free(head);
-	return (1);
+	t_heads	*tmp;
+
+	tmp = *lst;
+	while (tmp)
+	{
+		(*lst) = (*lst)->next;
+		free_elem_heads(&tmp);
+		tmp = *lst;
+	}
 }
 
 t_heads	*ft_last(t_heads *lst)

@@ -96,6 +96,12 @@ int	find_op(char *str, char op)
 	return (0);
 }
 
+/*int	dollar_in_quotes(int i, int	diff, char *str, t_data *data)
+{
+
+
+}*/
+
 t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 {
 	t_token	*new_token;
@@ -105,8 +111,6 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 	i = 1;
 	diff = 1;
 	new_token = NULL;
-	if (!find_op(&str[1], op))
-		return (NULL);
 	new_token = ft_create_token(token);
 	while (str[i] != op)
 	{
