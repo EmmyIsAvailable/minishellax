@@ -65,6 +65,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		unlink((*line)->infile->data);
 		return (0);
 	}
+	ft_print_line(line);
 	data->exit_status = ft_pipex(line, data, shlvl);
 	return (0);
 }
@@ -91,7 +92,7 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 			count += clear_head(head);
 		else if (j == 0)
 			return (no_pipe(count, line, data, shlvl));
-		else
+		else if (j == 1)
 			break ;
 	}
 	return (1);
@@ -116,7 +117,7 @@ void	ft_print(t_token *head)
 	}
 }
 
-/*void	ft_print_line(t_heads **line)
+void	ft_print_line(t_heads **line)
 {
 	t_heads	*temp;
 	int		i;
@@ -132,4 +133,4 @@ void	ft_print(t_token *head)
 		i++;
 		temp = temp->next;
 	}
-}*/
+}
