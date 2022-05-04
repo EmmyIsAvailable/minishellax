@@ -15,6 +15,7 @@
 char	*ft_dup(char *data, int i, int diff, char *str)
 {
 	char	*tmp;
+	char	*tmp_bis;
 	int		j;
 
 	j = 0;
@@ -27,7 +28,9 @@ char	*ft_dup(char *data, int i, int diff, char *str)
 		j++;
 	}
 	tmp[j] = '\0';
+	tmp_bis = data;
 	data = ft_strjoin(data, tmp);
+	free(tmp_bis);
 	free(tmp);
 	tmp = NULL;
 	return (data);
@@ -77,6 +80,7 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 {
 	int	i;
 	int	diff;
+	char	*tmp;
 
 	i = 1;
 	diff = 1;
@@ -86,8 +90,10 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 		{
 			if (!no_data(&(*new_token), i, str) && diff != i)
 				(*new_token)->data = ft_dup((*new_token)->data, i, diff, str);
+			tmp = (*new_token)->data;
 			(*new_token)->data = ft_strjoin((*new_token)->data,
 					(const char *)ft_search_env(&str[i + 1], data));
+			free(tmp);
 			i += (1 + ft_name(&str[i + 1]));
 			diff = i;
 		}
