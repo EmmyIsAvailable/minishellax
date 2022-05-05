@@ -1,35 +1,32 @@
 #include "./minishell.h"
 
-int     ft_pipex(t_heads **line, t_data *data)
+int     ft_pipex(t_heads **final_line, t_heads **line, t_data *data)
 {
 	pid_t	pid;
-	t_heads *final_line;
 	int	ret;
 
-	final_line = NULL;
 	if (pipe(data->pipes[0]) == -1)
 		return (1);
-	ret = ft_no_fork(line, data, &final_line);
-	//je pense qu'il faudrait utiliser final_line
+	ret = ft_no_fork(line, data, final_line);
 	if (ret != 2)
 		return (ret);
 	pid = fork();
 	if (pid == 0)
         {
-		if (check_infile(line, data) || check_outfile(line))
+		if (check_infile(final_line, data) || check_outfile(final_line))
 			return (1);
-		if (((*line)->next))
+		if (((*final_line)->next))
 		{
                 	dup2(data->pipes[0][1], STDOUT_FILENO);
                 	close(data->pipes[0][0]);
 		}
-               	if (dispatch_builtins((*line)->cmd, data) == 1)
-			ft_exec((*line)->cmd, data);
+               	if (dispatch_builtins((*final_line)->cmd, data) == 1)
+			ft_exec((*final_line)->cmd, data);
         }
 	else if (pid > 0)
 		data->last_pid = pid;
 	close(data->pipes[0][1]);
-	return (ft_pipex_bis(line, data));
+	return (ft_pipex_bis(final_line, data));
 }
 
 int	ft_pipex_bis(t_heads **line, t_data *data)

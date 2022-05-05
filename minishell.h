@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/22 13:10:55 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 11:16:39 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
 
 /*_pipex_*/
-int		ft_pipex(t_heads **line, t_data *data);
+int		ft_pipex(t_heads **final_line, t_heads **line, t_data *data);
 int		ft_pipex_bis(t_heads **line, t_data *data);
 int		multiple_pipes(t_heads **line, t_data *data);
 
