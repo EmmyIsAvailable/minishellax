@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_bis.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 11:48:32 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/05/05 12:07:43 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_lst_delone(t_token *lst, void (*del)(void *))
@@ -25,7 +37,6 @@ void	ft_lst_clear(t_token **lst, void (*del)(void *))
 	}
 }
 
-//deux suivantes a supp
 void	ft_free(t_token **head)
 {
 	t_token	*tmp;

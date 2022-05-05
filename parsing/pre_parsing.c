@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/22 13:48:57 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 14:33:39 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
 			tmp = fill_data(SPACE, 1, " ", data);
 			ft_lst_add_back(head, tmp);
 		}
+		free(spaceless[i]);
 		i++;
 	}
-	// free cmd
+	ft_free(&cmd);
+	free(spaceless);
 }
 
 void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
@@ -95,6 +97,7 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	line = NULL;
 	here_flag = 0;
 	create_tokens(str, head, data, here_flag);
+	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else
