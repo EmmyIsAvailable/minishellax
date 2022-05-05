@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 14:46:18 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:00:57 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 	tmp_binary = NULL;
 	if (*line)
 	{
-		path = ft_split(getenv("PATH"), ':');
 		if (is_non_print_builtins((*line)->cmd) == 0)
 		{
 			if (!(*line)->next)
@@ -103,6 +102,7 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 				return (ft_no_fork(&(*line), data, &(*final_line)));
 			}
 		}
+		path = ft_split(getenv("PATH"), ':');
 		tmp_binary = get_binary((*line)->cmd->data, path);
 		free_tab(path);
 		if (!tmp_binary)
