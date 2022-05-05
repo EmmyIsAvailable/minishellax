@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:03:19 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:12:33 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:48:58 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	error_cd(t_token *token)
 	buf = NULL;
 	if (token->next && token->next->next)
 		printf("-bash: cd: too many arguments\n");
-	else if (stat(token->next->data, buf) == -1)
+	else if (token->next && stat(token->next->data, buf) == -1)
 		printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 	return (0);
 }
