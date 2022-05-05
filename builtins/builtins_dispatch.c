@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 10:23:36 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:18:18 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_cd(t_token *token, t_data *data)
 {
 	char	*new_path;
 	char	*old_path;
-	int	ret;
+	int		ret;
 
 	new_path = NULL;
 	old_path = NULL;
@@ -40,8 +40,8 @@ int	dispatch_builtins(t_token *token, t_data *data)
 	{
 		if (!token->next)
 		{
-			displayOnTerm("\n");
-			printf("%s\n", (char *)NULL);
+			ft_display("\n");
+			printf("%s\n", (char *) NULL);
 		}
 		return (ft_echo(token->next, data));
 	}
@@ -65,35 +65,13 @@ int	non_printable_builtins(t_token *token, t_data *data)
 	return (1);
 }
 
-int	error_export(t_token *token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp)
-	{
-		if (check_assign(tmp->data) != 0)
-			printf("-bash: export: '%s': not a valid identifier\n", tmp->data);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 int	is_non_print_builtins(t_token *token)
 {
 	t_token	*tmp;
-	struct stat	*buf;
 
 	tmp = token;
-	buf = NULL;
 	if (ft_strncmp(token->data, "cd", 3) == 0)
-	{
-		if (token->next && token->next->next)
-			printf("-bash: cd: too many arguments\n");
-		else if (stat(token->next->data, buf) == -1)
-			printf("-bash: cd: %s: No such file or directory\n", token->next->data);
-		return (0);
-	}
+		return (error_cd(token));
 	if (ft_strncmp(token->data, "export", 7) == 0 && token->next)
 		return (error_export(token->next));
 	if (ft_strncmp(token->data, "unset", 6) == 0 && token->next)
@@ -101,7 +79,8 @@ int	is_non_print_builtins(t_token *token)
 		while (tmp)
 		{
 			if (check_unset(token->next->data) != 0)
-				printf("-bash: unset: '%s': not a valid identifier\n", token->next->data);
+				printf("-bash: unset: '%s': not a valid identifier\n",
+					token->next->data);
 			tmp = tmp->next;
 		}
 		return (0);

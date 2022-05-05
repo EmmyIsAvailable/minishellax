@@ -6,13 +6,13 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 16:23:41 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:17:40 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	displayOnTerm(char *str)
+int	ft_display(char *str)
 {
 	int	len;
 
@@ -26,7 +26,7 @@ int	displayOnTerm(char *str)
 int	variables_in_echo(char *params, t_data *data)
 {
 	char	**envp;
-	int	i;
+	int		i;
 
 	i = 0;
 	envp = data->envp;
@@ -36,7 +36,7 @@ int	variables_in_echo(char *params, t_data *data)
 		{
 			if (ft_strncmp(envp[i], params, ft_strlen(params)) == 0)
 			{
-				displayOnTerm(&envp[i][ft_strlen(params) + 1]);
+				ft_display(&envp[i][ft_strlen(params) + 1]);
 				return (1);
 			}
 		}
@@ -49,7 +49,6 @@ int	ft_echo(t_token *token, t_data *data)
 {
 	int		option;
 	int		print;
-	char	*param;
 
 	option = 0;
 	print = 0;
@@ -61,17 +60,16 @@ int	ft_echo(t_token *token, t_data *data)
 	while (token)
 	{
 		if (token->token == ECHO)
-			displayOnTerm(ft_itoa(data->exit_status));
+			print = ft_display(ft_itoa(data->exit_status));
 		else
-			param = token->data;
-		print = displayOnTerm(param);
+			print = ft_display(token->data);
 		if (token->next && print == 0)
-			displayOnTerm(" ");
+			ft_display(" ");
 		token = token->next;
 	}
 	if (option == 0)
-		displayOnTerm("\n");
-	printf("%s\n", (char *)NULL);
+		ft_display("\n");
+	printf("%s\n", (char *) NULL);
 	return (0);
 }
 
@@ -82,18 +80,18 @@ int	ft_env(t_data *data)
 	i = 0;
 	while (data->envp[i])
 	{
-		displayOnTerm(data->envp[i]);
-		displayOnTerm("\n");
+		ft_display(data->envp[i]);
+		ft_display("\n");
 		i++;
 	}
-	printf("%s\n", (char *)NULL);
+	printf("%s\n", (char *) NULL);
 	return (0);
 }
 
 int	ft_pwd(void)
 {
-	displayOnTerm(getcwd(NULL, 0));
-	displayOnTerm("\n");
-	printf("%s\n", (char *)NULL);
+	ft_display(getcwd(NULL, 0));
+	ft_display("\n");
+	printf("%s\n", (char *) NULL);
 	return (0);
 }

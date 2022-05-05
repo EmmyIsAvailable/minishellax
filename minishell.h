@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:16:39 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 11:17:17 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_message_exit(char *history, char *str, t_data *data);
 void	data_exit(char i, char j, int vrai, t_data *data);
 
 /*_builtins_cmd_*/
-int		displayOnTerm(char *str);
+int		ft_display(char *str);
 int		ft_echo(t_token *token, t_data *data);
 int		ft_pwd(void);
 int		ft_env(t_data *data);
@@ -126,7 +126,10 @@ int		dispatch_builtins(t_token *token, t_data *data);
 int		ft_cd(t_token *token, t_data *data);
 int		non_printable_builtins(t_token *token, t_data *data);
 int		is_non_print_builtins(t_token *token);
+
+/*_check_error_builtins_*/
 int		error_export(t_token *token);
+int		error_cd(t_token *token);
 
 /*_export_builtins_*/
 int		add_var_envp(char *str, t_data *data);
