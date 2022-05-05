@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/14 16:31:29 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:23:36 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ int	error_export(t_token *token)
 int	is_non_print_builtins(t_token *token)
 {
 	t_token	*tmp;
+	struct stat	*buf;
 
 	tmp = token;
+	buf = NULL;
 	if (ft_strncmp(token->data, "cd", 3) == 0)
 	{
 		if (token->next && token->next->next)
 			printf("-bash: cd: too many arguments\n");
-		else if (stat(token->next->data, NULL) == -1)
+		else if (stat(token->next->data, buf) == -1)
 			printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 		return (0);
 	}
