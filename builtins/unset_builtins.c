@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:31:22 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 10:46:46 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:27:22 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ void	ft_exec_unset(t_token *token, char **envp, int i)
 			{
 				envp[i] = ft_strdup(envp[i + 1]);
 				i++;
-			} 
+			}
 			free(envp[i]);
 			envp[i] = NULL;
 		}
 	}
 }
 
-int     ft_unset(t_token *token, t_data *data)
+int	ft_unset(t_token *token, t_data *data)
 {
-	int	i;
+	int		i;
 	char	**envp;
-	int	ret;
+	int		ret;
 
 	envp = data->envp;
 	ret = 0;
-        while (token)
-        {
-                i = -1;
+	while (token)
+	{
+		i = -1;
 		if (check_unset(token->data) == 0)
 			ft_exec_unset(token, envp, i);
 		else
