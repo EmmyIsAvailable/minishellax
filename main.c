@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/22 11:36:35 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:36:39 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,23 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 	{
 		head = NULL;
 		history = readline("$> ");
-		if ((data.shlvl == 1 && history == NULL) || (history
-				&& data.shlvl == 1 && ft_message_exit(history, "exit", &data) == 0))
+		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1
+				&& ft_message_exit(history, "exit", &data) == 0))
 			break ;
 		else if (history && ft_cmp_line(history, "./minishell") == 0)
 			upgrade_shlvl(&data);
-		else if (data.shlvl > 1 && ((history
-					&& ft_message_exit(history, "exit", &data) == 0) || history == NULL))
+		else if (data.shlvl > 1 && ((history && ft_message_exit(history,
+						"exit", &data) == 0) || history == NULL))
 		{
-			ft_prev_envp(shlvl, &data); // et il faut free l'envp qu'on quitte
+			ft_prev_envp(shlvl, &data);
 			history = "";
 		}
 		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, &data, &shlvl);
 		add_history(history);
+		free(history);
 	}
+	free(history);
 	return (0);
 }
 
@@ -110,7 +112,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 	init_envp(&data, envp);
-	if (minishell(data, head, shlvl))
-		return (1);
+	minishell(data, head, shlvl);
+	free_tab(data.envp);
 	return (0);
 }
