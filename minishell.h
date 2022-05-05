@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:57:51 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:44:02 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_lst_clear(t_token **lst, void (*del)(void *));
 int		clear_head(t_token **head);
 void	ft_free(t_token **head);
 
-
 /*_parse_*/
 t_token	*scan_token(char *str, int io_here, t_data *data);
 t_token	*fill_data(token_type token, int len, char *op, t_data *data);//malloc
@@ -85,10 +84,8 @@ int		find_op(char *str, char op);
 int		jump_spaces(char *str, int i);
 int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
 
-
 /*_split_bis_*/
 char	**ft_split_bis(char const *s, char *c);
-
 
 /*_split_env*/
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
@@ -110,8 +107,8 @@ int		minishell(t_data data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
 void	sig_int(int code);
-int	event_ctrl_c(t_data *data);
-int	ft_message_exit(char *history, char *str, t_data *data);
+int		event_ctrl_c(t_data *data);
+int		ft_message_exit(char *history, char *str, t_data *data);
 void	data_exit(char i, char j, int vrai, t_data *data);
 
 /*_builtins_cmd_*/
@@ -144,7 +141,7 @@ int		check_unset(char *str);
 int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
-int	ft_exec(t_token *token, t_data *data);
+int		ft_exec(t_token *token, t_data *data);
 void	**ft_free_tab(char **data);
 char	*get_binary(char *cmd, char **env_path);
 char	**fill_token_tab(t_token *token);
@@ -157,8 +154,9 @@ int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
 
 /*_pipex_*/
 int		ft_pipex(t_heads **final_line, t_heads **line, t_data *data);
-int		ft_pipex_bis(t_heads **line, t_data *data);
+int		ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes);
 int		multiple_pipes(t_heads **line, t_data *data);
+int		ft_pipex_final(t_heads **line, t_data *data);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);
@@ -169,6 +167,6 @@ int		ft_prev_envp(t_token *shlvl, t_data *data);
 int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 int		ft_unset_prev(char *str, t_data *data);
 int		upgrade_shlvl(t_data *data);
-void		ft_exec_unset_prev(char *to_export, char **envp);
+void	ft_exec_unset_prev(char *to_export, char **envp);
 
 #endif
