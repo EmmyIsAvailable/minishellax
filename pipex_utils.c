@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 15:53:12 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 15:54:52 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 {
 	t_heads	**tmp;
 
-	tmp = line;	
+	tmp = line;
 	if (!(*line)->next)
 		return (non_printable_builtins((*line)->cmd, data));
 	else
@@ -101,7 +101,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 {
 	t_heads	**tmp;
 
-	tmp = line;	
+	tmp = line;
 	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
 		return (1);
 	printf("-bash: %s: command not found\n", (*line)->cmd->data);
