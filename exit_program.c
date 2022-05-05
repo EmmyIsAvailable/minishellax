@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 12:00:52 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:43:48 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	data_exit(char i, char j, int vrai, t_data *data)
 int	ft_message_exit(char *history, char *str, t_data *data)
 {
 	int	i;
+	int	j;
 	int	vrai;
 
 	vrai = 0;
@@ -79,6 +80,10 @@ int	ft_message_exit(char *history, char *str, t_data *data)
 		i++;
 		vrai = 1;
 	}
-	data_exit(history[i], history[i + 1], vrai, data);
+	if (history[i] == '\0')
+		j = '\0';
+	else
+		j = history[i + 1];
+	data_exit(history[i], j, vrai, data);
 	return (0);
 }
