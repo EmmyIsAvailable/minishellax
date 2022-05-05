@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 12:10:55 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:49:55 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,6 @@ int	check_outfile(t_heads **line)
 	return (0);
 }
 
-void	ft_free_path(char **path)
-{
-	int	i;
-
-	i = -1;
-	while (path[++i])
-		free(path[i]);
-	free(path);
-}
-
 int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 {
 	char	**path;
@@ -113,7 +103,6 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 		}
 		if (!get_binary((*line)->cmd->data, path))
 		{
-			ft_free_path(path);
 			if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
 				return (1);
 			printf("-bash: %s: command not found\n", (*line)->cmd->data);
@@ -125,6 +114,7 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 			else
 				return (127);
 		}
+		free_tab(path);
 		if ((*line))
 		{
 			push_heads(tmp, final_line);
