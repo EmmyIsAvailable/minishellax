@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 11:49:39 by eruellan          #+#    #+#             */
+/*   Updated: 2022/05/05 11:51:17 by eruellan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_heredoc(char *deli, t_data *data)
 {
 	char	*tmp;
-	int	heredoc;
+	int		heredoc;
 	char	*buffer;
 
 	tmp = NULL;
@@ -17,7 +29,7 @@ int	is_heredoc(char *deli, t_data *data)
 		if (buffer)
 			buffer = ft_strjoin(buffer, "\n");
 		if (tmp && ft_strncmp(tmp, deli, ft_strlen(deli) + 1) == 0)
-			break;
+			break ;
 		buffer = ft_strjoin(buffer, tmp);
 		tmp = readline("> ");
 	}
@@ -29,7 +41,7 @@ int	is_heredoc(char *deli, t_data *data)
 
 char	*env_in_heredoc(int heredoc, char *buffer, t_data *data)
 {
-	int	i;
+	int		i;
 	char	*ret;
 	char	*tmp;
 
