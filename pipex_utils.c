@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:28:59 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 12:10:55 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_wait(t_data *data)
 {
 	pid_t	pid;
-	int	wait_status;
+	int		wait_status;
 
 	wait_status = 0;
 	pid = 0;
@@ -24,7 +24,7 @@ void	ft_wait(t_data *data)
 		pid = wait(&wait_status);
 		if (pid == data->last_pid)
 			return ;
-	} 
+	}
 }
 
 int	check_infile(t_heads **line, t_data *data)
@@ -62,9 +62,11 @@ int	check_outfile(t_heads **line)
 	while (tmp_out)
 	{
 		if (tmp_out->token == 5)
-			tmp_out->fd = open(tmp_out->data, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			tmp_out->fd = open(tmp_out->data, O_WRONLY
+					| O_CREAT | O_TRUNC, 0664);
 		else if (tmp_out->token == 7)
-			tmp_out->fd = open (tmp_out->data, O_WRONLY | O_CREAT | O_APPEND, 0664);
+			tmp_out->fd = open (tmp_out->data, O_WRONLY
+					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
 			perror("Open outfile failed");
@@ -92,7 +94,7 @@ void	ft_free_path(char **path)
 
 int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 {
-	char **path;
+	char	**path;
 	t_heads	**tmp;
 
 	tmp = line;
