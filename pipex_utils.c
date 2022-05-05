@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 15:00:57 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:53:12 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,46 +82,57 @@ int	check_outfile(t_heads **line)
 	return (0);
 }
 
+int	non_print(t_heads **line, t_heads **final_line, t_data *data)
+{
+	t_heads	**tmp;
+
+	tmp = line;	
+	if (!(*line)->next)
+		return (non_printable_builtins((*line)->cmd, data));
+	else
+	{
+		free_elem_heads(&(*tmp));
+		return (ft_no_fork(&(*line), data, &(*final_line)));
+	}
+	return (0);
+}
+
+int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
+{
+	t_heads	**tmp;
+
+	tmp = line;	
+	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
+		return (1);
+	printf("-bash: %s: command not found\n", (*line)->cmd->data);
+	if ((*line)->next)
+	{
+		free_elem_heads(&(*tmp));
+		return (ft_no_fork(&(*line), data, &(*final_line)));
+	}
+	else
+		return (127);
+}
+
 int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 {
 	char	**path;
 	char	*tmp_binary;
-	t_heads	**tmp;
 
-	tmp = line;
 	tmp_binary = NULL;
 	if (*line)
 	{
 		if (is_non_print_builtins((*line)->cmd) == 0)
-		{
-			if (!(*line)->next)
-				return (non_printable_builtins((*line)->cmd, data));
-			else
-			{
-				free_elem_heads(&(*tmp));
-				return (ft_no_fork(&(*line), data, &(*final_line)));
-			}
-		}
+			return (non_print(&(*line), &(*final_line), data));
 		path = ft_split(getenv("PATH"), ':');
 		tmp_binary = get_binary((*line)->cmd->data, path);
 		free_tab(path);
 		if (!tmp_binary)
-		{
-			if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
-				return (1);
-			printf("-bash: %s: command not found\n", (*line)->cmd->data);
-			if ((*line)->next)
-			{
-				free_elem_heads(&(*tmp));
-				return (ft_no_fork(&(*line), data, &(*final_line)));
-			}
-			else
-				return (127);
-		}
+			return (no_binary(&(*line), &(*final_line), data));
 		free(tmp_binary);
 		if ((*line))
 		{
-			push_heads(tmp, final_line);
+			push_heads(line, final_line);
 			return (ft_no_fork(&(*line), data, &(*final_line)));
 		}
 	}
