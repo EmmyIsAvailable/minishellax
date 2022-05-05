@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:17:17 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:57:51 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,6 @@ int		ft_prev_envp(t_token *shlvl, t_data *data);
 int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 int		ft_unset_prev(char *str, t_data *data);
 int		upgrade_shlvl(t_data *data);
+void		ft_exec_unset_prev(char *to_export, char **envp);
 
 #endif
