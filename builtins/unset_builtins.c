@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:31:22 by eruellan          #+#    #+#             */
-/*   Updated: 2022/04/07 16:00:27 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/05 10:46:46 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ int	check_unset(char *str)
 	return (0);
 }
 
+void	ft_exec_unset(t_token *token, char **envp, int i)
+{
+	while (envp[++i])
+	{
+		if (check_existence(token->data, envp[i]) == 1)
+		{
+			while (envp[i] && envp[i + 1])
+			{
+				envp[i] = ft_strdup(envp[i + 1]);
+				i++;
+			} 
+			free(envp[i]);
+			envp[i] = NULL;
+		}
+	}
+}
+
 int     ft_unset(t_token *token, t_data *data)
 {
 	int	i;
@@ -52,26 +69,10 @@ int     ft_unset(t_token *token, t_data *data)
         {
                 i = -1;
 		if (check_unset(token->data) == 0)
-		{
-                	while (envp[++i])
-			{
-				if (check_existence(token->data, envp[i]) == 1)
-				{
-					while (envp[i] && envp[i + 1])
-					{
-						envp[i] = ft_strdup(envp[i + 1]);
-						i++;
-					} 
-					free(envp[i]);
-					envp[i] = NULL;
-				}
-			}
-		}
+			ft_exec_unset(token, envp, i);
 		else
 			ret = 1;
 		token = token->next;
 	}
 	return (ret);
 }
-
-
