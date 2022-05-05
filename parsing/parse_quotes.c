@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 11:41:43 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 14:44:18 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 	int		i;
 
 	new_token = NULL;
+	if (!find_op(&str[1], '\'') || !find_op(&str[1], '\'')) 
+		return (NULL);
 	new_token = ft_create_token(token);
 	if (token == DOUBLE_QUOTE)
 		i = dollar_in_quotes(&new_token, str, op, data);

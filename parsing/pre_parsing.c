@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 14:33:39 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 15:00:24 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
 		tmp = scan_token(&str[i], io_here_flag, data);
 		if (!tmp)
+		{
+			printf("Bash : parsing error\n");
 			return (ft_lst_clear(head, free));
+		}
 		if (ft_strchr(tmp->data, 32) && tmp->token == 1)
 			ft_split_token(head, tmp, data);
 		else
