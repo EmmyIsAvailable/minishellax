@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/22 14:49:59 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/05 15:03:18 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data(DOUBLE_GREATER, 2, ">>", data));
 	else if (ft_strncmp((const char *)str, "$?", 2) == 0)
 		return (fill_data(ECHO, 2, "$?", data));
-	else if (ft_strncmp((const char *)str, "\"", 1) == 0) //&& find_op(&str[1], '\"'))
+	else if (ft_strncmp((const char *)str, "\"", 1) == 0)
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
-	else if (ft_strncmp((const char *)str, "\'", 1) == 0) //&& find_op(&str[1], '\''))
+	else if (ft_strncmp((const char *)str, "\'", 1) == 0)
 		return (fill_data_quotes(SIMPLE_QUOTE, str, '\'', data));
 	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here == 0)
 		return (fill_data(DOLLAR_SIGN, 0, &str[0], data));
@@ -108,7 +108,7 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data(WORD, ft_name(&str[1]) + 1, &str[0], data));
 	else if (find_token(str[0]) != -1)
 		return (fill_data(find_token(str[0]), 1, &str[0], data));
-	else //if (!find_op(str, '\'') && !find_op(str, '\"'))
+	else
 		return (other_token(str, io_here, data));
 	return (NULL);
 }
