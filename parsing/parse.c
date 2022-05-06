@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 15:03:18 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:57:57 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,28 @@ t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 	return (new_token);
 }
 
+t_token	*fill_data_bis(token_type token, int len, char *op, t_data *data)
+{
+	t_token	*new_token;
+	int		i;
+
+	i = -1;
+	new_token = ft_create_token(token);
+	if (token == DOLLAR_SIGN && ft_search_env(&op[1], data))
+		return (split_env(new_token, op, data));
+	if (token == DOLLAR_SIGN)
+		len = ft_name(&op[1]) + 1;
+	new_token->data = malloc(sizeof(char) * len + 1);
+	if (!new_token->data)
+		return (NULL);
+	while (op[++i] && i < len)
+		new_token->data[i] = op[i];
+	new_token->data[len] = '\0';
+	new_token->data_size = len;
+	free(op);
+	return (new_token);
+}
+
 t_token	*other_token(char *str, int io_here, t_data *datas)
 {
 	int		i;
@@ -86,8 +108,8 @@ t_token	*other_token(char *str, int io_here, t_data *datas)
 	data[i] = str[i];
 	data[j] = '\0';
 	if (!io_here && ft_strchr((const char *)data, '=') != NULL)
-		return (fill_data(ASSIGN, j, data, datas));
-	return (fill_data(WORD, j, data, datas));
+		return (fill_data_bis(ASSIGN, j, data, datas));
+	return (fill_data_bis(WORD, j, data, datas));
 }
 
 t_token	*scan_token(char *str, int io_here, t_data *data)

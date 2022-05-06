@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 15:44:02 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:44:48 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		find_op(char *str, char op);
 /*_pre_parsing_*/
 int		jump_spaces(char *str, int i);
 int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
+void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag);
 
 /*_split_bis_*/
 char	**ft_split_bis(char const *s, char *c);

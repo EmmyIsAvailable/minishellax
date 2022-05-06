@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:43:29 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 11:44:02 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:46:13 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,29 @@
 
 void	free_elem_heads(t_heads **lst)
 {
-	t_heads	*tmp;
-
-	tmp = *lst;
+	if (!(*lst))
+		return ;
 	if ((*lst))
 	{
-		if ((*lst)->next)
-			*lst = (*lst)->next;
-		else
-			*lst = NULL;
-		if (tmp->cmd)
-			ft_lst_clear(&tmp->cmd, free);
-		if (tmp->infile)
-			ft_lst_clear(&tmp->infile, free);
-		if (tmp->outfile)
-			ft_lst_clear(&tmp->outfile, free);
+		if ((*lst)->cmd)
+			ft_lst_clear(&(*lst)->cmd, free);
+		if ((*lst)->infile)
+			ft_lst_clear(&(*lst)->infile, free);
+		if ((*lst)->outfile)
+			ft_lst_clear(&(*lst)->outfile, free);
+		free(*lst);
 	}
-	free(tmp);
 }
 
 void	clear_all_heads(t_heads **lst)
 {
 	t_heads	*tmp;
 
-	tmp = *lst;
-	while (tmp)
+	while (*lst)
 	{
-		(*lst) = (*lst)->next;
-		free_elem_heads(&tmp);
-		tmp = *lst;
+		tmp = (*lst)->next;
+		free_elem_heads(lst);
+		*lst = tmp;
 	}
 }
 

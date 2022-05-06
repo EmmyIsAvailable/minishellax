@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 14:36:39 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:38:48 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,16 @@ int	ft_cmp_line(char *history, char *str)
 int	minishell(t_data data, t_token *head, t_token *shlvl)
 {
 	char	*history;
+	t_heads	*line;
+	int	here_flag;
 
 	history = NULL;
 	event_ctrl_c(&data);
 	while (data.shlvl != -1)
 	{
 		head = NULL;
+		line = NULL;
+		here_flag = 0;
 		history = readline("$> ");
 		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1
 				&& ft_message_exit(history, "exit", &data) == 0))
@@ -89,10 +93,17 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 			history = "";
 		}
 		if (history && ft_cmp_line(history, "./minishell") != 0)
-			ft_parse(history, &head, &data, &shlvl);
+		{
+			create_tokens(history, &head, &data, here_flag);
+			if (!head)
+				break;
+			else
+				cmd_line(&head, &line, &data, &shlvl);
+		}
 		add_history(history);
 		free(history);
 	}
+	ft_lst_clear(&shlvl, free);
 	free(history);
 	return (0);
 }

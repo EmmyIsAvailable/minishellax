@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 14:31:06 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:57:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 	if ((*head) == NULL)
 		return (0);
 	if ((*head)->token == SPACE)
-		(*head) = (*head)->next;
+		ft_free(head);
 	if ((*head)->token == REDIR_IN)
 		return (check_inf(head, inf, out, cmd));
 	if ((*head)->token == REDIR_OUT)
@@ -68,6 +68,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		unlink((*line)->infile->data);
 		return (0);
 	}
+	ft_print_line(line);
 	data->exit_status = ft_pipex(&final_line, line, data);
 	return (0);
 }

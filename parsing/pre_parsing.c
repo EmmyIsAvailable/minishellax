@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 15:00:24 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:42:40 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 	}
 }
 
-int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
+/*int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 {
 	t_heads	*line;
 	int		here_flag;
@@ -100,9 +100,8 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	line = NULL;
 	here_flag = 0;
 	create_tokens(str, head, data, here_flag);
-	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else
 		return (cmd_line(head, &line, data, shlvl));
-}
+}*/
