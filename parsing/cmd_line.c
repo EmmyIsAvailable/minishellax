@@ -29,7 +29,9 @@ int	join_data(t_token **tmp)
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
 		(*tmp)->token = SPACE;
 		(*tmp) = (*tmp)->next;
-		(*tmp)->data = str;
+		free((*tmp)->data);
+		(*tmp)->data = ft_strdup(str);
+		free(str);
 		(*tmp)->token = var_env;
 	}
 	return (0);
