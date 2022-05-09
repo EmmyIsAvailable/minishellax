@@ -77,8 +77,8 @@ int	check_assign(char *assignment)
 		if (assignment[i] == '=')
 			eq_sign = 1;
 	}
-	if (eq_sign != 1)
-		return (1);
+//	if (eq_sign != 1)
+//		return (1);
 	return (0);
 }
 

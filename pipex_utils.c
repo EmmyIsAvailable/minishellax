@@ -84,14 +84,15 @@ int	check_outfile(t_heads **line)
 
 int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 {
-	t_heads	**tmp;
+	t_heads	*tmp;
 
-	tmp = line;
 	if (!(*line)->next)
 		return (non_printable_builtins(&(*line), data));
 	else
 	{
-		free_elem_heads(&(*tmp));
+		tmp = (*line)->next;	
+		free_elem_heads(&(*line));
+		(*line) = tmp;
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	return (0);
@@ -99,15 +100,16 @@ int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 
 int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 {
-	t_heads	**tmp;
+	t_heads	*tmp;
 
-	tmp = line;
 	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
 		return (1);
 	printf("-bash: %s: command not found\n", (*line)->cmd->data);
 	if ((*line)->next)
 	{
-		free_elem_heads(&(*tmp));
+		tmp = (*line)->next;	
+		free_elem_heads(&(*line));
+		(*line) = tmp;
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	else
@@ -124,12 +126,15 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 	{
 		if (is_non_print_builtins((*line)->cmd) == 0)
 			return (non_print(&(*line), &(*final_line), data));
-		path = ft_split(getenv("PATH"), ':');
-		tmp_binary = get_binary((*line)->cmd->data, path);
-		free_tab(path);
-		if (!tmp_binary)
-			return (no_binary(&(*line), &(*final_line), data));
-		free(tmp_binary);
+		else
+		{
+			path = ft_split(getenv("PATH"), ':');
+			tmp_binary = get_binary((*line)->cmd->data, path);
+			free_tab(path);
+			if (!tmp_binary)
+				return (no_binary(&(*line), &(*final_line), data));
+			free(tmp_binary);
+		}
 		if ((*line))
 		{
 			push_heads(line, final_line);

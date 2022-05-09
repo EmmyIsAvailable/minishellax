@@ -15,7 +15,7 @@ OBJS	= ${SRCS:.c=.o}
 
 RM	= rm -f
 
-CC	= gcc #-fsanitize=address
+CC	= gcc -fsanitize=address
 
 FLAGS	= -Wall -Wextra -Werror
 

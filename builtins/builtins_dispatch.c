@@ -65,6 +65,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 
 int	non_printable_builtins(t_heads **line, t_data *data)
 {
+	//leaks all ok
 	int	ret;
 
 	ret = 1;

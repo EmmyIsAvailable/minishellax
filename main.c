@@ -122,6 +122,5 @@ int	main(int ac, char **av, char **envp)
 	init_envp(&data, envp);
 	minishell(data, head, shlvl);
 	free_tab(data.envp);
-	while (1);
 	return (0);
 }
