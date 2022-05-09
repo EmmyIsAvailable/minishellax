@@ -92,7 +92,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 	}
 }
 
-/*int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
+int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 {
 	t_heads	*line;
 	int		here_flag;
@@ -104,4 +104,4 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 		return (0);
 	else
 		return (cmd_line(head, &line, data, shlvl));
-}*/
+}

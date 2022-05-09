@@ -67,39 +67,36 @@ int	ft_cmp_line(char *history, char *str)
 	return (0);
 }
 
+int	ft_shlvl(t_data *data, char *history, t_token *shlvl)
+{
+	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
+			&& ft_message_exit(history, "exit", data) == 0))
+		return (0);
+	else if (history && ft_cmp_line(history, "./minishell") == 0)
+		upgrade_shlvl(data);
+	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
+					"exit", data) == 0) || history == NULL))
+	{
+		ft_prev_envp(shlvl, data);
+		history = "";
+	}
+	return (1);
+}
+
 int	minishell(t_data data, t_token *head, t_token *shlvl)
 {
 	char	*history;
-	t_heads	*line;
-	int	here_flag;
 
 	history = NULL;
 	event_ctrl_c(&data);
 	while (data.shlvl != -1)
 	{
 		head = NULL;
-		line = NULL;
-		here_flag = 0;
 		history = readline("$> ");
-		if ((data.shlvl == 1 && history == NULL) || (history && data.shlvl == 1
-				&& ft_message_exit(history, "exit", &data) == 0))
+		if (ft_shlvl(&data, history, shlvl) == 0)
 			break ;
-		else if (history && ft_cmp_line(history, "./minishell") == 0)
-			upgrade_shlvl(&data);
-		else if (data.shlvl > 1 && ((history && ft_message_exit(history,
-						"exit", &data) == 0) || history == NULL))
-		{
-			ft_prev_envp(shlvl, &data);
-			history = "";
-		}
 		if (history && ft_cmp_line(history, "./minishell") != 0)
-		{
-			create_tokens(history, &head, &data, here_flag);
-			if (!head)
-				break;
-			else
-				cmd_line(&head, &line, &data, &shlvl);
-		}
+			ft_parse(history, &head, &data, &shlvl);
 		add_history(history);
 		free(history);
 	}

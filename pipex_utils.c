@@ -88,7 +88,7 @@ int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 
 	tmp = line;
 	if (!(*line)->next)
-		return (non_printable_builtins((*line)->cmd, data));
+		return (non_printable_builtins(&(*line), data));
 	else
 	{
 		free_elem_heads(&(*tmp));

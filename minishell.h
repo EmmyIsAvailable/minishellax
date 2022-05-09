@@ -119,10 +119,16 @@ int		ft_pwd(void);
 int		ft_env(t_data *data);
 int		variables_in_echo(char *params, t_data *data);
 
+/*_pipex_*/
+int		ft_pipex(t_heads **final_line, t_heads **line, t_data *data);
+int		ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes);
+int		multiple_pipes(t_heads **line, t_data *data);
+int		ft_pipex_final(t_heads **line, t_data *data);
+
 /*_builtins_dispatch_*/
-int		dispatch_builtins(t_token *token, t_data *data);
-int		ft_cd(t_token *token, t_data *data);
-int		non_printable_builtins(t_token *token, t_data *data);
+int		dispatch_builtins(t_heads **line, t_data *data); // changes
+int		ft_cd(t_heads **line, t_data *data); //changed
+int		non_printable_builtins(t_heads **line, t_data *data);//changed 
 int		is_non_print_builtins(t_token *token);
 
 /*_check_error_builtins_*/
@@ -152,12 +158,6 @@ void	ft_wait(t_data *data);
 int		check_infile(t_heads **line, t_data *data);
 int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
-
-/*_pipex_*/
-int		ft_pipex(t_heads **final_line, t_heads **line, t_data *data);
-int		ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes);
-int		multiple_pipes(t_heads **line, t_data *data);
-int		ft_pipex_final(t_heads **line, t_data *data);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);

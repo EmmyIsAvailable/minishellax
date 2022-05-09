@@ -34,7 +34,7 @@ int	ft_pipex(t_heads **final_line, t_heads **line, t_data *data)
 			dup2(data->pipes[0][1], STDOUT_FILENO);
 			close(data->pipes[0][0]);
 		}
-		if (dispatch_builtins((*final_line)->cmd, data) == 1)
+		if (dispatch_builtins(&(*final_line), data) == 1)
 			ft_exec((*final_line)->cmd, data);
 	}
 	else if (pid > 0)
@@ -50,8 +50,8 @@ int	ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes)
 	pid = fork();
 	if (pid == 0)
 	{	
-		if (check_infile(&(*line)->next, data)
-			|| check_outfile(&(*line)->next))
+		if (check_infile(&(*line), data)
+			|| check_outfile(&(*line)))
 		{
 			return (1);
 		}
@@ -59,28 +59,28 @@ int	ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes)
 			dup2(data->pipes[0][0], STDIN_FILENO);
 		else if (mult_pipes == 1)
 			dup2(data->pipes[1][0], STDIN_FILENO);
-		if (dispatch_builtins((*line)->next->cmd, data) == 1)
-		{
-			ft_exec((*line)->next->cmd, data);
-			clear_all_heads(line);
-		}
+		if (dispatch_builtins(&(*line), data) == 1)
+			ft_exec((*line)->cmd, data);
 	}
 	else if (pid > 0)
 		data->last_pid = pid;
 	close(data->pipes[0][0]);
 	close(data->pipes[0][1]);
-	clear_all_heads(line);
 	return (0);
 }
 
 int	ft_pipex_final(t_heads **line, t_data *data)
 {
 	int		mult_pipes;
+	t_heads	*tmp;
 
+	tmp = (*line)->next;
+	free_elem_heads(&(*line));
+	(*line) = tmp;
 	mult_pipes = 0;
-	if ((*line)->next && (*line)->next->next)
+	if ((*line) && (*line)->next)
 		mult_pipes = multiple_pipes(line, data);
-	if ((*line)->next)
+	if ((*line))
 		ft_pipex_bis(line, data, mult_pipes);
 	ft_wait(data);
 	clear_all_heads(line);
@@ -91,9 +91,8 @@ int	multiple_pipes(t_heads **line, t_data *data)
 {
 	pid_t	pid;
 
-	while ((*line)->next && (*line)->next->next)
+	while ((*line) && (*line)->next)
 	{
-		free_elem_heads(&(*line));
 		pipe(data->pipes[1]);
 		pid = fork();
 		if (pid == 0)
@@ -105,9 +104,8 @@ int	multiple_pipes(t_heads **line, t_data *data)
 			dup2(data->pipes[0][0], STDIN_FILENO);
 			dup2(data->pipes[1][1], STDOUT_FILENO);
 			close(data->pipes[1][0]);
-			if (dispatch_builtins((*line)->cmd, data) == 1)
+			if (dispatch_builtins(&(*line), data) == 1)
 				ft_exec((*line)->cmd, data);
-			clear_all_heads(line);
 		}
 		else if (pid > 0)
 			data->last_pid = pid;

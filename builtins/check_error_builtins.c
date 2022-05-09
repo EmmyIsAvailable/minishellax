@@ -28,12 +28,11 @@ int	error_export(t_token *token)
 
 int	error_cd(t_token *token)
 {
-	struct stat	*buf;
+	struct stat	buf;
 
-	buf = NULL;
 	if (token->next && token->next->next)
 		printf("-bash: cd: too many arguments\n");
-	else if (token->next && stat(token->next->data, buf) == -1)
+	else if (token->next && stat(token->next->data, &buf) == -1)
 		printf("-bash: cd: %s: No such file or directory\n", token->next->data);
 	return (0);
 }
