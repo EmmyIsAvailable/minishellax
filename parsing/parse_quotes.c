@@ -111,7 +111,7 @@ t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
 	int		i;
 
 	new_token = NULL;
-	if (!find_op(&str[1], '\'') || !find_op(&str[1], '\'')) 
+	if (!find_op(&str[1], op))
 		return (NULL);
 	new_token = ft_create_token(token);
 	if (token == DOUBLE_QUOTE)

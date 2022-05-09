@@ -57,7 +57,6 @@ void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
 		free(spaceless[i]);
 		i++;
 	}
-	ft_free(&cmd);
 	free(spaceless);
 }
 
