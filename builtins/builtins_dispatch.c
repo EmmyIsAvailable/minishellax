@@ -65,16 +65,20 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 
 int	non_printable_builtins(t_heads **line, t_data *data)
 {
+	int	ret;
+
+	ret = 1;
 	if (ft_strncmp((*line)->cmd->data, "cd", 3) == 0)
 		return (ft_cd(&(*line), data));
 	if (ft_strncmp((*line)->cmd->data, "export", 7) == 0 && (*line)->cmd->next)
 	{
 		ft_free(&(*line)->cmd);
-		return (ft_export(&(*line), data));
+		ret = ft_export((*line)->cmd, data);
 	}
 	if (ft_strncmp((*line)->cmd->data, "unset", 6) == 0 && (*line)->cmd->next)
-		return (ft_unset((*line)->cmd, data)); // a terme envoyer line
-	return (1);
+		ret = ft_unset((*line)->cmd, data);
+	clear_all_heads(line);
+	return (ret);
 }
 
 int	is_non_print_builtins(t_token *token)

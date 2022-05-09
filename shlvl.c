@@ -109,5 +109,6 @@ int	upgrade_shlvl(t_data *data)
 	data->shlvl++;
 	shlvl = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
 	browse_data_var(shlvl, data);
+	free(shlvl);
 	return (0);
 }

@@ -40,35 +40,7 @@ int	ft_pipex(t_heads **final_line, t_heads **line, t_data *data)
 	else if (pid > 0)
 		data->last_pid = pid;
 	close(data->pipes[0][1]);
-	printf("line :\n");
-	ft_print_line(line);
 	return (ft_pipex_final(final_line, data));
-}
-
-int	ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{	
-		if (check_infile(&(*line), data)
-			|| check_outfile(&(*line)))
-		{
-			return (1);
-		}
-		if (mult_pipes == 0)
-			dup2(data->pipes[0][0], STDIN_FILENO);
-		else if (mult_pipes == 1)
-			dup2(data->pipes[1][0], STDIN_FILENO);
-		if (dispatch_builtins(&(*line), data) == 1)
-			ft_exec((*line)->cmd, data);
-	}
-	else if (pid > 0)
-		data->last_pid = pid;
-	close(data->pipes[0][0]);
-	close(data->pipes[0][1]);
-	return (0);
 }
 
 int	ft_pipex_final(t_heads **line, t_data *data)
@@ -115,4 +87,30 @@ int	multiple_pipes(t_heads **line, t_data *data)
 		close(data->pipes[1][1]);
 	}
 	return (1);
+}
+
+int	ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{	
+		if (check_infile(&(*line), data)
+			|| check_outfile(&(*line)))
+		{
+			return (1);
+		}
+		if (mult_pipes == 0)
+			dup2(data->pipes[0][0], STDIN_FILENO);
+		else if (mult_pipes == 1)
+			dup2(data->pipes[1][0], STDIN_FILENO);
+		if (dispatch_builtins(&(*line), data) == 1)
+			ft_exec((*line)->cmd, data);
+	}
+	else if (pid > 0)
+		data->last_pid = pid;
+	close(data->pipes[0][0]);
+	close(data->pipes[0][1]);
+	return (0);
 }

@@ -135,7 +135,7 @@ int		error_cd(t_token *token);
 
 /*_export_builtins_*/
 int		add_var_envp(char *str, t_data *data);
-int		ft_export(t_heads **line, t_data *data);
+int		ft_export(t_token *token, t_data *data);
 int		browse_data_var(char *str, t_data *data);
 int		check_assign(char *assignment);
 int		ft_solo_export(t_data *data);

@@ -62,17 +62,19 @@ int	ft_unset(t_token *token, t_data *data)
 	int		i;
 	char	**envp;
 	int		ret;
+	t_token	*tmp;
 
 	envp = data->envp;
 	ret = 0;
-	while (token)
+	tmp = token;
+	while (tmp)
 	{
 		i = -1;
-		if (check_unset(token->data) == 0)
-			ft_exec_unset(token, envp, i);
+		if (check_unset(tmp->data) == 0)
+			ft_exec_unset(tmp, envp, i);
 		else
 			ret = 1;
-		token = token->next;
+		tmp = tmp->next;
 	}
 	return (ret);
 }

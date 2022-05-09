@@ -94,11 +94,11 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 
 int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 {
-	t_heads	*line;
 	int		here_flag;
+	t_heads	*line;
 
-	line = NULL;
 	here_flag = 0;
+	line = NULL;
 	create_tokens(str, head, data, here_flag);
 	if (!(*head))
 		return (0);

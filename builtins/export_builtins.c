@@ -82,12 +82,12 @@ int	check_assign(char *assignment)
 	return (0);
 }
 
-int	ft_export(t_heads **line, t_data *data)
+int	ft_export(t_token *token, t_data *data)
 {
 	t_token	*tmp;
 	int		ret;
 
-	tmp = (*line)->cmd;
+	tmp = token;
 	ret = 0;
 	while (tmp)
 	{
@@ -100,7 +100,6 @@ int	ft_export(t_heads **line, t_data *data)
 			ret = 1;
 		tmp = tmp->next;
 	}
-	clear_all_heads(&(*line));
 	return (ret);
 }
 
