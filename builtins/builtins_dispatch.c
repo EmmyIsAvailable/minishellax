@@ -14,6 +14,7 @@
 
 int	ft_cd(t_heads **line, t_data *data)
 {
+	char	*cwd;
 	char	*new_path;
 	char	*old_path;
 	int		ret;
@@ -21,17 +22,23 @@ int	ft_cd(t_heads **line, t_data *data)
 	new_path = NULL;
 	old_path = NULL;
 	ret = 0;
-	old_path = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+	cwd = getcwd(NULL, 0);
+	old_path = ft_strjoin("OLDPWD=", cwd);
 	browse_data_var(old_path, data);
+	free(old_path);
+	free(cwd);
 	if ((*line)->cmd->next)
 		ret = chdir((*line)->cmd->next->data);
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
 		return (1);
-	new_path = ft_strjoin("PWD=", getcwd(NULL, 0));
+	cwd = getcwd(NULL, 0);
+	new_path = ft_strjoin("PWD=", cwd);
 	browse_data_var(new_path, data);
-//	clear_all_heads(line);
+	free(new_path);
+	free(cwd);
+	clear_all_heads(line);
 	return (0);
 }
 
@@ -48,42 +55,13 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 		return (ft_echo((*line)->cmd, data));//envoyer line tt court a terme
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 4) == 0 && !(*line)->cmd->next)
-	{
-//		clear_all_heads(line);
 		return (ft_pwd());
-	}
 	if (ft_strncmp((*line)->cmd->data, "env", 4) == 0 && !(*line)->cmd->next)
-	{
-//		clear_all_heads(line);
 		return (ft_env(data));
-	}
 	if (ft_strncmp((*line)->cmd->data, "export", 7) == 0 && !(*line)->cmd->next)
-	{
-//		clear_all_heads(line);
 		return (ft_solo_export(data));
-	}
 	return (1);
 }
-
-/*int	dispatch_builtins(t_token *token, t_data *data) // a changer
-{
-	if (ft_strncmp(token->data, "echo", 5) == 0)
-	{
-		if (!token->next)
-		{
-			ft_display("\n");
-			printf("%s\n", (char *) NULL);
-		}
-		return (ft_echo(token->next, data));
-	}
-	if (ft_strncmp(token->data, "pwd", 4) == 0 && !token->next)
-		return (ft_pwd());
-	if (ft_strncmp(token->data, "env", 4) == 0 && !token->next)
-		return (ft_env(data));
-	if (ft_strncmp(token->data, "export", 7) == 0 && !token->next)
-		return (ft_solo_export(data));
-	return (1);
-}*/
 
 int	non_printable_builtins(t_heads **line, t_data *data)
 {
@@ -92,7 +70,7 @@ int	non_printable_builtins(t_heads **line, t_data *data)
 	if (ft_strncmp((*line)->cmd->data, "export", 7) == 0 && (*line)->cmd->next)
 	{
 		ft_free(&(*line)->cmd);
-		return (ft_export((*line)->cmd, data)); // a terme envoyer line
+		return (ft_export(&(*line), data));
 	}
 	if (ft_strncmp((*line)->cmd->data, "unset", 6) == 0 && (*line)->cmd->next)
 		return (ft_unset((*line)->cmd, data)); // a terme envoyer line

@@ -40,6 +40,8 @@ int	ft_pipex(t_heads **final_line, t_heads **line, t_data *data)
 	else if (pid > 0)
 		data->last_pid = pid;
 	close(data->pipes[0][1]);
+	printf("line :\n");
+	ft_print_line(line);
 	return (ft_pipex_final(final_line, data));
 }
 

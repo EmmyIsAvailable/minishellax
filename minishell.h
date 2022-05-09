@@ -91,8 +91,6 @@ char	**ft_split_bis(char const *s, char *c);
 /*_split_env*/
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
 
-//t_token	*ft_duplicate(t_token **cmd, int shell_lvl, int cmd_env);
-
 /*_recusive_parsing*/
 int		check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
@@ -137,7 +135,7 @@ int		error_cd(t_token *token);
 
 /*_export_builtins_*/
 int		add_var_envp(char *str, t_data *data);
-int		ft_export(t_token *token, t_data *data);
+int		ft_export(t_heads **line, t_data *data);
 int		browse_data_var(char *str, t_data *data);
 int		check_assign(char *assignment);
 int		ft_solo_export(t_data *data);
