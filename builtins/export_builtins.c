@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 12:53:33 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:23:09 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:33:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ int	browse_data_var(char *str, t_data *data)
 int	check_assign(char *assignment)
 {
 	int	i;
-	int	eq_sign;
+//	int	eq_sign;
 
 	i = 0;
-	eq_sign = 0;
+//	eq_sign = 0;
 	if (ft_isalpha(assignment[i]) == 0 && assignment[i] != '_')
 		return (1);
-	while (assignment[++i])
+/*	while (assignment[++i])
 	{
 		if (assignment[i] == '=')
 			eq_sign = 1;
 	}
-//	if (eq_sign != 1)
-//		return (1);
+	if (eq_sign != 1)
+		return (1);*/
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:17:40 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:44:53 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,25 @@ int	ft_echo(t_token *token, t_data *data)
 {
 	int		option;
 	int		print;
+	t_token		*tmp;
 
 	option = 0;
 	print = 0;
-	if (ft_strncmp(token->data, "-n", 3) == 0)
+	tmp = token;
+	if (ft_strncmp(tmp->data, "-n", 3) == 0)
 	{
 		option = 1;
-		token = token->next;
+		tmp = tmp->next;
 	}
-	while (token)
+	while (tmp)
 	{
-		if (token->token == ECHO)
+		if (tmp->token == ECHO)
 			print = ft_display(ft_itoa(data->exit_status));
 		else
-			print = ft_display(token->data);
-		if (token->next && print == 0)
+			print = ft_display(tmp->data);
+		if (tmp->next && print == 0)
 			ft_display(" ");
-		token = token->next;
+		tmp = tmp->next;
 	}
 	if (option == 0)
 		ft_display("\n");

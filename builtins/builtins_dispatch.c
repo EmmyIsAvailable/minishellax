@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:18:18 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:44:48 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_cd(t_heads **line, t_data *data)
 
 int	dispatch_builtins(t_heads **line, t_data *data)
 {
+	//leaks ok
 	if (ft_strncmp((*line)->cmd->data, "echo", 5) == 0)
 	{
 		if (!(*line)->cmd->next)
@@ -52,7 +53,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 			printf("%s\n", (char *) NULL);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo((*line)->cmd, data));//envoyer line tt court a terme
+		return (ft_echo((*line)->cmd, data));
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 4) == 0 && !(*line)->cmd->next)
 		return (ft_pwd());
