@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/06 15:57:57 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:44:51 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ t_token	*fill_data_bis(token_type token, int len, char *op, t_data *data)
 	int		i;
 
 	i = -1;
-	new_token = ft_create_token(token);
+	new_token = ft_create_token(token); //leaks
 	if (token == DOLLAR_SIGN && ft_search_env(&op[1], data))
 		return (split_env(new_token, op, data));
 	if (token == DOLLAR_SIGN)
 		len = ft_name(&op[1]) + 1;
-	new_token->data = malloc(sizeof(char) * len + 1);
+	new_token->data = malloc(sizeof(char) * len + 1);//leaks
 	if (!new_token->data)
 		return (NULL);
 	while (op[++i] && i < len)

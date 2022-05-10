@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 12:53:36 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:07:15 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,16 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 	printf("-bash: %s: command not found\n", (*line)->cmd->data);
 	if ((*line)->next)
 	{
-		tmp = (*line)->next;	
+		tmp = (*line)->next;
 		free_elem_heads(&(*line));
 		(*line) = tmp;
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	else
+	{
+		clear_all_heads(&(*line));
 		return (127);
+	}
 }
 
 int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)

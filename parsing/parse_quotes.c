@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 14:44:18 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:12:25 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*ft_dup(char *data, int i, int diff, char *str)
 	}
 	tmp[j] = '\0';
 	tmp_bis = data;
-	data = ft_strjoin(data, tmp);
+	free(data);
+	data = ft_strjoin(tmp_bis, tmp);
 	free(tmp_bis);
 	free(tmp);
 	tmp = NULL;
@@ -84,16 +85,22 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 
 	i = 1;
 	diff = 1;
+	tmp = NULL;
 	while (str[i] != op)
 	{
 		if (str[i] == '$' && ft_search_env(&str[i + 1], data))
 		{
 			if (!no_data(&(*new_token), i, str) && diff != i)
 				(*new_token)->data = ft_dup((*new_token)->data, i, diff, str);
-			tmp = (*new_token)->data;
-			(*new_token)->data = ft_strjoin((*new_token)->data,
+			if ((*new_token)->data)
+			{
+				tmp = ft_strdup((*new_token)->data);
+				free((*new_token)->data);
+			}
+			(*new_token)->data = ft_strjoin(tmp,
 					(const char *)ft_search_env(&str[i + 1], data));
 			free(tmp);
+			tmp = NULL;
 			i += (1 + ft_name(&str[i + 1]));
 			diff = i;
 		}

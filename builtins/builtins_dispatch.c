@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 11:44:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:06:23 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_cd(t_heads **line, t_data *data)
 	char	*old_path;
 	int		ret;
 
+	printf("on arrive a cd\n");
 	new_path = NULL;
 	old_path = NULL;
 	ret = 0;
@@ -32,7 +33,10 @@ int	ft_cd(t_heads **line, t_data *data)
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
+	{
+		clear_all_heads(line);
 		return (1);
+	}
 	cwd = getcwd(NULL, 0);
 	new_path = ft_strjoin("PWD=", cwd);
 	browse_data_var(new_path, data);

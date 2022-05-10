@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/06 16:57:26 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:13:29 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	join_data(t_token **tmp)
 {
-	char	*str;
 	int		var_env;
+	char	*str;
 
 	str = NULL;
 	var_env = 9;
@@ -27,11 +27,11 @@ int	join_data(t_token **tmp)
 		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
 			break ;
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-		(*tmp)->token = SPACE;
-		(*tmp) = (*tmp)->next;
+		printf("str : %s\n", str);
+		ft_free(tmp);
+		printf("deleting : %s\n", (*tmp)->data);
 		free((*tmp)->data);
 		(*tmp)->data = ft_strdup(str);
-		free(str);
 		(*tmp)->token = var_env;
 	}
 	return (0);
