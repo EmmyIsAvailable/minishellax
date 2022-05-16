@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 16:07:15 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/16 14:04:47 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	check_infile(t_heads **line, t_data *data)
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{
+			clear_all_heads(line);
 			perror("Open infile failed");
 			return (1);
 		}
@@ -69,6 +70,7 @@ int	check_outfile(t_heads **line)
 					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
+			clear_all_heads(line);
 			perror("Open outfile failed");
 			return (1);
 		}

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/10 15:13:29 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/16 15:54:19 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	join_data(t_token **tmp)
 			var_env = 1;
 		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
 			break ;
+		if ((*tmp) && (*tmp)->next)
+			printf("1er : __%s__, 2e : __%s__\n", (*tmp)->data, (*tmp)->next->data);
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-		printf("str : %s\n", str);
 		ft_free(tmp);
-		printf("deleting : %s\n", (*tmp)->data);
 		free((*tmp)->data);
 		(*tmp)->data = ft_strdup(str);
 		(*tmp)->token = var_env;
@@ -41,6 +41,8 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
 	if ((*head) == NULL)
 		return (0);
+	if ((*head)->token == PIPE)
+		return (1);
 	if ((*head)->token == SPACE)
 		ft_free(head);
 	if ((*head)->token == REDIR_IN)
@@ -100,6 +102,9 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 		else if (j == 1)
 			break ;
 	}
+	free_elem_heads(&tmp);
+	ft_lst_clear(head, free);
+	clear_all_heads(line);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:43:29 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/06 16:46:13 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/16 14:27:05 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	clear_all_heads(t_heads **lst)
 {
 	t_heads	*tmp;
 
+	if (!(*lst))
+		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;
