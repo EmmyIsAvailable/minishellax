@@ -118,10 +118,7 @@ int		ft_env(t_data *data);
 int		variables_in_echo(char *params, t_data *data);
 
 /*_pipex_*/
-int		ft_pipex(t_heads **final_line, t_heads **line, t_data *data);
-int		ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes);
-int		multiple_pipes(t_heads **line, t_data *data);
-int		ft_pipex_final(t_heads **line, t_data *data);
+int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data); // changes

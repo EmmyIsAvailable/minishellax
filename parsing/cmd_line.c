@@ -26,13 +26,12 @@ int	join_data(t_token **tmp)
 			var_env = 1;
 		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
 			break ;
-		if ((*tmp) && (*tmp)->next)
-			printf("1er : __%s__, 2e : __%s__\n", (*tmp)->data, (*tmp)->next->data);
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
 		ft_free(tmp);
 		free((*tmp)->data);
 		(*tmp)->data = ft_strdup(str);
 		(*tmp)->token = var_env;
+		free(str);
 	}
 	return (0);
 }
@@ -72,8 +71,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		unlink((*line)->infile->data);
 		return (0);
 	}
-	ft_print_line(line);
-	data->exit_status = ft_pipex(&final_line, line, data);
+	data->exit_status = ft_pipex(data, &final_line, line);
 	return (0);
 }
 

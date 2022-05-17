@@ -12,105 +12,66 @@
 
 #include "./minishell.h"
 
-int	ft_pipex(t_heads **final_line, t_heads **line, t_data *data)
+void	child(t_data *data, t_heads **line, int i)
 {
-	pid_t	pid;
-	int		ret;
+	int	tmp;
 
-	if (pipe(data->pipes[0]) == -1)
-		return (1);
+	if ((*line)->next && i % 2 == 0)
+		dup2(data->pipes[1], STDOUT_FILENO);
+	else if ((*line)->next && i % 2 == 1)
+	{
+		close(data->tmp_fd);
+		data->tmp_fd = open("pipe", O_WRONLY | O_TRUNC, 0777);
+		dup2(data->tmp_fd, STDOUT_FILENO);
+	}
+	if (i == 0 || i % 2 == 1)
+		dup2(data->pipes[0], STDIN_FILENO);
+	else if (i % 2 == 0)
+	{
+		tmp = open("pipe", O_RDONLY, 0777);
+		dup2(tmp, STDIN_FILENO);
+	}
+	if (check_outfile(line) || check_infile(line, data))
+		return ;
+	ft_exec((*line)->cmd, data);
+}
+
+void	parent(t_data *data, t_heads **line)
+{
+	if ((*line)->next)
+		close(data->pipes[1]);
+	if (data->pid1 > 0)
+		if (waitpid(data->pid1, NULL, 0) == -1)
+			return ;
+}
+
+int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
+{
+	int		ret;
+	int		i;
+
+	i = 0;
 	ret = ft_no_fork(line, data, final_line);
 	if (ret != 2)
 		return (ret);
-	pid = fork();
-	if (pid == 0)
+	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
+	while ((*final_line))
 	{
-		if (check_infile(final_line, data) || check_outfile(final_line))
+		if (i % 2 == 0)
 		{
-			return (1);
-		}
-		if (((*final_line)->next))
-		{
-			dup2(data->pipes[0][1], STDOUT_FILENO);
-			close(data->pipes[0][0]);
-		}
-		if (dispatch_builtins(&(*final_line), data) == 1)
-			ft_exec((*final_line)->cmd, data);
-	}
-	else if (pid > 0)
-		data->last_pid = pid;
-	close(data->pipes[0][1]);
-	return (ft_pipex_final(final_line, data));
-}
-
-int	ft_pipex_final(t_heads **line, t_data *data)
-{
-	int		mult_pipes;
-	t_heads	*tmp;
-
-	tmp = (*line)->next;
-	free_elem_heads(&(*line));
-	(*line) = tmp;
-	mult_pipes = 0;
-	if ((*line) && (*line)->next)
-		mult_pipes = multiple_pipes(line, data);
-	if ((*line))
-		ft_pipex_bis(line, data, mult_pipes);
-	ft_wait(data);
-	clear_all_heads(line);
-	return (0);
-}
-
-int	multiple_pipes(t_heads **line, t_data *data)
-{
-	pid_t	pid;
-
-	while ((*line) && (*line)->next)
-	{
-		pipe(data->pipes[1]);
-		pid = fork();
-		if (pid == 0)
-		{	
-			if (check_infile(line, data) || check_outfile(line))
-			{
+			if (pipe(data->pipes) == -1)
 				return (1);
-			}
-			dup2(data->pipes[0][0], STDIN_FILENO);
-			dup2(data->pipes[1][1], STDOUT_FILENO);
-			close(data->pipes[1][0]);
-			if (dispatch_builtins(&(*line), data) == 1)
-				ft_exec((*line)->cmd, data);
 		}
-		else if (pid > 0)
-			data->last_pid = pid;
-		close(data->pipes[0][0]);
-		close(data->pipes[1][1]);
-	}
-	return (1);
-}
-
-int	ft_pipex_bis(t_heads **line, t_data *data, int mult_pipes)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{	
-		if (check_infile(&(*line), data)
-			|| check_outfile(&(*line)))
+		if (dispatch_builtins(final_line, data) == 1)
 		{
-			return (1);
+			data->pid1 = fork();
+			if (data->pid1 == 0)
+				child(data, final_line, i);
 		}
-		if (mult_pipes == 0)
-			dup2(data->pipes[0][0], STDIN_FILENO);
-		else if (mult_pipes == 1)
-			dup2(data->pipes[1][0], STDIN_FILENO);
-		if (dispatch_builtins(&(*line), data) == 1)
-			ft_exec((*line)->cmd, data);
+		parent(data, final_line);
+		(*final_line) = (*final_line)->next;
+		i++;
 	}
-	else if (pid > 0)
-		data->last_pid = pid;
-	close(data->pipes[0][0]);
-	close(data->pipes[0][1]);
+	unlink("pipe");
 	return (0);
 }

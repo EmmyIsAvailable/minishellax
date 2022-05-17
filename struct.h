@@ -6,12 +6,12 @@ typedef struct s_data {
 	char	**var;
 	char	*oldpwd;
 	char	*pwd;
-	int	pipe0[2];
-	int	pipe1[2];
-	int	*pipes[2];
-	int	shlvl;
-	int	exit_status;
+	int		tmp_fd;
+	int		pipes[2];
+	int		shlvl;
+	int		exit_status;
 	pid_t	last_pid;
+	pid_t	pid1;
 } t_data;
 
 typedef struct s_token
@@ -21,7 +21,7 @@ typedef struct s_token
 	size_t			data_size;
 	int				fd;
 	int				shlvl;
-	int				cmd_env; // export = 0, unset = 1
+	int				cmd_env; /*export = 0, unset = 1*/
 	struct s_token	*next;
 	struct s_token	*prev;
 } t_token;
