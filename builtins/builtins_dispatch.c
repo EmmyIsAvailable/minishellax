@@ -19,7 +19,6 @@ int	ft_cd(t_heads **line, t_data *data)
 	char	*old_path;
 	int		ret;
 
-	printf("on arrive a cd\n");
 	new_path = NULL;
 	old_path = NULL;
 	ret = 0;
@@ -33,10 +32,7 @@ int	ft_cd(t_heads **line, t_data *data)
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
-	{
-		clear_all_heads(line);
 		return (1);
-	}
 	cwd = getcwd(NULL, 0);
 	new_path = ft_strjoin("PWD=", cwd);
 	browse_data_var(new_path, data);
@@ -48,21 +44,20 @@ int	ft_cd(t_heads **line, t_data *data)
 
 int	dispatch_builtins(t_heads **line, t_data *data)
 {
-	//leaks ok
 	if (ft_strncmp((*line)->cmd->data, "echo", 5) == 0)
 	{
 		if (!(*line)->cmd->next)
 		{
-			ft_display("\n");
-			printf("%s\n", (char *) NULL);
+			printf("\n");
+			return (0);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo((*line)->cmd, data));
+		return (ft_echo((*line)->cmd, data, line));//envoyer line tt court a terme
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 4) == 0 && !(*line)->cmd->next)
-		return (ft_pwd());
+		return (ft_pwd(line));
 	if (ft_strncmp((*line)->cmd->data, "env", 4) == 0 && !(*line)->cmd->next)
-		return (ft_env(data));
+		return (ft_env(data, line));
 	if (ft_strncmp((*line)->cmd->data, "export", 7) == 0 && !(*line)->cmd->next)
 		return (ft_solo_export(data));
 	return (1);

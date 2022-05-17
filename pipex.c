@@ -49,6 +49,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 {
 	int		ret;
 	int		i;
+	t_heads	*tmp;
 
 	i = 0;
 	ret = ft_no_fork(line, data, final_line);
@@ -69,9 +70,12 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 				child(data, final_line, i);
 		}
 		parent(data, final_line);
-		(*final_line) = (*final_line)->next;
+		tmp = (*final_line)->next;
+		free_elem_heads(&(*final_line));
+		(*final_line) = tmp;
 		i++;
 	}
 	unlink("pipe");
+	clear_all_heads(line);
 	return (0);
 }

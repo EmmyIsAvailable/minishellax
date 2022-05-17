@@ -22,8 +22,8 @@ void	ft_wait(t_data *data)
 	while (pid != -1)
 	{
 		pid = wait(&wait_status);
-		if (pid == data->last_pid)
-			return ;
+		if (pid == data->pid1)
+			break ;
 	}
 }
 
@@ -37,10 +37,8 @@ int	check_infile(t_heads **line, t_data *data)
 		if (tmp_in->token == 8)
 			is_heredoc(tmp_in->data, data);
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
-		printf("new infile : %s => fd : %d\n", tmp_in->data, tmp_in->fd);
 		if (tmp_in->fd < 0)
 		{
-			clear_all_heads(line);
 			perror("Open infile failed");
 			return (1);
 		}
@@ -48,7 +46,7 @@ int	check_infile(t_heads **line, t_data *data)
 		{
 			dup2(tmp_in->fd, STDIN_FILENO);
 			close(tmp_in->fd);
-			if (tmp_in->token == 8)
+			if (tmp_in->token == 8 || ft_strncmp(tmp_in->data, "tmp", 3) == 0)
 				unlink(tmp_in->data);
 		}
 		tmp_in = tmp_in->next;
@@ -71,7 +69,6 @@ int	check_outfile(t_heads **line)
 					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
-			clear_all_heads(line);
 			perror("Open outfile failed");
 			return (1);
 		}
@@ -93,7 +90,7 @@ int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 		return (non_printable_builtins(&(*line), data));
 	else
 	{
-		tmp = (*line)->next;	
+		tmp = (*line)->next;
 		free_elem_heads(&(*line));
 		(*line) = tmp;
 		return (ft_no_fork(&(*line), data, &(*final_line)));
@@ -107,7 +104,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 
 	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
 		return (1);
-	printf("-bash: %s: command not found\n", (*line)->cmd->data);
+	printf("bash: %s: command not found\n", (*line)->cmd->data);
 	if ((*line)->next)
 	{
 		tmp = (*line)->next;
@@ -116,10 +113,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	else
-	{
-		clear_all_heads(&(*line));
 		return (127);
-	}
 }
 
 int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)

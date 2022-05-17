@@ -111,10 +111,12 @@ int		ft_message_exit(char *history, char *str, t_data *data);
 void	data_exit(char i, char j, int vrai, t_data *data);
 
 /*_builtins_cmd_*/
+int		write_outfile(t_heads **line, char *str);
+int		write_outfile_bis(t_token *tmp_out, char *str);
 int		ft_display(char *str);
-int		ft_echo(t_token *token, t_data *data);
-int		ft_pwd(void);
-int		ft_env(t_data *data);
+int		ft_echo(t_token *token, t_data *data, t_heads **line);
+int		ft_pwd(t_heads **line);
+int		ft_env(t_data *data, t_heads **line);
 int		variables_in_echo(char *params, t_data *data);
 
 /*_pipex_*/
