@@ -18,22 +18,28 @@ int	is_heredoc(char *deli, t_data *data)
 	int		heredoc;
 	char	*buffer;
 
-	tmp = NULL;
-	buffer = NULL;
+//	tmp = NULL;
+//	buffer = NULL;
 	heredoc = open(deli, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (heredoc < 0)
-		perror("Heredoc failed");
-	tmp = readline("> ");
-	while (1)
+//	if (heredoc < 0)
+//		perror("Heredoc failed");
+	buffer = readline("> ");
+	if (ft_strncmp(buffer, deli, (ft_strlen(deli) + 1)) != 0)
 	{
-		if (buffer)
-			buffer = ft_strjoin(buffer, "\n");
-		if (tmp && ft_strncmp(tmp, deli, ft_strlen(deli) + 1) == 0)
-			break ;
-		buffer = ft_strjoin(buffer, tmp);
-		tmp = readline("> ");
+		while (1)
+		{
+			tmp = readline("> ");
+			if (buffer)
+				buffer = ft_strjoin(buffer, "\n");
+			if (tmp && ft_strncmp(tmp, deli, (ft_strlen(deli) + 1)) == 0)
+				break ;
+			if (tmp)
+				buffer = ft_strjoin(buffer, tmp);
+			free(tmp);
+		}
+		free(tmp);
+		env_in_heredoc(heredoc, buffer, data);
 	}
-	env_in_heredoc(heredoc, buffer, data);
 	close(heredoc);
 	free(buffer);
 	return (0);
@@ -64,4 +70,18 @@ char	*env_in_heredoc(int heredoc, char *buffer, t_data *data)
 		i += ft_name(&buffer[i]);
 	}
 	return (ret);
+}
+
+int	check_heredoc(t_heads **line, t_data *data)
+{
+	t_token	*tmp_in;
+
+	tmp_in = (*line)->infile;
+	while (tmp_in)
+	{
+		if (tmp_in->token == 8)
+			is_heredoc(tmp_in->data, data);
+		tmp_in = tmp_in->next;
+	}
+	return (0);
 }

@@ -27,15 +27,13 @@ void	ft_wait(t_data *data)
 	}
 }
 
-int	check_infile(t_heads **line, t_data *data)
+int	check_infile(t_heads **line)
 {
 	t_token	*tmp_in;
 
 	tmp_in = (*line)->infile;
 	while (tmp_in)
 	{
-		if (tmp_in->token == 8)
-			is_heredoc(tmp_in->data, data);
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{

@@ -152,13 +152,14 @@ char	**fill_token_tab(t_token *token);
 
 /*_pipex_utils_*/
 void	ft_wait(t_data *data);
-int		check_infile(t_heads **line, t_data *data);
+int		check_infile(t_heads **line);
 int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);
 char	*env_in_heredoc(int heredoc, char *buffer, t_data *data);
+int		check_heredoc(t_heads **line, t_data *data);
 
 /*_shlvl_*/
 int		ft_prev_envp(t_token *shlvl, t_data *data);
