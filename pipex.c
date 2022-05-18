@@ -16,20 +16,23 @@ void	child(t_data *data, t_heads **line, int i)
 {
 	int	tmp;
 
+	check_heredoc(line, data);
 	if ((*line)->next && i % 2 == 0)
 		dup2(data->pipes[1], STDOUT_FILENO);
 	else if ((*line)->next && i % 2 == 1)
 	{
 		close(data->tmp_fd);
 		data->tmp_fd = open("pipe", O_WRONLY | O_TRUNC, 0777);
-		dup2(data->tmp_fd, STDOUT_FILENO);
+		if (dup2(data->tmp_fd, STDOUT_FILENO) == -1)
+			return ;
 	}
 	if (i == 0 || i % 2 == 1)
 		dup2(data->pipes[0], STDIN_FILENO);
 	else if (i % 2 == 0)
 	{
 		tmp = open("pipe", O_RDONLY, 0777);
-		dup2(tmp, STDIN_FILENO);
+		if (dup2(tmp, STDIN_FILENO) == -1)
+			return ;
 	}
 	if (check_outfile(line) || check_infile(line, data))
 		return ;
@@ -49,7 +52,6 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 {
 	int		ret;
 	int		i;
-	t_heads	*tmp;
 
 	i = 0;
 	ret = ft_no_fork(line, data, final_line);
@@ -70,12 +72,9 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 				child(data, final_line, i);
 		}
 		parent(data, final_line);
-		tmp = (*final_line)->next;
-		free_elem_heads(&(*final_line));
-		(*final_line) = tmp;
+		(*final_line) = (*final_line)->next;
 		i++;
 	}
 	unlink("pipe");
-	clear_all_heads(line);
 	return (0);
 }
