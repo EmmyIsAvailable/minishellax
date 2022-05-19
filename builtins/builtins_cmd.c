@@ -6,15 +6,54 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/16 13:51:56 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 14:01:24 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	*join_elems(char *str, char *to_add)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (str)
+	{
+		tmp = ft_strdup(str);
+		free(str);
+		str = NULL;
+	}
+	str = ft_strjoin(tmp, to_add);
+	free(tmp);
+	tmp = NULL;
+	return (str);
+}
+
+char	*prep_data(char *str, t_token *token, t_data *data)
+{
+	char	*exit_value;
+	
+	exit_value = 0;
+	while (token)
+	{
+		if (token->token == ECHO)
+		{
+			exit_value = ft_itoa(data->exit_status);
+			str = join_elems(str, exit_value);
+			free(exit_value);
+		}
+		else	
+			str = join_elems(str, token->data);
+		if (token->next)
+			str = join_elems(str, " ");
+		ft_free(&token);
+	}
+	return (str);
+}
+
 int	ft_echo(t_token *token, t_data *data, t_heads **line)
 {
-	int		option;
+	int	option;
 	char	*str;
 
 	option = 0;
@@ -22,20 +61,11 @@ int	ft_echo(t_token *token, t_data *data, t_heads **line)
 	if (ft_strncmp(token->data, "-n", 3) == 0)
 	{
 		option = 1;
-		token = token->next;
+		ft_free(&token);
 	}
-	while (token)
-	{
-		if (token->token == ECHO)
-			str = ft_strjoin(str, ft_itoa(data->exit_status));
-		else
-			str = ft_strjoin(str, token->data);
-		if (token->next)
-			str = ft_strjoin(str, " ");
-		token = token->next;
-	}
+	str = prep_data(str, token, data);
 	if (option == 0)
-		str = ft_strjoin(str, "\n");
+		str = join_elems(str, "\n");
 	write_outfile(line, str);
 	free(str);
 	return (0);
@@ -50,8 +80,8 @@ int	ft_env(t_data *data, t_heads **line)
 	env = NULL;
 	while (data->envp[i])
 	{
-		env = ft_strjoin(env, data->envp[i]);
-		env = ft_strjoin(env, "\n");
+		env = join_elems(env, data->envp[i]);
+		env = join_elems(env, "\n");
 		i++;
 	}
 	write_outfile(line, env);
@@ -62,9 +92,12 @@ int	ft_env(t_data *data, t_heads **line)
 int	ft_pwd(t_heads **line)
 {
 	char	*pwd;
+	char	*cwd;
 
 	pwd = NULL;
-	pwd = ft_strjoin(getcwd(NULL, 0), "\n");
+	cwd = getcwd(NULL, 0);
+	pwd = ft_strjoin(cwd, "\n");
+	free(cwd);
 	write_outfile(line, pwd);
 	free(pwd);
 	return (0);
@@ -91,7 +124,6 @@ int	write_outfile(t_heads **line, char *str)
 		tmp->fd = fd;
 		tmp->data = ft_strdup("tmp");
 		push(&tmp, &(*line)->next->infile);
-		ft_print_line(line);
 		return (fd);
 	}
 	return (write_outfile_bis(tmp_out, str));
