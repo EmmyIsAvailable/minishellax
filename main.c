@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 14:53:41 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:10:05 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,10 @@ void	clean_shlvl(t_token **shlvl, int level)
 	{
 		if (tmp->shlvl > level)
 			ft_free(&tmp);
-		tmp = tmp->next;
 	}
-
 }
 
-int	ft_shlvl(t_data *data, char *history, t_token *shlvl)
+int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message_exit(history, "exit", data) == 0))
@@ -89,8 +87,8 @@ int	ft_shlvl(t_data *data, char *history, t_token *shlvl)
 	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
 					"exit", data) == 0) || history == NULL))
 	{
-		ft_prev_envp(shlvl, data);
-		clean_shlvl(&shlvl, data->shlvl);
+		ft_prev_envp(*shlvl, data);
+	//	clean_shlvl(shlvl, data->shlvl);
 		history = "";
 	}
 	return (1);
@@ -106,7 +104,7 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 	{
 		head = NULL;
 		history = readline("$> ");
-		if (ft_shlvl(&data, history, shlvl) == 0)
+		if (ft_shlvl(&data, history, &shlvl) == 0)
 			break ;
 		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, &data, &shlvl);
