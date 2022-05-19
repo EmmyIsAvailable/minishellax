@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 16:06:23 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:46:31 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 			return (0);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo((*line)->cmd, data, line));//envoyer line tt court a terme
+		return (ft_echo((*line)->cmd, data, line));
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 4) == 0 && !(*line)->cmd->next)
 		return (ft_pwd(line));
@@ -65,7 +65,6 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 
 int	non_printable_builtins(t_heads **line, t_data *data)
 {
-	//leaks all ok
 	int	ret;
 
 	ret = 1;
