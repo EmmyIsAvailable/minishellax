@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:51:55 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:56:56 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:08:49 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,22 @@ int	ft_unset_prev(char *str, t_data *data)
 	int		i;
 	char	**envp;
 	char	*to_export;
+	int		lenght;
 
 	i = 0;
-	to_export = (char *)malloc(sizeof(char) * (ft_name(str) + 1));
-	if (!to_export)
-		return (1);
-	while (str[i] != '=')
+	lenght = ft_strlen(str);
+	while (str[i])
 	{
-		to_export[i] = str[i];
+		if (str[i] == '=')
+			lenght = ft_name(str);
 		i++;
 	}
+	i = 0;
+	to_export = (char *)malloc(sizeof(char) * lenght);
+	if (!to_export)
+		return (1);
+	while (i++ < lenght)
+		to_export[i] = str[i];
 	to_export[i] = '\0';
 	envp = data->envp;
 	ft_exec_unset_prev(to_export, envp);
@@ -94,8 +100,8 @@ int	ft_prev_envp(t_token *shlvl, t_data *data)
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
 		if (tmp->cmd_env == 0)
-			if (browse_data_var(tmp->data, data) == 1)
-				add_var_envp(tmp->data, data);
+			if (browse_data_var(tmp->data, data) == 1){printf("%s\n", tmp->data);
+				add_var_envp(tmp->data, data);}
 		tmp = tmp->next;
 	}
 	free (new);
