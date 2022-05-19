@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/16 15:54:19 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:22:27 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
 	if ((*head) == NULL)
 		return (0);
-	if ((*head)->token == PIPE)
-		return (1);
 	if ((*head)->token == SPACE)
 		ft_free(head);
+	if ((*head)->token == PIPE)
+	{
+		error_msg(0, "|");
+		return (1);
+	}
 	if ((*head)->token == REDIR_IN)
 		return (check_inf(head, inf, out, cmd));
 	if ((*head)->token == REDIR_OUT)
@@ -91,6 +94,11 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 			break ;
 		if ((*head)->token != PIPE)
 			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
+		else if ((*head)->token == PIPE)
+		{
+			error_msg(0, "|");
+			break;
+		}	
 		if (j == -1 || j == 0)
 			push_heads(&tmp, line);
 		if (j == -1)

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:48:32 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/10 14:57:14 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:23:07 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ int	clear_head(t_token **head)
 	while ((*head) && (*head)->token != 0)
 		ft_free(head);
 	ft_free(head);
+	if ((*head) && (*head)->token == 0)
+		ft_free(head);
 	return (1);
 }

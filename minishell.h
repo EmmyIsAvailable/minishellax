@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/06 15:44:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:08:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char	**ft_split_bis(char const *s, char *c);
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
 
 /*_recusive_parsing*/
+int		error_msg(int type, char *str);
 int		check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);

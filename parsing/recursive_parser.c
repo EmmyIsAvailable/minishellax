@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/16 14:53:39 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:25:59 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		return (0);
 	if ((*tmp)->token == SPACE)
 		ft_free(tmp);
-	if ((*tmp)->token == PIPE && (*tmp)->next != NULL && (*tmp)->next->token != PIPE)
+	if ((*tmp)->token == PIPE && (*tmp)->next != NULL)
 		return (-1);
 	if ((*tmp)->token == ECHO)
 	{
