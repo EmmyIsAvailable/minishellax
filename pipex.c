@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 13:47:53 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 14:47:06 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 	i = 0;
 	next = NULL;
 	ret = ft_no_fork(line, data, final_line);
+	if (ret != 2)
 		return (ret);
 	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	while ((*final_line))
