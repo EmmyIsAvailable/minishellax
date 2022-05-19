@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/06 16:38:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 14:53:41 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,20 @@ int	ft_cmp_line(char *history, char *str)
 	return (0);
 }
 
+void	clean_shlvl(t_token **shlvl, int level)
+{
+	t_token	*tmp;
+
+	tmp = *shlvl;
+	while (tmp)
+	{
+		if (tmp->shlvl > level)
+			ft_free(&tmp);
+		tmp = tmp->next;
+	}
+
+}
+
 int	ft_shlvl(t_data *data, char *history, t_token *shlvl)
 {
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
@@ -76,6 +90,7 @@ int	ft_shlvl(t_data *data, char *history, t_token *shlvl)
 					"exit", data) == 0) || history == NULL))
 	{
 		ft_prev_envp(shlvl, data);
+		clean_shlvl(&shlvl, data->shlvl);
 		history = "";
 	}
 	return (1);
@@ -120,6 +135,5 @@ int	main(int ac, char **av, char **envp)
 	init_envp(&data, envp);
 	minishell(data, head, shlvl);
 	free_tab(data.envp);
-//	while (1);
 	return (0);
 }
