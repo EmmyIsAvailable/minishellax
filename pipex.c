@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 14:54:41 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:41:55 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	child(t_data *data, t_heads **line, int i)
 		if (dup2(tmp, STDIN_FILENO) == -1)
 			return ;
 	}
-	if (check_outfile(line) || check_infile(line, data))
+	if (check_outfile(line) || check_infile(line))
 		return ;
 	ft_exec((*line)->cmd, data);
 }

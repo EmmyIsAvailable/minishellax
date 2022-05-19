@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/16 14:04:47 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:53:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 		tmp = (*line)->next;
 		free_elem_heads(&(*line));
 		(*line) = tmp;
+		clear_all_heads(&(*final_line));
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	else
