@@ -66,19 +66,10 @@ int	browse_data_var(char *str, t_data *data)
 int	check_assign(char *assignment)
 {
 	int	i;
-//	int	eq_sign;
 
 	i = 0;
-//	eq_sign = 0;
 	if (ft_isalpha(assignment[i]) == 0 && assignment[i] != '_')
 		return (1);
-/*	while (assignment[++i])
-	{
-		if (assignment[i] == '=')
-			eq_sign = 1;
-	}
-	if (eq_sign != 1)
-		return (1);*/
 	return (0);
 }
 
@@ -127,6 +118,5 @@ int	ft_solo_export(t_data *data)
 		write(1, "\"\n", 2);
 		i++;
 	}
-	printf("%s\n", (char *) NULL);
 	return (0);
 }

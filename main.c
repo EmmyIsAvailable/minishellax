@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-int	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
-	return (0);
-}
-
 int	init_envp(t_data *data, char **envp)
 {
 	int	i;
@@ -83,7 +68,7 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 			&& ft_message_exit(history, "exit", data) == 0))
 		return (0);
 	else if (history && ft_cmp_line(history, "./minishell") == 0)
-		upgrade_shlvl(data);
+		change_shlvl(data, '+');
 	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
 					"exit", data) == 0) || history == NULL))
 	{
