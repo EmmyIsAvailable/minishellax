@@ -100,8 +100,9 @@ int		check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 
 /*_main_*/
-int		init_envp(t_data *data, char **envp);
 int		ft_cmp_line(char *history, char *str);
+void	clean_shlvl(t_token **shlvl, int level);
+int		ft_shlvl(t_data *data, char *history, t_token **shlvl);
 int		minishell(t_data data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
@@ -111,6 +112,7 @@ int		ft_message_exit(char *history, char *str, t_data *data);
 void	data_exit(char i, char j, int vrai, t_data *data);
 
 /*_free_*/
+int		init_envp(t_data *data, char **envp);
 int		free_tab(char **tab);
 char	*join_elems(char *str, char *to_add);
 char	*prep_data(char *str, t_token *token, t_data *data);
@@ -124,6 +126,9 @@ int		ft_env(t_data *data, t_heads **line);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
+void	parent(t_data *data, t_heads **line);
+void	child(t_data *data, t_heads **line, int i);
+
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data); // changes
