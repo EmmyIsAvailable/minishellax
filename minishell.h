@@ -170,7 +170,7 @@ char	*env_in_heredoc(int heredoc, char *buffer, t_data *data);
 int		check_heredoc(t_heads **line, t_data *data);
 
 /*_shlvl_*/
-int		ft_prev_envp(t_token *shlvl, t_data *data);
+int		ft_prev_envp(t_token **shlvl, t_data *data);
 int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 int		ft_unset_prev(char *str, t_data *data);
 int		change_shlvl(t_data *data, char c);

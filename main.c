@@ -26,18 +26,6 @@ int	ft_cmp_line(char *history, char *str)
 	return (0);
 }
 
-void	clean_shlvl(t_token **shlvl, int level)
-{
-	t_token	*tmp;
-
-	tmp = *shlvl;
-	while (tmp)
-	{
-		if (tmp->shlvl > level)
-			ft_free(&tmp);
-	}
-}
-
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
@@ -48,8 +36,7 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
 					"exit", data) == 0) || history == NULL))
 	{
-		ft_prev_envp(*shlvl, data);
-	//	clean_shlvl(shlvl, data->shlvl);
+		ft_prev_envp(shlvl, data);
 		history = "";
 	}
 	return (1);

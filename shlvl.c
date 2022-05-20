@@ -80,20 +80,20 @@ int	ft_unset_prev(char *str, t_data *data)
 	return (0);
 }
 
-int	ft_prev_envp(t_token *shlvl, t_data *data)
+int	ft_prev_envp(t_token **shlvl, t_data *data)
 {
 	t_token	*tmp;
 
-	while (shlvl && shlvl->shlvl == data->shlvl)
+	while ((*shlvl) && (*shlvl)->shlvl == data->shlvl)
 	{
-		if (shlvl->cmd_env == 0)
-			ft_unset_prev(shlvl->data, data);
-		else if (shlvl->cmd_env == 1)
-			ft_export_prev(shlvl->data, shlvl, data);
-		shlvl = shlvl->next;
+		if ((*shlvl)->cmd_env == 0)
+			ft_unset_prev((*shlvl)->data, data);
+		else if ((*shlvl)->cmd_env == 1)
+			ft_export_prev((*shlvl)->data, *shlvl, data);
+		ft_free(shlvl);
 	}
 	change_shlvl(data, '-');
-	tmp = shlvl;
+	tmp = *shlvl;
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
 		if (tmp->cmd_env == 0)
