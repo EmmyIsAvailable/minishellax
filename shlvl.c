@@ -67,11 +67,11 @@ int	ft_unset_prev(char *str, t_data *data)
 			lenght = ft_name(str);
 		i++;
 	}
-	i = 0;
-	to_export = (char *)malloc(sizeof(char) * lenght);
+	i = -1;
+	to_export = (char *)malloc(sizeof(char) * (lenght + 1));
 	if (!to_export)
 		return (1);
-	while (i++ < lenght)
+	while (str[++i] && i < lenght)
 		to_export[i] = str[i];
 	to_export[i] = '\0';
 	envp = data->envp;
@@ -83,8 +83,7 @@ int	ft_unset_prev(char *str, t_data *data)
 int	ft_prev_envp(t_token *shlvl, t_data *data)
 {
 	t_token	*tmp;
-	char	*new;
-
+	
 	while (shlvl && shlvl->shlvl == data->shlvl)
 	{
 		if (shlvl->cmd_env == 0)
@@ -93,28 +92,31 @@ int	ft_prev_envp(t_token *shlvl, t_data *data)
 			ft_export_prev(shlvl->data, shlvl, data);
 		shlvl = shlvl->next;
 	}
-	data->shlvl--;
-	new = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
-	browse_data_var(new, data);
+	change_shlvl(data, '-');
 	tmp = shlvl;
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
 		if (tmp->cmd_env == 0)
-			if (browse_data_var(tmp->data, data) == 1){printf("%s\n", tmp->data);
-				add_var_envp(tmp->data, data);}
+			if (browse_data_var(tmp->data, data) == 1)
+				add_var_envp(tmp->data, data);
 		tmp = tmp->next;
 	}
-	free (new);
 	return (0);
 }
 
-int	upgrade_shlvl(t_data *data)
+int	change_shlvl(t_data *data, char c)
 {
-	char	*shlvl;
+	char	*new;
+	char	*nb_shlvl;
 
-	data->shlvl++;
-	shlvl = ft_strjoin("SHLVL=", ft_itoa(data->shlvl));
-	browse_data_var(shlvl, data);
-	free(shlvl);
+	if (c == '+')
+		data->shlvl++;
+	else if (c == '-')
+		data->shlvl--;
+	nb_shlvl = ft_itoa(data->shlvl);
+	new = ft_strjoin("SHLVL=", nb_shlvl);
+	free(nb_shlvl);
+	browse_data_var(new, data);
+	free(new);
 	return (0);
 }

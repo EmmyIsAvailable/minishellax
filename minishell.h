@@ -101,7 +101,6 @@ int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 
 /*_main_*/
 int		init_envp(t_data *data, char **envp);
-int		free_tab(char **tab);
 int		ft_cmp_line(char *history, char *str);
 int		minishell(t_data data, t_token *head, t_token *shlvl);
 
@@ -111,14 +110,17 @@ int		event_ctrl_c(void);
 int		ft_message_exit(char *history, char *str, t_data *data);
 void	data_exit(char i, char j, int vrai, t_data *data);
 
+/*_free_*/
+int		free_tab(char **tab);
+char	*join_elems(char *str, char *to_add);
+char	*prep_data(char *str, t_token *token, t_data *data);
+
 /*_builtins_cmd_*/
 int		write_outfile(t_heads **line, char *str);
 int		write_outfile_bis(t_token *tmp_out, char *str);
-int		ft_display(char *str);
 int		ft_echo(t_token *token, t_data *data, t_heads **line);
 int		ft_pwd(t_heads **line);
 int		ft_env(t_data *data, t_heads **line);
-int		variables_in_echo(char *params, t_data *data);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
@@ -166,7 +168,7 @@ int		check_heredoc(t_heads **line, t_data *data);
 int		ft_prev_envp(t_token *shlvl, t_data *data);
 int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 int		ft_unset_prev(char *str, t_data *data);
-int		upgrade_shlvl(t_data *data);
+int		change_shlvl(t_data *data, char c);
 void	ft_exec_unset_prev(char *to_export, char **envp);
 
 #endif
