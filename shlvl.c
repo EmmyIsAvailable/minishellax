@@ -83,7 +83,7 @@ int	ft_unset_prev(char *str, t_data *data)
 int	ft_prev_envp(t_token *shlvl, t_data *data)
 {
 	t_token	*tmp;
-	
+
 	while (shlvl && shlvl->shlvl == data->shlvl)
 	{
 		if (shlvl->cmd_env == 0)

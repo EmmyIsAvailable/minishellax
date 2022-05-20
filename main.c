@@ -12,30 +12,6 @@
 
 #include "minishell.h"
 
-int	init_envp(t_data *data, char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	data->envp = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!data->envp)
-		return (1);
-	i = 0;
-	while (envp[i])
-	{
-		data->envp[i] = ft_strdup(envp[i]);
-		if (!data->envp[i])
-			return (1);
-		i++;
-	}
-	data->envp[i] = NULL;
-	data->shlvl = 1;
-	data->exit_status = 0;
-	return (0);
-}
-
 int	ft_cmp_line(char *history, char *str)
 {
 	int	i;
