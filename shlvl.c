@@ -16,9 +16,10 @@ int	ft_export_prev(char *str, t_token *shlvl, t_data *data)
 {
 	t_token	*tmp;
 
-	tmp = shlvl;
+	tmp = shlvl;printf("str %s\n", str);
 	while (tmp)
 	{
+		printf("%s\n", tmp->data);
 		if (tmp->cmd_env == 0 && (int)ft_strlen(str) == ft_name(tmp->data))
 		{
 			if (ft_strncmp(tmp->data, str, ft_strlen(str)) == 0)
@@ -83,7 +84,9 @@ int	ft_unset_prev(char *str, t_data *data)
 int	ft_prev_envp(t_token **shlvl, t_data *data)
 {
 	t_token	*tmp;
-
+	t_token	*tmp2;
+	
+	//ft_print(*shlvl);
 	while ((*shlvl) && (*shlvl)->shlvl == data->shlvl)
 	{
 		if ((*shlvl)->cmd_env == 0)
@@ -94,12 +97,19 @@ int	ft_prev_envp(t_token **shlvl, t_data *data)
 	}
 	change_shlvl(data, '-');
 	tmp = *shlvl;
+	tmp2 = *shlvl;
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
 		if (tmp->cmd_env == 0)
 			if (browse_data_var(tmp->data, data) == 1)
 				add_var_envp(tmp->data, data);
 		tmp = tmp->next;
+	}
+	while (tmp2 && tmp2->shlvl == data->shlvl)
+	{
+		if (tmp2->cmd_env == 1)
+			ft_unset(tmp2, data);
+		tmp2 = tmp2->next;
 	}
 	return (0);
 }
