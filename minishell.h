@@ -120,7 +120,7 @@ char	*prep_data(char *str, t_token *token, t_data *data);
 /*_builtins_cmd_*/
 int		write_outfile(t_heads **line, char *str);
 int		write_outfile_bis(t_token *tmp_out, char *str);
-int		ft_echo(t_token *token, t_data *data, t_heads **line);
+int		ft_echo(t_token **token, t_data *data, t_heads **line);
 int		ft_pwd(t_heads **line);
 int		ft_env(t_data *data, t_heads **line);
 
