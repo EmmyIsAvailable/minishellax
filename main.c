@@ -19,22 +19,18 @@ int	ft_cmp_line(char *history, char *str)
 	i = jump_spaces(history, 0);
 	if (ft_strncmp(&history[i], str, ft_strlen(str)) != 0)
 		return (1);
-	i += ft_strlen(str);
-	i = jump_spaces(history, i);
-	if (history[i] != '\0')
-		return (1);
 	return (0);
 }
 
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
-			&& ft_message_exit(history, "exit", data) == 0))
+			&& ft_message_exit(history, "exit") == 0))
 		return (0);
-	else if (history && ft_cmp_line(history, "./minishell") == 0)
+	else if (history && ft_message_exit(history, "./minishell") == 0)
 		change_shlvl(data, '+');
 	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
-					"exit", data) == 0) || history == NULL))
+					"exit") == 0) || history == NULL))
 	{
 		ft_prev_envp(shlvl, data);
 		history = "";

@@ -101,7 +101,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 	t_heads	*tmp;
 
 	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
-		return (1);
+		return (ft_exit((*line)->cmd));
 	printf("bash: %s: command not found\n", (*line)->cmd->data);
 	if ((*line)->next)
 	{
@@ -140,5 +140,5 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 			return (ft_no_fork(&(*line), data, &(*final_line)));
 		}
 	}
-	return (2);
+	return (-1);
 }

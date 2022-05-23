@@ -38,51 +38,53 @@ int	event_ctrl_c(void)
 	return (0);
 }
 
-void	data_exit(char i, char j, int vrai, t_data *data)
+int	ft_message_exit(char *history, char *str)
 {
-	if (i == ' ' && vrai == 1)
+	char	**tab;
+
+	tab = ft_split_bis(history, "\f\n\r\t\v ");
+	if (ft_strncmp(tab[0], str, ft_strlen(tab[0])) != 0)
+		return (1);
+	if (ft_strncmp(str, "./minishell", 11) == 0 && tab[1])
 	{
-		printf("exit\n-bash: exit: too many arguments\n");
-		data->exit_status = 1;
+		printf("minishell: %s: No such file or directory\n", tab[1]);
+		return (1);
 	}
-	else if (vrai == 0 && i == '-' && ft_isdigit(j))
-	{
-		printf("exit\n");
-		data->exit_status = 255;
-	}
-	else if (!ft_isdigit(i) && i != '\0')
-	{
-		printf("exit\n-bash: exit: numeric argument required\n");
-		data->exit_status = 2;
-	}
-	else if (i == '\0')
+	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		printf("exit\n");
-		data->exit_status = 1;
+		if (tab[1] && tab[2])
+			return (1);
 	}
+	free_tab(tab);
+	return (0);
 }
 
-int	ft_message_exit(char *history, char *str, t_data *data)
+int	ft_exit(t_token *cmd)
 {
 	int	i;
-	int	j;
-	int	vrai;
 
-	vrai = 0;
-	i = jump_spaces(history, 0);
-	if (ft_strncmp(&history[i], str, ft_strlen(str)) != 0)
-		return (1);
-	i += ft_strlen(str);
-	i = jump_spaces(history, i);
-	while (ft_isdigit(history[i]))
+	i = -1;
+	if (cmd->next)
 	{
-		i++;
-		vrai = 1;
+		while (cmd->next->data[++i])
+		{
+			if (i == 0 && cmd->next->data[i] == '-')
+				i++;
+			if (!ft_isdigit(cmd->next->data[i]))
+			{
+				printf("bash: exit: %s: numeric argument required\n", cmd->next->data);
+				return (2);
+			}
+		}
+		if (cmd->next->next)
+		{
+			printf("bash: exit: %s: too many arguments\n", cmd->next->data);
+			return (1);
+		}
+		if (ft_atoi(cmd->next->data) < 0)
+			return (255);
+		return (ft_atoi(cmd->next->data));
 	}
-	if (history[i] == '\0')
-		j = '\0';
-	else
-		j = history[i + 1];
-	data_exit(history[i], j, vrai, data);
 	return (0);
 }
