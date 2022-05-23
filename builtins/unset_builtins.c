@@ -17,7 +17,7 @@ int	check_existence(char *str, char *env)
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(str, env, ft_strlen(str)) == 0) //pr unset qq chose qui ne ocntient pas de = 
+	if (ft_strncmp(str, env, ft_strlen(str)) == 0) 
 		return (1);
 	while (str[i] == env[i])
 		i++;
