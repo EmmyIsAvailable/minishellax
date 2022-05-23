@@ -12,19 +12,19 @@
 
 #include "../minishell.h"
 
-int	ft_echo(t_token *token, t_data *data, t_heads **line)
+int	ft_echo(t_token **token, t_data *data, t_heads **line)
 {
 	int	option;
 	char	*str;
 
 	option = 0;
 	str = NULL;
-	if (ft_strncmp(token->data, "-n", 3) == 0)
+	if (ft_strncmp((*token)->data, "-n", 3) == 0)
 	{
 		option = 1;
-		ft_free(&token);
+		ft_free(token);
 	}
-	str = prep_data(str, token, data);
+	str = prep_data(str, (*token), data);
 	if (option == 0)
 		str = join_elems(str, "\n");
 	write_outfile(line, str);

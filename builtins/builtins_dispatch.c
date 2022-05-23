@@ -52,7 +52,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 			return (0);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo((*line)->cmd, data, line));
+		return (ft_echo(&(*line)->cmd, data, line));
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 4) == 0 && !(*line)->cmd->next)
 		return (ft_pwd(line));
