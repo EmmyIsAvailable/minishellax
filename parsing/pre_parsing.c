@@ -82,7 +82,9 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 			printf("bash : parsing error\n");
 			return (ft_lst_clear(head, free));
 		}
-		if (ft_strchr(tmp->data, 32) && tmp->token == 1)
+		if (!tmp->data)
+			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
+		else if (ft_strchr(tmp->data, 32) && tmp->token == 1)
 			ft_split_token(head, tmp, data);
 		else
 			ft_lst_add_back(head, tmp);
