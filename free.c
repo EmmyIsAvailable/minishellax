@@ -80,4 +80,18 @@ int	free_tab(char **tab)
 	return (0);
 }
 
+int	check_exit_args(char *arg)
+{
+	int	i;
 
+	i = 0;
+	while (arg[i])
+	{
+		if (i == 0 && arg[i] == '-')
+			i++;
+		if (!ft_isdigit(arg[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}

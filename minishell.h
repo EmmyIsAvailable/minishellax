@@ -108,14 +108,16 @@ int		minishell(t_data data, t_token *head, t_token *shlvl);
 /*_exit_program_*/
 void	sig_int(int code);
 int		event_ctrl_c(void);
-int		ft_message_exit(char *history, char *str);
+int		ft_message(char *history, char *str);
 int		ft_exit(t_token *cmd);
+int		ft_exit_message(int i, t_token *cmd);
 
 /*_free_*/
 int		init_envp(t_data *data, char **envp);
 int		free_tab(char **tab);
 char	*join_elems(char *str, char *to_add);
 char	*prep_data(char *str, t_token *token, t_data *data);
+int		check_exit_args(char *arg);
 
 /*_builtins_cmd_*/
 int		write_outfile(t_heads **line, char *str);

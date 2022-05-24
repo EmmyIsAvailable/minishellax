@@ -25,11 +25,11 @@ int	ft_cmp_line(char *history, char *str)
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
-			&& ft_message_exit(history, "exit") == 0))
+			&& ft_message(history, "exit") == 0))
 		return (0);
-	else if (history && ft_message_exit(history, "./minishell") == 0)
+	else if (history && ft_message(history, "./minishell") == 0)
 		change_shlvl(data, '+');
-	else if (data->shlvl > 1 && ((history && ft_message_exit(history,
+	else if (data->shlvl > 1 && ((history && ft_message(history,
 					"exit") == 0) || history == NULL))
 	{
 		ft_prev_envp(shlvl, data);
