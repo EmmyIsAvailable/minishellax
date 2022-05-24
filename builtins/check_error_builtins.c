@@ -20,7 +20,7 @@ int	error_export(t_token *token)
 	while (tmp)
 	{
 		if (check_assign(tmp->data) != 0)
-			printf("-bash: export: '%s': not a valid identifier\n", tmp->data);
+			printf("bash: export: '%s': not a valid identifier\n", tmp->data);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -31,8 +31,8 @@ int	error_cd(t_token *token)
 	struct stat	buf;
 
 	if (token->next && token->next->next)
-		printf("-bash: cd: too many arguments\n");
+		printf("bash: cd: too many arguments\n");
 	else if (token->next && stat(token->next->data, &buf) == -1)
-		printf("-bash: cd: %s: No such file or directory\n", token->next->data);
+		printf("bash: cd: %s: No such file or directory\n", token->next->data);
 	return (0);
 }
