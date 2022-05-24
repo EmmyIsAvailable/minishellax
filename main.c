@@ -46,10 +46,13 @@ int	minishell(t_data data, t_token *head, t_token *shlvl)
 	event_ctrl_c();
 	while (data.shlvl != -1)
 	{
+		global = 0;
 		head = NULL;
 		history = readline("$> ");
 		if (ft_shlvl(&data, history, &shlvl) == 0)
 			break ;
+		if (global == 1)
+			data.exit_status = 130;
 		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, &data, &shlvl);
 		add_history(history);

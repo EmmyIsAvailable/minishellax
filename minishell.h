@@ -36,6 +36,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+extern int	global;
+
 /*_RACINE_*/
 
 /*_cmd_line_*/

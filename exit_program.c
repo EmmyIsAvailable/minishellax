@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+int	global;
 
 void	sig_int(int code)
 {
@@ -18,6 +19,7 @@ void	sig_int(int code)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 1);
+	global = 1;
 	return ;
 }
 
