@@ -48,7 +48,7 @@ int	browse_data_var(char *str, t_data *data)
 	while (data->envp[i])
 	{
 		j = 0;
-		while (str[j] == data->envp[i][j] && (str[j] != '=' || str[j] != '+'))
+		while (str[j] == data->envp[i][j] && (str[j] != '=' && str[j] != '+'))
 			j++;
 		if (str[j] == '=')
 		{
@@ -111,7 +111,7 @@ int	ft_export(t_token *token, t_data *data)
 		{
 			if (browse_data_var(tmp->data, data) == 1)
 			{
-				trim = ft_strtrimone(tmp->data, '+');printf("%s\n", trim);
+				trim = ft_strtrimone(tmp->data, '+');
 				if (!trim)
 					add_var_envp(tmp->data, data);
 				else

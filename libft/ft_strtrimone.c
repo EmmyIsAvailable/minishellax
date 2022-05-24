@@ -30,11 +30,9 @@ char	*ft_strtrimone(char *str, char c)
 		ret[i] = str[i];
 		i++;
 	}
-	if (str[i] == c)
-		i++;
-	while (str[i])
+	while (str[i] && str[i + 1])
 	{
-		ret[i - 1] = str[i];
+		ret[i] = str[i + 1];
 		i++;
 	}
 	ret[i] = '\0';
