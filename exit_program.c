@@ -38,7 +38,7 @@ int	event_ctrl_c(void)
 	return (0);
 }
 
-int	ft_message_exit(char *history, char *str)
+int	ft_message(char *history, char *str)
 {
 	char	**tab;
 
@@ -53,10 +53,25 @@ int	ft_message_exit(char *history, char *str)
 	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		printf("exit\n");
-		if (tab[1] && tab[2])
+		if (tab[1] && !check_exit_args(tab[1]) && tab[2])
 			return (1);
 	}
 	free_tab(tab);
+	return (0);
+}
+
+int	ft_exit_message(int i, t_token *cmd)
+{
+	if (i == 1)
+	{
+		printf("bash: exit: %s: numeric argument required\n", cmd->data);
+		return (2);
+	}
+	if (i == 2)
+	{
+		printf("bash: exit: %s: too many arguments\n", cmd->data);
+		return (1);
+	}
 	return (0);
 }
 
@@ -72,19 +87,13 @@ int	ft_exit(t_token *cmd)
 			if (i == 0 && cmd->next->data[i] == '-')
 				i++;
 			if (!ft_isdigit(cmd->next->data[i]))
-			{
-				printf("bash: exit: %s: numeric argument required\n", cmd->next->data);
-				return (2);
-			}
+				return (ft_exit_message(1, cmd->next));
 		}
 		if (cmd->next->next)
-		{
-			printf("bash: exit: %s: too many arguments\n", cmd->next->data);
-			return (1);
-		}
+			return (ft_exit_message(2, cmd->next));
 		if (ft_atoi(cmd->next->data) < 0)
 			return (255);
-		return (ft_atoi(cmd->next->data));
+		return (ft_atoi(cmd->next->data) % 256);
 	}
 	return (0);
 }
