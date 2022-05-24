@@ -40,6 +40,11 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
 	if ((*head) == NULL)
 		return (0);
+	if ((*head)->token == SPACE && !(*head)->next)
+	{
+		printf("bash: : command not found\n");
+		return (1);
+	}
 	if ((*head)->token == SPACE)
 		ft_free(head);
 	if ((*head)->token == PIPE)

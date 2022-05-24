@@ -73,12 +73,12 @@ t_token	*fill_data_bis(token_type token, int len, char *op, t_data *data)
 	int		i;
 
 	i = -1;
-	new_token = ft_create_token(token); //leaks
+	new_token = ft_create_token(token);
 	if (token == DOLLAR_SIGN && ft_search_env(&op[1], data))
 		return (split_env(new_token, op, data));
 	if (token == DOLLAR_SIGN)
 		len = ft_name(&op[1]) + 1;
-	new_token->data = malloc(sizeof(char) * len + 1);//leaks
+	new_token->data = malloc(sizeof(char) * len + 1);
 	if (!new_token->data)
 		return (NULL);
 	while (op[++i] && i < len)
