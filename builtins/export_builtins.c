@@ -71,20 +71,14 @@ int	browse_data_var(char *str, t_data *data)
 int	check_assign(char *assignment)
 {
 	int	i;
-	int	vrai;
 
 	i = 1;
-	vrai = 0;
 	if (!ft_isalpha(assignment[0]) && assignment[0] != '_')
 		return (1);
-	if (assignment[0] == '_')
-		vrai = 1;
 	while (assignment[i] && assignment[i] != '=' && assignment[i] != '+')
 	{
 		if (!ft_isalnum(assignment[i]) && assignment[i] != '_')
 			return (1);
-		if (assignment[i] == '_' || ft_isdigit(assignment[i]))
-			vrai = 1;
 		i++;
 	}
 	if (assignment[i] == '+')
@@ -92,7 +86,7 @@ int	check_assign(char *assignment)
 		if (assignment[i + 1] != '=')
 			return (1);
 	}
-	if (vrai == 1 && assignment[i] != '=' && assignment[i] != '+')
+	else if (assignment[i] != '=')
 		return (1);
 	return (0);
 }
