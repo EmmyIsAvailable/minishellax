@@ -32,8 +32,7 @@ int	event_ctrl_c(void)
 	sig_quit.sa_flags = 0;
 	sig_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sig_quit.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL) == 0)
-		return (1);
+	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sig_quit, NULL);
 	return (0);
 }

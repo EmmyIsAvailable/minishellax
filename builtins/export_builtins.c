@@ -41,14 +41,14 @@ int	add_var_envp(char *str, t_data *data)
 
 int	browse_data_var(char *str, t_data *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (data->envp[i])
 	{
 		j = 0;
-		while (str[j] == data->envp[i][j] && str[j] != '=')
+		while (str[j] == data->envp[i][j] && (str[j] != '=' && str[j] != '+'))
 			j++;
 		if (str[j] == '=')
 		{
@@ -56,6 +56,11 @@ int	browse_data_var(char *str, t_data *data)
 			data->envp[i] = ft_strdup(str);
 			if (!data->envp[i])
 				return (1);
+			return (0);
+		}
+		if (str[j] == '+' && str[j + 1] == '=')
+		{
+			data->envp[i] = join_elems(data->envp[i], ft_strrchr(str, str[j + 2]));
 			return (0);
 		}
 		i++;
@@ -66,9 +71,28 @@ int	browse_data_var(char *str, t_data *data)
 int	check_assign(char *assignment)
 {
 	int	i;
+	int	vrai;
 
-	i = 0;
-	if (ft_isalpha(assignment[i]) == 0 && assignment[i] != '_')
+	i = 1;
+	vrai = 0;
+	if (!ft_isalpha(assignment[0]) && assignment[0] != '_')
+		return (1);
+	if (assignment[0] == '_')
+		vrai = 1;
+	while (assignment[i] && assignment[i] != '=' && assignment[i] != '+')
+	{
+		if (!ft_isalnum(assignment[i]) && assignment[i] != '_')
+			return (1);
+		if (assignment[i] == '_' || ft_isdigit(assignment[i]))
+			vrai = 1;
+		i++;
+	}
+	if (assignment[i] == '+')
+	{
+		if (assignment[i + 1] != '=')
+			return (1);
+	}
+	if (vrai == 1 && assignment[i] != '=' && assignment[i] != '+')
 		return (1);
 	return (0);
 }
@@ -76,6 +100,7 @@ int	check_assign(char *assignment)
 int	ft_export(t_token *token, t_data *data)
 {
 	t_token	*tmp;
+	char	*trim;
 	int		ret;
 
 	tmp = token;
@@ -85,7 +110,14 @@ int	ft_export(t_token *token, t_data *data)
 		if (check_assign(tmp->data) == 0)
 		{
 			if (browse_data_var(tmp->data, data) == 1)
-				add_var_envp(tmp->data, data);
+			{
+				trim = ft_strtrimone(tmp->data, '+');
+				if (!trim)
+					add_var_envp(tmp->data, data);
+				else
+					add_var_envp(trim, data);
+				free(trim);
+			}
 		}
 		else
 			ret = 1;
