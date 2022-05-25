@@ -84,7 +84,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 		}
 		if (!tmp->data)
 			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
-		if (ft_strchr(tmp->data, 32) && tmp->token == 1)
+		else if (ft_strchr(tmp->data, 32) && tmp->token == 1)
 			ft_split_token(head, tmp, data);
 		else
 			ft_lst_add_back(head, tmp);
