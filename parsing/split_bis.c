@@ -96,11 +96,15 @@ char	**ft_split_bis(char const *s, char *c)
 	char	**split;
 	int		words;
 
+	split = NULL;
 	words = nb_words(s, c);
-	split = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!split)
-		return (NULL);
-	fill_words(split, s, c);
-	split[words] = NULL;
+	if (words)
+	{
+		split = (char **)malloc(sizeof(char *) * (words + 1));
+		if (!split)
+			return (NULL);
+		fill_words(split, s, c);
+		split[words] = NULL;
+	}
 	return (split);
 }
