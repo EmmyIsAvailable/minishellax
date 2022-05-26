@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 11:08:26 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/26 15:29:57 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		ft_cmp_line(char *history, char *str);
 void	clean_shlvl(t_token **shlvl, int level);
 int		ft_shlvl(t_data *data, char *history, t_token **shlvl);
-int		minishell(t_data data, t_token *head, t_token *shlvl);
+int		minishell(t_data *data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
 void	sig_int(int code);

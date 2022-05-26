@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 15:10:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/26 15:55:33 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 	return (1);
 }
 
-int	minishell(t_data data, t_token *head, t_token *shlvl)
+int	minishell(t_data *data, t_token *head, t_token *shlvl)
 {
 	char	*history;
 
 	history = NULL;
 	event_ctrl_c();
-	while (data.shlvl != -1)
+	while (data->shlvl != -1)
 	{
 		global = 0;
 		head = NULL;
 		history = readline("$> ");
-		if (ft_shlvl(&data, history, &shlvl) == 0)
+		if (ft_shlvl(data, history, &shlvl) == 0)
 			break ;
 		if (global == 1)
-			data.exit_status = 130;
+			data->exit_status = 130;
 		if (history && ft_cmp_line(history, "./minishell") != 0)
-			ft_parse(history, &head, &data, &shlvl);
+			ft_parse(history, &head, data, &shlvl);
 		add_history(history);
 		free(history);
 	}
@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	}
 	init_envp(&data, envp);
-	minishell(data, head, shlvl);
+	minishell(&data, head, shlvl);
 	free_tab(data.envp);
 	return (0);
 }
