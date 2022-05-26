@@ -14,6 +14,7 @@
 
 void	free_elem_heads(t_heads **lst)
 {
+	printf("deleting pipe\n");
 	if (!(*lst))
 		return ;
 	if ((*lst))
@@ -31,7 +32,7 @@ void	free_elem_heads(t_heads **lst)
 void	clear_all_heads(t_heads **lst)
 {
 	t_heads	*tmp;
-
+	
 	if (!(*lst))
 		return ;
 	while (*lst)

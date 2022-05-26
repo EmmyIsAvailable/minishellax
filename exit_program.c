@@ -18,7 +18,7 @@ void	sig_int(int code)
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 1);
+//	rl_replace_line("", 1);
 	global = 1;
 	return ;
 }
@@ -44,7 +44,7 @@ int	ft_message(char *history, char *str)
 	char	**tab;
 
 	tab = ft_split_bis(history, "\f\n\r\t\v ");
-	if (ft_strncmp(tab[0], str, ft_strlen(tab[0])) != 0)
+	if (!tab || ft_strncmp(tab[0], str, ft_strlen(tab[0])) != 0)
 		return (1);
 	if (ft_strncmp(str, "./minishell", 11) == 0 && tab[1])
 	{
