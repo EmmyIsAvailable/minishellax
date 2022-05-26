@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:48:32 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/19 15:07:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/26 16:15:13 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_lst_delone(t_token *lst, void (*del)(void *))
 		return ;
 	if (lst)
 	{
+		printf("deleting : _%s_\n", lst->data);
 		(*del)(lst->data);
 		free(lst);
 	}
@@ -43,6 +44,7 @@ void	ft_free(t_token **head)
 
 	tmp = (*head);
 	(*head) = (*head)->next;
+	printf("deleting : _%s_\n", tmp->data);
 	free(tmp->data);
 	free(tmp);
 }
