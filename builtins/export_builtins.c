@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 12:53:33 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/10 11:33:26 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/26 15:53:18 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,26 @@
 int	add_var_envp(char *str, t_data *data)
 {
 	int		i;
-	char	**envp;
+	int		j;
+	char	**tmp;
 
 	i = 0;
-	envp = data->envp;
-	while (envp[i])
+	j = -1;
+	tmp = NULL;
+	while (data->envp[i])
 		i++;
+	tmp = malloc(sizeof(char *) * (i + 1));
+	while (data->envp[++j])
+		tmp[j] = ft_strdup(data->envp[j]);
+	tmp[j] = NULL;
+	free_tab(data->envp);
 	data->envp = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!data->envp)
 		return (1);
 	i = 0;
-	while (envp[i])
+	while (tmp[i])
 	{
-		data->envp[i] = ft_strdup(envp[i]);
+		data->envp[i] = ft_strdup(tmp[i]);
 		if (!data->envp[i])
 			return (1);
 		i++;
@@ -36,6 +43,7 @@ int	add_var_envp(char *str, t_data *data)
 	if (!data->envp[i])
 		return (1);
 	data->envp[i + 1] = NULL;
+	free_tab(tmp);
 	return (0);
 }
 

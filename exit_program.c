@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 14:33:39 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:00:30 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig_int(int code)
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-//	rl_replace_line("", 1);
+	rl_replace_line("", 1);
 	global = 1;
 	return ;
 }
@@ -45,17 +45,24 @@ int	ft_message(char *history, char *str)
 
 	tab = ft_split_bis(history, "\f\n\r\t\v ");
 	if (!tab || ft_strncmp(tab[0], str, ft_strlen(tab[0])) != 0)
+	{
+		free_tab(tab);
 		return (1);
+	}
 	if (ft_strncmp(str, "./minishell", 11) == 0 && tab[1])
 	{
 		printf("minishell: %s: No such file or directory\n", tab[1]);
+		free_tab(tab);
 		return (1);
 	}
 	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		printf("exit\n");
 		if (tab[1] && !check_exit_args(tab[1]) && tab[2])
+		{
+			free_tab(tab);
 			return (1);
+		}
 	}
 	free_tab(tab);
 	return (0);
