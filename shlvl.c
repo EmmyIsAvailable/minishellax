@@ -16,10 +16,9 @@ int	ft_export_prev(char *str, t_token *shlvl, t_data *data)
 {
 	t_token	*tmp;
 
-	tmp = shlvl;printf("str %s\n", str);
+	tmp = shlvl;
 	while (tmp)
 	{
-		printf("%s\n", tmp->data);
 		if (tmp->cmd_env == 0 && (int)ft_strlen(str) == ft_name(tmp->data))
 		{
 			if (ft_strncmp(tmp->data, str, ft_strlen(str)) == 0)
@@ -86,7 +85,6 @@ int	ft_prev_envp(t_token **shlvl, t_data *data)
 	t_token	*tmp;
 	t_token	*tmp2;
 	
-	//ft_print(*shlvl);
 	while ((*shlvl) && (*shlvl)->shlvl == data->shlvl)
 	{
 		if ((*shlvl)->cmd_env == 0)

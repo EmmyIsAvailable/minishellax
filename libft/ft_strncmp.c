@@ -12,6 +12,16 @@
 
 #include "libft.h"
 
+int	check_len(const char *s1, size_t n)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && (s1[i] == ' ' || s1[i] == '\n' || s1[i] == '\f' || s1[i] == '\r' || s1[i] == '\t' || s1[i] == '\v'))
+		i++;
+	
+}
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
