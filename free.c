@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/27 15:14:59 by eruellan          #+#    #+#             */
+/*   Updated: 2022/05/27 15:52:27 by eruellan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./minishell.h"
 
 int	init_envp(t_data *data, char **envp)
@@ -46,7 +58,7 @@ char	*prep_data(char *str, t_token *token, t_data *data)
 {
 	char	*exit_value;
 	t_token	*tmp;
-	
+
 	exit_value = 0;
 	tmp = token;
 	while (tmp)
@@ -57,7 +69,7 @@ char	*prep_data(char *str, t_token *token, t_data *data)
 			str = join_elems(str, exit_value);
 			free(exit_value);
 		}
-		else	
+		else
 			str = join_elems(str, tmp->data);
 		if (tmp->next)
 			str = join_elems(str, " ");

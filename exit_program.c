@@ -6,20 +6,21 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/26 17:00:30 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:50:20 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-int	global;
+
+int	g_global;
 
 void	sig_int(int code)
 {
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-//	rl_replace_line("", 1);
-	global = 1;
+	rl_replace_line("", 1);
+	g_global = 1;
 	return ;
 }
 
@@ -44,19 +45,24 @@ int	ft_message(char *history, char *str)
 	char	**tab;
 
 	tab = ft_split_bis(history, "\f\n\r\t\v ");
-	if (!tab || ft_strncmp(tab[0], str, ft_strlen(tab[0])) != 0)
+	if (!tab || ft_strncmp(tab[0], str, ft_strlen(str)) != 0)
 	{
 		if (tab)
 			free_tab(tab);
 		return (1);
 	}
-	if (ft_strncmp(str, "./minishell", 11) == 0 && tab[1])
+	if (ft_strncmp(tab[0], "./minishell", 11) == 0 && tab[1])
 	{
 		printf("minishell: %s: No such file or directory\n", tab[1]);
 		free_tab(tab);
 		return (1);
 	}
-	if (ft_strncmp(str, "exit", 4) == 0)
+	return (ft_message_bis(tab));
+}
+
+int	ft_message_bis(char **tab)
+{
+	if (ft_strncmp(tab[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
 		if (tab[1] && !check_exit_args(tab[1]) && tab[2])
@@ -80,29 +86,6 @@ int	ft_exit_message(int i, t_token *cmd)
 	{
 		printf("bash: exit: %s: too many arguments\n", cmd->data);
 		return (1);
-	}
-	return (0);
-}
-
-int	ft_exit(t_token *cmd)
-{
-	int	i;
-
-	i = -1;
-	if (cmd->next)
-	{
-		while (cmd->next->data[++i])
-		{
-			if (i == 0 && cmd->next->data[i] == '-')
-				i++;
-			if (!ft_isdigit(cmd->next->data[i]))
-				return (ft_exit_message(1, cmd->next));
-		}
-		if (cmd->next->next)
-			return (ft_exit_message(2, cmd->next));
-		if (ft_atoi(cmd->next->data) < 0)
-			return (255);
-		return (ft_atoi(cmd->next->data) % 256);
 	}
 	return (0);
 }

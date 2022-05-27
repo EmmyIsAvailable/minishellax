@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:51:55 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 15:08:49 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:28:17 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_prev_envp(t_token **shlvl, t_data *data)
 {
 	t_token	*tmp;
 	t_token	*tmp2;
-	
+
 	while ((*shlvl) && (*shlvl)->shlvl == data->shlvl)
 	{
 		if ((*shlvl)->cmd_env == 0)
@@ -96,6 +96,11 @@ int	ft_prev_envp(t_token **shlvl, t_data *data)
 	change_shlvl(data, '-');
 	tmp = *shlvl;
 	tmp2 = *shlvl;
+	return (ft_prev_envp_bis(tmp, tmp2, data));
+}
+
+int	ft_prev_envp_bis(t_token *tmp, t_token *tmp2, t_data *data)
+{
 	while (tmp && tmp->shlvl == data->shlvl)
 	{
 		if (tmp->cmd_env == 0)
@@ -109,22 +114,5 @@ int	ft_prev_envp(t_token **shlvl, t_data *data)
 			ft_unset(tmp2, data);
 		tmp2 = tmp2->next;
 	}
-	return (0);
-}
-
-int	change_shlvl(t_data *data, char c)
-{
-	char	*new;
-	char	*nb_shlvl;
-
-	if (c == '+')
-		data->shlvl++;
-	else if (c == '-')
-		data->shlvl--;
-	nb_shlvl = ft_itoa(data->shlvl);
-	new = ft_strjoin("SHLVL=", nb_shlvl);
-	free(nb_shlvl);
-	browse_data_var(new, data);
-	free(new);
 	return (0);
 }

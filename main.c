@@ -6,11 +6,28 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/26 16:56:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:37:27 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	change_shlvl(t_data *data, char c)
+{
+	char	*new;
+	char	*nb_shlvl;
+
+	if (c == '+')
+		data->shlvl++;
+	else if (c == '-')
+		data->shlvl--;
+	nb_shlvl = ft_itoa(data->shlvl);
+	new = ft_strjoin("SHLVL=", nb_shlvl);
+	free(nb_shlvl);
+	browse_data_var(new, data);
+	free(new);
+	return (0);
+}
 
 int	ft_cmp_line(char *history, char *str)
 {
@@ -46,12 +63,12 @@ int	minishell(t_data *data, t_token *head, t_token *shlvl)
 	event_ctrl_c();
 	while (data->shlvl != -1)
 	{
-		global = 0;
+		g_global = 0;
 		head = NULL;
 		history = readline("$> ");
 		if (ft_shlvl(data, history, &shlvl) == 0)
 			break ;
-		if (global == 1)
+		if (g_global == 1)
 			data->exit_status = 130;
 		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, data, &shlvl);
