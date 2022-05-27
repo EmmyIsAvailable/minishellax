@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:43:29 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/16 14:27:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:21:49 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_elem_heads(t_heads **lst)
 {
-	printf("deleting pipe\n");
 	if (!(*lst))
 		return ;
 	if ((*lst))
@@ -32,7 +31,7 @@ void	free_elem_heads(t_heads **lst)
 void	clear_all_heads(t_heads **lst)
 {
 	t_heads	*tmp;
-	
+
 	if (!(*lst))
 		return ;
 	while (*lst)

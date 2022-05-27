@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:49:39 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:51:17 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:51:01 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int	is_heredoc(char *deli, t_data *data)
 	int		heredoc;
 	char	*buffer;
 
-//	tmp = NULL;
-//	buffer = NULL;
 	heredoc = open(deli, O_WRONLY | O_CREAT | O_APPEND, 0777);
-//	if (heredoc < 0)
-//		perror("Heredoc failed");
 	buffer = readline("> ");
 	if (ft_strncmp(buffer, deli, (ft_strlen(deli) + 1)) != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/26 16:19:27 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:40:26 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_split_token(t_token **head, t_token *cmd, t_data *data)
 	free(spaceless);
 }
 
-void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
+void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
 {
 	int		i;
 	int		space;
@@ -76,7 +76,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 			break ;
 		if (space != i && space != 0)
 			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
-		tmp = scan_token(&str[i], io_here_flag, data);
+		tmp = scan_token(&str[i], h_flag, data);
 		if (!tmp)
 		{
 			printf("bash : parsing error\n");
@@ -88,7 +88,7 @@ void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag)
 			ft_split_token(head, tmp, data);
 		else
 			ft_lst_add_back(head, tmp);
-		io_here_flag = ft_heredoc(tmp);
+		h_flag = ft_heredoc(tmp);
 		i += (int)tmp->data_size;
 	}
 }

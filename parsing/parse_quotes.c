@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/10 15:12:25 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:22:48 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int	no_data(t_token **new_token, int i, char *str)
 
 int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 {
-	int	i;
-	int	diff;
+	int		i;
+	int		diff;
 	char	*tmp;
 
 	i = 1;

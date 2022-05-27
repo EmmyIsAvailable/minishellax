@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 14:47:06 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:47:30 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,18 @@ void	parent(t_data *data, t_heads **line)
 
 int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 {
-	int		ret;
 	int		i;
-	t_heads		*next;
+	t_heads	*next;
 
-	i = 0;
 	next = NULL;
-	ret = ft_no_fork(line, data, final_line);
-	if (ret != -1)
-		return (ret);
-	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
+	i = ft_no_fork(line, data, final_line);
+	if (i != -1)
+		return (i);
+	i = 0;
 	while ((*final_line))
 	{
 		if (i % 2 == 0)
-		{
-			if (pipe(data->pipes) == -1)
-				return (1);
-		}
+			pipe(data->pipes);
 		if (dispatch_builtins(final_line, data) == 1)
 		{
 			data->pid1 = fork();
@@ -79,6 +74,28 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 		(*final_line) = next;
 		i++;
 	}
-	unlink("pipe");
+	return (0);
+}
+
+int	ft_exit(t_token *cmd)
+{
+	int	i;
+
+	i = -1;
+	if (cmd->next)
+	{
+		while (cmd->next->data[++i])
+		{
+			if (i == 0 && cmd->next->data[i] == '-')
+				i++;
+			if (!ft_isdigit(cmd->next->data[i]))
+				return (ft_exit_message(1, cmd->next));
+		}
+		if (cmd->next->next)
+			return (ft_exit_message(2, cmd->next));
+		if (ft_atoi(cmd->next->data) < 0)
+			return (255);
+		return (ft_atoi(cmd->next->data) % 256);
+	}
 	return (0);
 }

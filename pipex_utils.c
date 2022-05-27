@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 11:53:26 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:20:52 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,6 @@ int	check_outfile(t_heads **line)
 			close(tmp_out->fd);
 		}
 		tmp_out = tmp_out->next;
-	}
-	return (0);
-}
-
-int	non_print(t_heads **line, t_heads **final_line, t_data *data)
-{
-	t_heads	*tmp;
-
-	if (!(*line)->next)
-		return (non_printable_builtins(&(*line), data));
-	else
-	{
-		tmp = (*line)->next;
-		free_elem_heads(&(*line));
-		(*line) = tmp;
-		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/26 15:29:57 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:20:26 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int	global;
+extern int	g_global;
 
 /*_RACINE_*/
 
@@ -85,7 +85,7 @@ int		find_op(char *str, char op);
 /*_pre_parsing_*/
 int		jump_spaces(char *str, int i);
 int		ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl);
-void	create_tokens(char *str, t_token **head, t_data *data, int io_here_flag);
+void	create_tokens(char *str, t_token **head, t_data *data, int h_flag);
 
 /*_split_bis_*/
 char	**ft_split_bis(char const *s, char *c);
@@ -103,15 +103,15 @@ int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 
 /*_main_*/
 int		ft_cmp_line(char *history, char *str);
-void	clean_shlvl(t_token **shlvl, int level);
 int		ft_shlvl(t_data *data, char *history, t_token **shlvl);
+int		change_shlvl(t_data *data, char c);
 int		minishell(t_data *data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
 void	sig_int(int code);
 int		event_ctrl_c(void);
 int		ft_message(char *history, char *str);
-int		ft_exit(t_token *cmd);
+int		ft_message_bis(char **tab);
 int		ft_exit_message(int i, t_token *cmd);
 
 /*_free_*/
@@ -132,24 +132,29 @@ int		ft_env(t_data *data, t_heads **line);
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
 void	parent(t_data *data, t_heads **line);
 void	child(t_data *data, t_heads **line, int i);
-
+int		ft_exit(t_token *cmd);
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data); // changes
 int		ft_cd(t_heads **line, t_data *data); //changed
+void	change_pwd(int i, t_data *data);
 int		non_printable_builtins(t_heads **line, t_data *data);//changed 
 int		is_non_print_builtins(t_token *token);
 
 /*_check_error_builtins_*/
 int		error_export(t_token *token);
 int		error_cd(t_token *token);
+int		non_print(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_export_builtins_*/
-int		add_var_envp(char *str, t_data *data);
 int		ft_export(t_token *token, t_data *data);
-int		browse_data_var(char *str, t_data *data);
-int		check_assign(char *assignment);
 int		ft_solo_export(t_data *data);
+
+/*_export_utils_*/
+int		browse_data_var(char *str, t_data *data);
+int		add_var_envp(char *str, t_data *data);
+int		check_assign(char *assignment);
+char	**clean_envp(t_data *data);
 
 /*_unset_builtins_*/
 int		check_existence(char *str, char *env);
@@ -167,6 +172,7 @@ void	ft_wait(t_data *data);
 int		check_infile(t_heads **line);
 int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
+int		no_binary(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);
@@ -175,9 +181,9 @@ int		check_heredoc(t_heads **line, t_data *data);
 
 /*_shlvl_*/
 int		ft_prev_envp(t_token **shlvl, t_data *data);
+int		ft_prev_envp_bis(t_token *tmp, t_token *tmp2, t_data *data);
 int		ft_export_prev(char *str, t_token *shlvl, t_data *data);
 int		ft_unset_prev(char *str, t_data *data);
-int		change_shlvl(t_data *data, char c);
 void	ft_exec_unset_prev(char *to_export, char **envp);
 
 #endif
