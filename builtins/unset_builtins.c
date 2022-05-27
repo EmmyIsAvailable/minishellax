@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:31:22 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 11:27:22 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/27 16:11:15 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_existence(char *str, char *env)
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(str, env, ft_strlen(str)) == 0) 
+	if (ft_strncmp(str, env, ft_strlen(str)) == 0)
 		return (1);
 	while (str[i] == env[i])
 		i++;

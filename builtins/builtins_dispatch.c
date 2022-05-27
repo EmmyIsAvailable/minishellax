@@ -6,38 +6,40 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 13:46:31 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:20:06 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	change_pwd(int i, t_data *data)
+{
+	char	*new;
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (i == 1)
+		new = ft_strjoin("OLDPWD=", cwd);
+	else if (i == 2)
+		new = ft_strjoin("PWD=", cwd);
+	browse_data_var(new, data);
+	free(new);
+	free(cwd);
+}
+
 int	ft_cd(t_heads **line, t_data *data)
 {
-	char	*cwd;
-	char	*new_path;
-	char	*old_path;
 	int		ret;
 
-	new_path = NULL;
-	old_path = NULL;
 	ret = 0;
-	cwd = getcwd(NULL, 0);
-	old_path = ft_strjoin("OLDPWD=", cwd);
-	browse_data_var(old_path, data);
-	free(old_path);
-	free(cwd);
+	change_pwd(1, data);
 	if ((*line)->cmd->next)
 		ret = chdir((*line)->cmd->next->data);
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
 		return (1);
-	cwd = getcwd(NULL, 0);
-	new_path = ft_strjoin("PWD=", cwd);
-	browse_data_var(new_path, data);
-	free(new_path);
-	free(cwd);
+	change_pwd(2, data);
 	clear_all_heads(line);
 	return (0);
 }

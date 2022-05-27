@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/19 14:58:46 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 15:55:26 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_echo(t_token **token, t_data *data, t_heads **line)
 {
-	int	option;
+	int		option;
 	char	*str;
 
 	option = 0;
@@ -79,7 +79,7 @@ int	write_outfile(t_heads **line, char *str)
 	}
 	if (!tmp_out && (*line)->next)
 	{
-		fd = open("tmp", O_CREAT | O_WRONLY , 0664);
+		fd = open("tmp", O_CREAT | O_WRONLY, 0664);
 		write(fd, str, ft_strlen(str));
 		tmp = ft_create_token(WORD);
 		tmp->fd = fd;
