@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:49:25 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/10 13:45:11 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/27 16:21:21 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token	*split_env(t_token *new_token, char *op, t_data *data)
 {
 	char	*tmp;
 	char	**spaceless;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = ft_strdup((const char *)ft_search_env(&op[1], data));
