@@ -88,16 +88,16 @@ int	is_non_print_builtins(t_token *token)
 	t_token	*tmp;
 
 	tmp = token;
-	if (ft_strncmp(token->data, "cd", 3) == 0)
+	if (ft_strncmp(token->data, "cd", 2) == 0)
 		return (error_cd(token));
-	if (ft_strncmp(token->data, "export", 7) == 0 && token->next)
+	if (ft_strncmp(token->data, "export", 6) == 0 && token->next)
 		return (error_export(token->next));
-	if (ft_strncmp(token->data, "unset", 6) == 0 && token->next)
+	if (ft_strncmp(token->data, "unset", 5) == 0 && token->next)
 	{
 		while (tmp)
 		{
 			if (check_unset(token->next->data) != 0)
-				printf("-bash: unset: '%s': not a valid identifier\n",
+				printf("bash: unset: '%s': not a valid identifier\n",
 					token->next->data);
 			tmp = tmp->next;
 		}
