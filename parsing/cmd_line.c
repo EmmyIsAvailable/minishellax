@@ -97,7 +97,7 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 	{
 		j = 1;
 		tmp = tmp_init();
-		if (!tmp || !tmp->cmd)
+		if (!tmp)
 			break ;
 		if ((*head)->token != PIPE)
 			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);

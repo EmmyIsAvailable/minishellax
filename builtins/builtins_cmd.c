@@ -19,7 +19,7 @@ int	ft_echo(t_token **token, t_data *data, t_heads **line)
 
 	option = 0;
 	str = NULL;
-	if (ft_strncmp((*token)->data, "-n", 3) == 0)
+	if (ft_strncmp((*token)->data, "-n", 2) == 0)
 	{
 		option = 1;
 		ft_free(token);
