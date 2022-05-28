@@ -50,7 +50,8 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 					"exit") == 0) || history == NULL))
 	{
 		ft_prev_envp(shlvl, data);
-		history = "";
+		free(history);
+		history = ft_strdup("");
 	}
 	return (1);
 }

@@ -17,6 +17,7 @@ void	change_pwd(int i, t_data *data)
 	char	*new;
 	char	*cwd;
 
+	new = NULL;
 	cwd = getcwd(NULL, 0);
 	if (i == 1)
 		new = ft_strjoin("OLDPWD=", cwd);
