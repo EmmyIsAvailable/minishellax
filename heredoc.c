@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:49:39 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 15:51:01 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:11:28 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,21 @@ int	is_heredoc(char *deli, t_data *data)
 		{
 			tmp = readline("> ");
 			if (buffer)
-				buffer = join_elems(buffer, "\n"); //ft_strjoin(buffer, "\n");
+				buffer = join_elems(buffer, "\n");
 			if (tmp && ft_strncmp(tmp, deli, (ft_strlen(deli) + 1)) == 0)
 				break ;
 			if (tmp)
-				buffer = join_elems(buffer, tmp); //ft_strjoin(buffer, tmp);
+				buffer = join_elems(buffer, tmp);
 			free(tmp);
 		}
 		free(tmp);
 		env_in_heredoc(heredoc, buffer, data);
 	}
+	return (ft_close_heredoc(heredoc, buffer));
+}
+
+int	ft_close_heredoc(int heredoc, char *buffer)
+{
 	close(heredoc);
 	free(buffer);
 	return (0);

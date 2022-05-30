@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:40:51 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 11:40:54 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:54:24 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	check_funct(int ex_or_unset, t_token *tmp, t_data *data)
 	int	is_alpha;
 
 	is_alpha = ft_isalpha(tmp->data[0]);
+	if (ex_or_unset == -1)
+		return (0);
 	if ((!ex_or_unset && tmp->data[ft_name(tmp->data)] == '=' && is_alpha)
 		|| (ft_search_env(tmp->data, data) && ex_or_unset == 1))
 		return (1);
