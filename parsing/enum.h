@@ -6,14 +6,14 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:49 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/04/22 11:11:03 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:14:28 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUM_H
 # define ENUM_H
 
-typedef enum {
+typedef enum t_types {
 	PIPE = 0,
 	DOLLAR_SIGN = 1,
 	DOUBLE_QUOTE = 2,
@@ -26,6 +26,6 @@ typedef enum {
 	WORD = 9,
 	SPACE = 10,
 	ECHO = 11
-} token_type;
+}	t_type;
 
 #endif
