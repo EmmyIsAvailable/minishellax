@@ -6,36 +6,11 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/27 16:22:48 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:34:36 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*ft_dup(char *data, int i, int diff, char *str)
-{
-	char	*tmp;
-	char	*tmp_bis;
-	int		j;
-
-	j = 0;
-	tmp = malloc(sizeof(char) * (i - diff + 1));
-	if (!tmp)
-		return (NULL);
-	while (j < i - diff)
-	{
-		tmp[j] = str[diff + j];
-		j++;
-	}
-	tmp[j] = '\0';
-	tmp_bis = data;
-	free(data);
-	data = ft_strjoin(tmp_bis, tmp);
-	free(tmp_bis);
-	free(tmp);
-	tmp = NULL;
-	return (data);
-}
 
 char	*ft_create_data(char *str, int i)
 {

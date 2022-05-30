@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 15:37:27 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:38:40 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 		change_shlvl(data, '+');
 	else if (data->shlvl > 1 && ((history && ft_message(history,
 					"exit") == 0) || history == NULL))
-	{
 		ft_prev_envp(shlvl, data);
-		free(history);//a placer autre part pour eviter les leaks sur exit shlvl MAIS fait actuellement segfault
-		history = ft_strdup("");
-	}
 	return (1);
 }
 
@@ -99,6 +95,5 @@ int	main(int ac, char **av, char **envp)
 	minishell(&data, head, shlvl);
 	free_tab(data.envp);
 	unlink ("pipe");
-	while (1);
 	return (0);
 }

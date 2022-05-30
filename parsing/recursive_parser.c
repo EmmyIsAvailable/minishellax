@@ -6,20 +6,11 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/19 11:25:59 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 14:22:09 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	error_msg(int type, char *str)
-{
-	if (type)
-		printf("Bash: syntax error near unexpected token `newline'\n");
-	else
-		printf("Bash: syntax error near unexpected token `%s'\n", str);
-	return (1);
-}
 
 int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {

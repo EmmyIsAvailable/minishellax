@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 16:20:26 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:30:05 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,17 @@ extern int	g_global;
 
 /*_RACINE_*/
 
+/*parsing_utils*/
+int		error_msg(int type, char *str);
+char	*ft_dup(char *data, int i, int diff, char *str);
+void	ft_print(t_token *head);
+void	ft_print_line(t_heads **line);
+t_token	*ft_create_token(token_type token);
+
 /*_cmd_line_*/
 int		check_token(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl);
 int		join_data(t_token **tmp);
-void	ft_print(t_token *head);
-void	ft_print_line(t_heads **line);
 
 /*_gestion_shlvl_list_*/
 void	create_shlvl(int count, t_token **cmd, t_data *data, t_token **shlvl);
@@ -71,8 +76,7 @@ void	ft_free(t_token **head);
 
 /*_parse_*/
 t_token	*scan_token(char *str, int io_here, t_data *data);
-t_token	*fill_data(token_type token, int len, char *op, t_data *data);//malloc
-t_token	*ft_create_token(token_type token); //malloc
+t_token	*fill_data(token_type token, int len, char *op, t_data *data);
 
 /*_search_env_*/
 int		ft_name(char *str);
@@ -94,7 +98,6 @@ char	**ft_split_bis(char const *s, char *c);
 t_token	*split_env(t_token *new_token, char *op, t_data *data);
 
 /*_recusive_parsing*/
-int		error_msg(int type, char *str);
 int		check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 int		check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
@@ -112,7 +115,7 @@ void	sig_int(int code);
 int		event_ctrl_c(void);
 int		ft_message(char *history, char *str);
 int		ft_message_bis(char **tab);
-int		ft_exit_message(int i, t_token *cmd);
+int		ft_exit_message(int i, t_heads **line); //modifier param partout ou funct utilisee
 
 /*_free_*/
 int		init_envp(t_data *data, char **envp);
@@ -132,7 +135,7 @@ int		ft_env(t_data *data, t_heads **line);
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
 void	parent(t_data *data, t_heads **line);
 void	child(t_data *data, t_heads **line, int i);
-int		ft_exit(t_token *cmd);
+int		ft_exit(t_heads **line);
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data); // changes

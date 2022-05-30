@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 15:50:20 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:17:14 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,21 @@ int	ft_message_bis(char **tab)
 	return (0);
 }
 
-int	ft_exit_message(int i, t_token *cmd)
+int	ft_exit_message(int i, t_heads **line)
 {
+	t_token	*cmd;
+
+	cmd = (*line)->cmd;
 	if (i == 1)
 	{
-		printf("bash: exit: %s: numeric argument required\n", cmd->data);
+		printf("bash: exit: %s: numeric argument required\n", cmd->next->data);
+		clear_all_heads(line);	
 		return (2);
 	}
 	if (i == 2)
 	{
-		printf("bash: exit: %s: too many arguments\n", cmd->data);
+		printf("bash: exit: %s: too many arguments\n", cmd->next->data);
+		clear_all_heads(line);
 		return (1);
 	}
 	return (0);

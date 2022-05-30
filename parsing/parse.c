@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/10 14:44:51 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 14:23:58 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ int	find_token(char c)
 	if (c == '$')
 		return (DOLLAR_SIGN);
 	return (-1);
-}
-
-t_token	*ft_create_token(token_type token)
-{
-	t_token	*new_token;
-
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->token = token;
-	new_token->data = NULL;
-	new_token->fd = 1;
-	new_token->next = NULL;
-	new_token->prev = NULL;
-	new_token->shlvl = 0;
-	new_token->cmd_env = -1;
-	return (new_token);
 }
 
 t_token	*fill_data(token_type token, int len, char *op, t_data *data)

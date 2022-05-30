@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/27 16:23:30 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:26:22 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,41 +120,4 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 	ft_lst_clear(head, free);
 	clear_all_heads(line);
 	return (1);
-}
-
-void	ft_print(t_token *head)
-{
-	t_token	*temp;
-	int		i;
-
-	temp = head;
-	i = 0;
-	if (temp)
-	{
-		while (temp != NULL)
-		{	
-			printf("i : %d, tok : %u, data : %s, ", i, temp->token, temp->data);
-			printf("shlvl : %d, cmd_env : %d\n", temp->shlvl, temp->cmd_env);
-			i++;
-			temp = temp->next;
-		}
-	}
-}
-
-void	ft_print_line(t_heads **line)
-{
-	t_heads	*temp;
-	int		i;
-
-	temp = (*line);
-	i = 0;
-	while (temp != NULL)
-	{
-		printf("i : %d\n", i);
-		ft_print(temp->cmd);
-		ft_print(temp->infile);
-		ft_print(temp->outfile);
-		i++;
-		temp = temp->next;
-	}
 }

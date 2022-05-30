@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 15:47:30 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:17:37 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,13 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 	return (0);
 }
 
-int	ft_exit(t_token *cmd)
+int	ft_exit(t_heads **line)
 {
 	int	i;
+	t_token	*cmd;
 
 	i = -1;
+	cmd = (*line)->cmd;
 	if (cmd->next)
 	{
 		while (cmd->next->data[++i])
@@ -89,13 +91,18 @@ int	ft_exit(t_token *cmd)
 			if (i == 0 && cmd->next->data[i] == '-')
 				i++;
 			if (!ft_isdigit(cmd->next->data[i]))
-				return (ft_exit_message(1, cmd->next));
+				return (ft_exit_message(1, line));
 		}
 		if (cmd->next->next)
-			return (ft_exit_message(2, cmd->next));
+			return (ft_exit_message(2, line));
 		if (ft_atoi(cmd->next->data) < 0)
+		{
+			clear_all_heads(line);////
 			return (255);
+		}
+		clear_all_heads(line); ////
 		return (ft_atoi(cmd->next->data) % 256);
 	}
+	clear_all_heads(line);///
 	return (0);
 }
