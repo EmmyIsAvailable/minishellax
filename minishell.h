@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 14:30:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:13:46 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	sig_int(int code);
 int		event_ctrl_c(void);
 int		ft_message(char *history, char *str);
 int		ft_message_bis(char **tab);
-int		ft_exit_message(int i, t_heads **line); //modifier param partout ou funct utilisee
+int		ft_exit_message(int i, t_heads **line);
 
 /*_free_*/
 int		init_envp(t_data *data, char **envp);
@@ -179,6 +179,7 @@ int		no_binary(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);
+int		ft_close_heredoc(int heredoc, char *buffer);
 char	*env_in_heredoc(int heredoc, char *buffer, t_data *data);
 int		check_heredoc(t_heads **line, t_data *data);
 
