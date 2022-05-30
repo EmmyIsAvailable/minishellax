@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 17:15:57 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:49:41 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_token	*fill_data(t_type token, int len, char *op, t_data *data);
 /*_search_env_*/
 int		ft_name(char *str);
 char	*ft_search_env(char *params, t_data *data);
+int	ft_heredoc(t_token *tmp);
 
 /*_parse_quotes_*/
 t_token	*fill_data_quotes(t_type token, char *str, char op, t_data *data);

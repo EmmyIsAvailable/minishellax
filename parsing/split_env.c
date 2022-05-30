@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:49:25 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 17:24:03 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 18:16:13 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,23 @@ t_token	*split_env(t_token *new_token, char *op, t_data *data)
 	int		i;
 	int		len;
 
-	i = -1;
+	i = 0;
 	len = 0;
 	spaceless = NULL;
 	if (!check_spaces(ft_search_env(&op[1], data)))
-		new_token->data = join_elems(new_token->data, ft_search_env(&op[1], data));
+		new_token->data = join_elems(new_token->data,
+				ft_search_env(&op[1], data));
 	else
 	{
 		spaceless = ft_split_bis(ft_search_env(&op[1], data), "\t\v\n\r\f ");
 		len = ft_len(spaceless);
-		while (spaceless[++i])
+		while (i < len)
 		{
 			new_token->data = join_elems(new_token->data, spaceless[i]);
 			if (i < len - 1)
 				new_token->data = join_elems(new_token->data, " ");
 			free(spaceless[i]);
+			i++;
 		}
 		free(spaceless);
 	}

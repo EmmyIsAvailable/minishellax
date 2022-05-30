@@ -6,23 +6,11 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 15:54:37 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:48:38 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	ft_heredoc(t_token *tmp)
-{
-	if (tmp->token != 32)
-	{
-		if (tmp->token == 8)
-			return (1);
-		else
-			return (0);
-	}
-	return (0);
-}
 
 int	jump_spaces(char *str, int i)
 {

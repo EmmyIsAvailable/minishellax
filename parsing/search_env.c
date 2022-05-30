@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:42:16 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/05 11:43:21 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:45:52 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,40 @@ char	*ft_search_env(char *params, t_data *data)
 		}
 	}
 	return (NULL);
+}
+
+int	join_data(t_token **tmp)
+{
+	int		var_env;
+	char	*str;
+
+	str = NULL;
+	var_env = 9;
+	while (((*tmp) && (*tmp)->next)
+		&& (((*tmp)->token != SPACE || (*tmp)->token != PIPE)))
+	{
+		if ((*tmp)->token == DOLLAR_SIGN)
+			var_env = 1;
+		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
+			break ;
+		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
+		ft_free(tmp);
+		free((*tmp)->data);
+		(*tmp)->data = ft_strdup(str);
+		(*tmp)->token = var_env;
+		free(str);
+	}
+	return (0);
+}
+
+int	ft_heredoc(t_token *tmp)
+{
+	if (tmp->token != 32)
+	{
+		if (tmp->token == 8)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
 }

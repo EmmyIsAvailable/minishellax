@@ -6,35 +6,11 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 17:01:07 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:41:53 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	join_data(t_token **tmp)
-{
-	int		var_env;
-	char	*str;
-
-	str = NULL;
-	var_env = 9;
-	while (((*tmp) && (*tmp)->next)
-		&& (((*tmp)->token != SPACE || (*tmp)->token != PIPE)))
-	{
-		if ((*tmp)->token == DOLLAR_SIGN)
-			var_env = 1;
-		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
-			break ;
-		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
-		ft_free(tmp);
-		free((*tmp)->data);
-		(*tmp)->data = ft_strdup(str);
-		(*tmp)->token = var_env;
-		free(str);
-	}
-	return (0);
-}
 
 int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
