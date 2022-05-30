@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 11:49:25 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/27 16:21:21 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:24:03 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,43 +40,26 @@ int	ft_len(char **str)
 
 t_token	*split_env(t_token *new_token, char *op, t_data *data)
 {
-	char	*tmp;
 	char	**spaceless;
 	int		i;
+	int		len;
 
-	i = 0;
-	tmp = ft_strdup((const char *)ft_search_env(&op[1], data));
-	if (!check_spaces(tmp))
-	{
-		new_token->data = ft_strdup(tmp);
-		free(tmp);
-	}
+	i = -1;
+	len = 0;
+	spaceless = NULL;
+	if (!check_spaces(ft_search_env(&op[1], data)))
+		new_token->data = join_elems(new_token->data, ft_search_env(&op[1], data));
 	else
 	{
-		spaceless = ft_split_bis(tmp, "\t\v\n\r\f ");
-		free(tmp);
-		tmp = NULL;
-		while (spaceless[i])
-		{
-			if (i > 0)
-			{
-				tmp = ft_strdup(new_token->data);
-				free(new_token->data);
-			}
-			new_token->data = ft_strjoin(tmp, spaceless[i]);
-			free(tmp);
-			if (i < ft_len(spaceless) - 1)
-			{
-				tmp = ft_strdup(new_token->data);
-				free(new_token->data);
-				new_token->data = ft_strjoin(tmp, " ");
-				free(tmp);
-			}
-			i++;
-		}
-		i = -1;
+		spaceless = ft_split_bis(ft_search_env(&op[1], data), "\t\v\n\r\f ");
+		len = ft_len(spaceless);
 		while (spaceless[++i])
+		{
+			new_token->data = join_elems(new_token->data, spaceless[i]);
+			if (i < len - 1)
+				new_token->data = join_elems(new_token->data, " ");
 			free(spaceless[i]);
+		}
 		free(spaceless);
 	}
 	new_token->data_size = ft_name(&op[1]) + 1;
