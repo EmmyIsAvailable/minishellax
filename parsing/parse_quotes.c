@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 16:30:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:35:47 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 		{
 			if (!no_data(&(*new_token), i, str) && diff != i)
 				(*new_token)->data = ft_dup((*new_token)->data, i, diff, str);
-			(*new_token)->data = join_elems((*new_token)->data, ft_search_env(&str[i + 1], data));
+			(*new_token)->data = join_elems((*new_token)->data,
+					ft_search_env(&str[i + 1], data));
 			i += (1 + ft_name(&str[i + 1]));
 			diff = i;
 		}
