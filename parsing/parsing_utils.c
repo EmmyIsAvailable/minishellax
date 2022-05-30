@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:21:28 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 14:30:47 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 16:15:04 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	error_msg(int type, char *str)
 {
-	if (type)
+	if (type == 1)
 		printf("Bash: syntax error near unexpected token `newline'\n");
-	else
+	else if (type == 0)
 		printf("Bash: syntax error near unexpected token `%s'\n", str);
+	else
+		printf(" : command not found\n");
 	return (1);
 }
 
@@ -54,7 +56,7 @@ char	*ft_dup(char *data, int i, int diff, char *str)
 		j++;
 	}
 	tmp[j] = '\0';
-	tmp_bis = data;
+	tmp_bis = ft_strdup(data);
 	free(data);
 	data = ft_strjoin(tmp_bis, tmp);
 	free(tmp_bis);
