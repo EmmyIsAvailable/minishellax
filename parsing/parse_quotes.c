@@ -78,7 +78,7 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 	return (i);
 }
 
-t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data)
+t_token	*fill_data_quotes(t_type token, char *str, char op, t_data *data)
 {
 	t_token	*new_token;
 	int		i;
