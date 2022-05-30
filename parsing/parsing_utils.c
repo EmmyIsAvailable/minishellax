@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:21:28 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 16:15:04 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:19:06 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	error_msg(int type, char *str)
 	return (1);
 }
 
-t_token	*ft_create_token(token_type token)
+t_token	*ft_create_token(t_type token)
 {
 	t_token	*new_token;
 

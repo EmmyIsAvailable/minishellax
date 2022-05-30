@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 14:23:58 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:18:00 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	find_token(char c)
 	return (-1);
 }
 
-t_token	*fill_data(token_type token, int len, char *op, t_data *data)
+t_token	*fill_data(t_type token, int len, char *op, t_data *data)
 {
 	t_token	*new_token;
 	int		i;
@@ -50,7 +50,7 @@ t_token	*fill_data(token_type token, int len, char *op, t_data *data)
 	return (new_token);
 }
 
-t_token	*fill_data_bis(token_type token, int len, char *op, t_data *data)
+t_token	*fill_data_bis(t_type token, int len, char *op, t_data *data)
 {
 	t_token	*new_token;
 	int		i;
