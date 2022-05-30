@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 14:26:22 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 15:36:28 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 {
 	if ((*head) == NULL)
 		return (0);
-	if ((*head)->token == SPACE && !(*head)->next)
-	{
-		printf("bash: : command not found\n");
-		return (1);
-	}
 	if ((*head)->token == SPACE)
 		ft_free(head);
 	if ((*head)->token == PIPE)
@@ -120,4 +115,18 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 	ft_lst_clear(head, free);
 	clear_all_heads(line);
 	return (1);
+}
+
+int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
+{
+	int		here_flag;
+	t_heads	*line;
+
+	here_flag = 0;
+	line = NULL;
+	create_tokens(str, head, data, here_flag);
+	if (!(*head))
+		return (0);
+	else
+		return (cmd_line(head, &line, data, shlvl));
 }
