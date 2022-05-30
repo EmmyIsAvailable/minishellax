@@ -50,7 +50,7 @@ int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 					"exit") == 0) || history == NULL))
 	{
 		ft_prev_envp(shlvl, data);
-		free(history);
+		free(history);//a placer autre part pour eviter les leaks sur exit shlvl MAIS fait actuellement segfault
 		history = ft_strdup("");
 	}
 	return (1);
@@ -99,5 +99,6 @@ int	main(int ac, char **av, char **envp)
 	minishell(&data, head, shlvl);
 	free_tab(data.envp);
 	unlink ("pipe");
+	while (1);
 	return (0);
 }

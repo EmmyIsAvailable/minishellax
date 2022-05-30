@@ -77,6 +77,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 	{
 		is_heredoc((*line)->infile->data, data);
 		unlink((*line)->infile->data);
+		clear_all_heads(line);
 		return (0);
 	}
 	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);

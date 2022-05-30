@@ -18,6 +18,7 @@ int	is_heredoc(char *deli, t_data *data)
 	int		heredoc;
 	char	*buffer;
 
+	tmp = NULL;
 	heredoc = open(deli, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	buffer = readline("> ");
 	if (ft_strncmp(buffer, deli, (ft_strlen(deli) + 1)) != 0)
@@ -26,11 +27,11 @@ int	is_heredoc(char *deli, t_data *data)
 		{
 			tmp = readline("> ");
 			if (buffer)
-				buffer = ft_strjoin(buffer, "\n");
+				buffer = join_elems(buffer, "\n"); //ft_strjoin(buffer, "\n");
 			if (tmp && ft_strncmp(tmp, deli, (ft_strlen(deli) + 1)) == 0)
 				break ;
 			if (tmp)
-				buffer = ft_strjoin(buffer, tmp);
+				buffer = join_elems(buffer, tmp); //ft_strjoin(buffer, tmp);
 			free(tmp);
 		}
 		free(tmp);

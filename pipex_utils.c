@@ -87,14 +87,12 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 	if (ft_strncmp((*line)->cmd->data, "exit", 4) == 0)
 		return (ft_exit((*line)->cmd));
 	printf("bash: %s: command not found\n", (*line)->cmd->data);
-	if ((*line)->next)
-	{
-		tmp = (*line)->next;
-		free_elem_heads(&(*line));
-		(*line) = tmp;
-		clear_all_heads(&(*final_line));
+	tmp = (*line)->next;
+	free_elem_heads(&(*line));
+	(*line) = tmp;
+	clear_all_heads(&(*final_line));
+	if ((*line))
 		return (ft_no_fork(&(*line), data, &(*final_line)));
-	}
 	else
 		return (127);
 }
