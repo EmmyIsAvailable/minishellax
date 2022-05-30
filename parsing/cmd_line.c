@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 15:36:28 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:01:07 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 	return (0);
 }
 
+void	no_leaks_combo(t_heads **tmp, t_token **head, t_heads **line)
+{
+	free_elem_heads(tmp);
+	ft_lst_clear(head, free);
+	clear_all_heads(line);
+}
+
 int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 {
 	int			j;
@@ -88,32 +95,24 @@ int	cmd_line(t_token **head, t_heads **line, t_data *data, t_token **shlvl)
 	t_heads		*tmp;
 
 	count = 0;
-	tmp = NULL;
-	while (1)
+	j = 0;
+	while (j != 1)
 	{
-		j = 1;
 		tmp = tmp_init();
-		if (!tmp)
-			break ;
-		if ((*head)->token != PIPE)
-			j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
-		else if ((*head)->token == PIPE)
+		if ((*head)->token == PIPE)
 		{
 			error_msg(0, "|");
 			break ;
-		}	
-		if (j == -1 || j == 0)
+		}
+		j = check_token(head, &tmp->infile, &tmp->outfile, &tmp->cmd);
+		if (j != 1)
 			push_heads(&tmp, line);
 		if (j == -1)
 			count += clear_head(head);
 		else if (j == 0)
 			return (no_pipe(count, line, data, shlvl));
-		else if (j == 1)
-			break ;
 	}
-	free_elem_heads(&tmp);
-	ft_lst_clear(head, free);
-	clear_all_heads(line);
+	no_leaks_combo(&tmp, head, line);
 	return (1);
 }
 
