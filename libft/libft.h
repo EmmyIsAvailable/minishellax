@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:54:52 by eruellan          #+#    #+#             */
-/*   Updated: 2021/11/23 11:00:46 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:13:56 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	**ft_sort_tab(char **tab);
 char	*ft_strtrimone(char *str, char c);
+int		ft_strncmp_len(const char *s1, const char *s2, size_t n);
 
 typedef struct s_list
 {
