@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 14:17:14 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/30 15:14:24 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	ft_message(char *history, char *str)
 	char	**tab;
 
 	tab = ft_split_bis(history, "\f\n\r\t\v ");
-	if (!tab || ft_strncmp(tab[0], str, ft_strlen(str)) != 0)
+	if (!tab || ft_strncmp_len(tab[0], str, ft_strlen(str)) != 0)
 	{
 		if (tab)
 			free_tab(tab);
 		return (1);
 	}
-	if (ft_strncmp(tab[0], "./minishell", 11) == 0 && tab[1])
+	if (ft_strncmp_len(tab[0], "./minishell", 11) == 0 && tab[1])
 	{
 		printf("minishell: %s: No such file or directory\n", tab[1]);
 		free_tab(tab);
@@ -62,7 +62,7 @@ int	ft_message(char *history, char *str)
 
 int	ft_message_bis(char **tab)
 {
-	if (ft_strncmp(tab[0], "exit", 4) == 0)
+	if (ft_strncmp_len(tab[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
 		if (tab[1] && !check_exit_args(tab[1]) && tab[2])
