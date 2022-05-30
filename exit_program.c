@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 15:14:24 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:01:53 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_exit_message(int i, t_heads **line)
 	if (i == 1)
 	{
 		printf("bash: exit: %s: numeric argument required\n", cmd->next->data);
-		clear_all_heads(line);	
+		clear_all_heads(line);
 		return (2);
 	}
 	if (i == 2)

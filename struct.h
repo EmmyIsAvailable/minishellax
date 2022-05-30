@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:52:47 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 15:54:06 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:16:57 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_data {
 
 typedef struct s_token
 {
-	token_type		token;
+	t_type			token;
 	char			*data;
 	size_t			data_size;
 	int				fd;
