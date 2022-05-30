@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 16:13:46 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:15:57 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		error_msg(int type, char *str);
 char	*ft_dup(char *data, int i, int diff, char *str);
 void	ft_print(t_token *head);
 void	ft_print_line(t_heads **line);
-t_token	*ft_create_token(token_type token);
+t_token	*ft_create_token(t_type token);
 
 /*_cmd_line_*/
 int		check_token(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
@@ -76,14 +76,14 @@ void	ft_free(t_token **head);
 
 /*_parse_*/
 t_token	*scan_token(char *str, int io_here, t_data *data);
-t_token	*fill_data(token_type token, int len, char *op, t_data *data);
+t_token	*fill_data(t_type token, int len, char *op, t_data *data);
 
 /*_search_env_*/
 int		ft_name(char *str);
 char	*ft_search_env(char *params, t_data *data);
 
 /*_parse_quotes_*/
-t_token	*fill_data_quotes(token_type token, char *str, char op, t_data *data);
+t_token	*fill_data_quotes(t_type token, char *str, char op, t_data *data);
 int		find_op(char *str, char op);
 
 /*_pre_parsing_*/
