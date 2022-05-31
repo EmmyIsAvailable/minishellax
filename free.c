@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:14:59 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 18:08:01 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/31 18:19:52 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ char	*join_elems(char *str, char *to_add)
 	if (str)
 	{
 		tmp = ft_strdup(str);
-		printf("temp : __%s__\n", tmp);
 		free(str);
 		str = NULL;
 	}
 	str = ft_strjoin(tmp, to_add);
-	printf("final str : __%s__\n", str);
 	free(tmp);
 	tmp = NULL;
 	return (str);

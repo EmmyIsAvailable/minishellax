@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/30 18:21:36 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/05/31 18:21:06 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,8 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
 	else if (ft_strncmp((const char *)str, "\'", 1) == 0)
 		return (fill_data_quotes(SIMPLE_QUOTE, str, '\'', data));
-	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here == 0){printf("dollar token\n");
+	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here == 0)
 		return (fill_data(DOLLAR_SIGN, 0, &str[0], data));
-	}
 	else if (ft_strncmp((const char *)str, "$", 1) == 0 && io_here)
 		return (fill_data(WORD, ft_name(&str[1]) + 1, &str[0], data));
 	else if (find_token(str[0]) != -1)
