@@ -71,14 +71,14 @@ int	non_printable_builtins(t_heads **line, t_data *data)
 	int	ret;
 
 	ret = 1;
-	if (ft_strncmp((*line)->cmd->data, "cd", 2) == 0)
+	if (ft_strncmp_len((*line)->cmd->data, "cd", 2) == 0)
 		return (ft_cd(&(*line), data));
-	if (ft_strncmp((*line)->cmd->data, "export", 6) == 0 && (*line)->cmd->next)
+	if (ft_strncmp_len((*line)->cmd->data, "export", 6) == 0 && (*line)->cmd->next)
 	{
 		ft_free(&(*line)->cmd);
 		ret = ft_export((*line)->cmd, data);
 	}
-	if (ft_strncmp((*line)->cmd->data, "unset", 5) == 0 && (*line)->cmd->next)
+	if (ft_strncmp_len((*line)->cmd->data, "unset", 5) == 0 && (*line)->cmd->next)
 		ret = ft_unset((*line)->cmd, data);
 	clear_all_heads(line);
 	return (ret);
@@ -89,11 +89,11 @@ int	is_non_print_builtins(t_token *token)
 	t_token	*tmp;
 
 	tmp = token;
-	if (ft_strncmp(token->data, "cd", 2) == 0)
+	if (ft_strncmp_len(token->data, "cd", 2) == 0)
 		return (error_cd(token));
-	if (ft_strncmp(token->data, "export", 6) == 0 && token->next)
+	if (ft_strncmp_len(token->data, "export", 6) == 0 && token->next)
 		return (error_export(token->next));
-	if (ft_strncmp(token->data, "unset", 5) == 0 && token->next)
+	if (ft_strncmp_len(token->data, "unset", 5) == 0 && token->next)
 	{
 		while (tmp)
 		{

@@ -128,9 +128,12 @@ int		check_exit_args(char *arg);
 /*_builtins_cmd_*/
 int		write_outfile(t_heads **line, char *str);
 int		write_outfile_bis(t_token *tmp_out, char *str);
-int		ft_echo(t_token **token, t_data *data, t_heads **line);
 int		ft_pwd(t_heads **line);
 int		ft_env(t_data *data, t_heads **line);
+
+/*_echo_builtin_*/
+int		ft_echo(t_token **token, t_data *data, t_heads **line);
+int		check_option(t_token **token);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);

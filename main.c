@@ -41,6 +41,8 @@ int	ft_cmp_line(char *history, char *str)
 
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
+	if (!history)
+		printf("exit\n");
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message(history, "exit") == 0))
 		return (0);

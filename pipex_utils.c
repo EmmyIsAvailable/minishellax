@@ -115,7 +115,7 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 	{
 		if (is_non_print_builtins((*line)->cmd) == 0)
 			return (non_print(&(*line), &(*final_line), data));
-		else if (ft_strncmp((*line)->cmd->data, "export", 6) != 0)
+		else if (ft_strncmp_len((*line)->cmd->data, "export", 6) != 0)
 		{
 			path = ft_split(getenv("PATH"), ':');
 			tmp_binary = get_binary((*line)->cmd->data, path);
