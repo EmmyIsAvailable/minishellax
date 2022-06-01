@@ -60,6 +60,24 @@ int	distrib_token(t_token **head, t_token *tmp, t_data *data, char **spaceless)
 	return (ft_heredoc(tmp));
 }
 
+int	check_tmp(t_token **head, t_token *tmp, t_data *data, int i)
+{
+	if (!tmp)
+	{
+		printf("bash : parsing error\n");
+		ft_lst_clear(head, free);
+		return (-1);
+	}
+	if (!tmp->data)
+	{
+		ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
+		i += 2;
+	}
+	else
+	i += (int)tmp->data_size;
+	return (i);
+}
+
 void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
 {
 	int			i;
@@ -79,12 +97,10 @@ void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
 		if (space != i && space != 0)
 			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
 		tmp = scan_token(&str[i], h_flag, data);
-		i += (int)tmp->data_size;
-		if (!tmp)
-		{
-			printf("bash : parsing error\n");
-			return (ft_lst_clear(head, free));
-		}
-		h_flag = distrib_token(head, tmp, data, spaceless);
+		i = check_tmp(head, tmp, data, i);
+		if (i == -1)
+			return ;
+		if (tmp->data)
+			h_flag = distrib_token(head, tmp, data, spaceless);
 	}
 }

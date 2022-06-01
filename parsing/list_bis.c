@@ -52,7 +52,7 @@ int	clear_head(t_token **head)
 	while ((*head) && (*head)->token != 0)
 		ft_free(head);
 	ft_free(head);
-	if ((*head) && (*head)->token == 0)
+	if ((*head) && (*head)->token == 0 && (*head)->next)
 		ft_free(head);
 	return (1);
 }

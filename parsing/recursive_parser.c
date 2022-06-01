@@ -16,7 +16,7 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (error_msg(1, NULL));
-	if ((*tmp)->token == SPACE)
+	while ((*tmp)->token == SPACE && (*tmp)->next)
 		ft_free(tmp);
 	if ((*tmp)->next)
 	{
@@ -44,7 +44,7 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp))
 		return (0);
-	if ((*tmp)->token == SPACE)
+	while ((*tmp)->token == SPACE && (*tmp)->next)
 		ft_free(tmp);
 	if ((*tmp)->token == PIPE && (*tmp)->next != NULL)
 		return (-1);
@@ -78,7 +78,8 @@ int	check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		return (error_msg(0, (*tmp)->next->data));
 	else
 	{
-		ft_free(tmp);
+		while ((*tmp)->token == SPACE && (*tmp)->next)
+			ft_free(tmp);
 		(*tmp)->token = 4;
 		push(&(*tmp), inf);
 		if (!(*tmp))
@@ -93,7 +94,7 @@ int	check_out(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (error_msg(1, NULL));
-	if ((*tmp)->token == SPACE)
+	while ((*tmp)->token == SPACE && (*tmp)->next)
 		ft_free(tmp);
 	if ((*tmp)->next->token == 9 || ((*tmp)->next->token == SPACE
 			&& (*tmp)->next->next->token == 9))
@@ -118,7 +119,7 @@ int	check_out_b(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 {
 	if (!(*tmp)->next)
 		return (error_msg(1, NULL));
-	if ((*tmp)->token == SPACE)
+	while ((*tmp)->token == SPACE && (*tmp)->next)
 		ft_free(tmp);
 	if ((*tmp)->next->token == 9 || ((*tmp)->next->token == SPACE
 			&& (*tmp)->next->next->token == 9))
