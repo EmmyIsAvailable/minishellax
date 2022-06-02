@@ -6,29 +6,17 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:20:14 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/05 12:05:40 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:25:08 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	**ft_free_tab(char **data)
+char	*check_path_cmd(char *cmd)
 {
-	int	i;
-
-	i = -1;
-	while (data[++i])
-	{
-		free(data[i]);
-		data[i] = NULL;
-	}
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	return (NULL);
-}
-
-int	ft_error(char *str)
-{
-	perror(str);
-	return (EXIT_FAILURE);
 }
 
 char	*get_binary(char *cmd, char **env_path)
@@ -40,14 +28,16 @@ char	*get_binary(char *cmd, char **env_path)
 	i = -1;
 	tmp = NULL;
 	cmd_path = NULL;
+	if (cmd[0] == '/')
+		return (check_path_cmd(cmd));
 	while (env_path[++i])
 	{
 		tmp = ft_strjoin(env_path[i], "/");
 		if (!tmp)
-			ft_error("Join failed");
+			return (NULL);
 		cmd_path = ft_strjoin(tmp, cmd);
 		if (!cmd_path)
-			ft_error("Cmd_path join failed");
+			return (NULL);
 		free(tmp);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
@@ -56,26 +46,39 @@ char	*get_binary(char *cmd, char **env_path)
 	return (NULL);
 }
 
+char	*pass_path(t_token *token)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (token->data[i])
+	{
+		if (token->data[i] == '/')
+			j = i;
+		i++;
+	}
+	if (token->data[j + 1] != '\0')
+		return (&token->data[j + 1]);
+	return (NULL);
+}
+
 char	**fill_token_tab(t_token *token)
 {
 	char	**tab;
 	int		i;
-	t_token	*tmp;
 
-	tmp = token;
 	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	tab = (char **)malloc(sizeof(char *) * (i + 1));
+	tab = (char **)malloc(sizeof(char *) * (count_token(token) + 1));
 	if (!tab)
 		return (NULL);
-	i = 0;
 	while (token)
 	{
-		tab[i] = ft_strdup(token->data);
+		if (i == 0 && token->data[0] == '/')
+			tab[i] = ft_strdup(pass_path(token));
+		else
+			tab[i] = ft_strdup(token->data);
 		if (!tab[i])
 			return (NULL);
 		i++;
@@ -93,14 +96,14 @@ int	ft_exec(t_token *token, t_data *data)
 
 	cmd = fill_token_tab(token);
 	if (!cmd)
-		ft_error("Split failed");
+		return (-1);
 	env_path = ft_split(getenv("PATH"), ':');
 	binary = get_binary(cmd[0], env_path);
-	ft_free_tab(env_path);
+	free_tab(env_path);
 	if (execve(binary, cmd, data->envp) == -1)
 	{
 		free (binary);
-		ft_free_tab(cmd);
+		free_tab(cmd);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/31 18:25:16 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 11:30:28 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,13 @@ int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
 void	parent(t_data *data, t_heads **line);
 void	child(t_data *data, t_heads **line, int i);
 int		ft_exit(t_heads **line);
+int		count_token(t_token *token);
 
 /*_builtins_dispatch_*/
-int		dispatch_builtins(t_heads **line, t_data *data); // changes
-int		ft_cd(t_heads **line, t_data *data); //changed
+int		dispatch_builtins(t_heads **line, t_data *data);
+int		ft_cd(t_heads **line, t_data *data);
 void	change_pwd(int i, t_data *data);
-int		non_printable_builtins(t_heads **line, t_data *data);//changed 
+int		non_printable_builtins(t_heads **line, t_data *data);
 int		is_non_print_builtins(t_token *token);
 
 /*_check_error_builtins_*/
@@ -170,9 +171,10 @@ int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
 int		ft_exec(t_token *token, t_data *data);
-void	**ft_free_tab(char **data);
 char	*get_binary(char *cmd, char **env_path);
 char	**fill_token_tab(t_token *token);
+char	*pass_path(t_token *token);
+char	*check_path_cmd(char *cmd);
 
 /*_pipex_utils_*/
 void	ft_wait(t_data *data);
