@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/27 16:20:06 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:32:12 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,14 @@ int	non_printable_builtins(t_heads **line, t_data *data)
 	ret = 1;
 	if (ft_strncmp_len((*line)->cmd->data, "cd", 2) == 0)
 		return (ft_cd(&(*line), data));
-	if (ft_strncmp_len((*line)->cmd->data, "export", 6) == 0 && (*line)->cmd->next)
+	if (ft_strncmp_len((*line)->cmd->data, "export", 6) == 0
+		&& (*line)->cmd->next)
 	{
 		ft_free(&(*line)->cmd);
 		ret = ft_export((*line)->cmd, data);
 	}
-	if (ft_strncmp_len((*line)->cmd->data, "unset", 5) == 0 && (*line)->cmd->next)
+	if (ft_strncmp_len((*line)->cmd->data, "unset", 5) == 0
+		&& (*line)->cmd->next)
 		ret = ft_unset((*line)->cmd, data);
 	clear_all_heads(line);
 	return (ret);

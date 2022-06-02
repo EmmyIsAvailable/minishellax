@@ -6,12 +6,11 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:24:43 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/31 18:27:10 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 11:31:22 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int	ft_env(t_data *data, t_heads **line)
 {
