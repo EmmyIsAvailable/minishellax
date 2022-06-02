@@ -6,7 +6,11 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/02 13:52:13 by cdaveux          ###   ########.fr       */
+=======
+/*   Updated: 2022/06/02 12:47:05 by eruellan         ###   ########.fr       */
+>>>>>>> 3651ca8cabea5ec2dcfeb446e1ff77cb7eaf75be
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +128,7 @@ int		ft_exit_message(int i, t_heads **line);
 int		init_envp(t_data *data, char **envp);
 int		free_tab(char **tab);
 char	*join_elems(char *str, char *to_add);
-char	*prep_data(char *str, t_token *token, t_data *data);
+char	*prep_data(char *str, t_token *token);
 int		check_exit_args(char *arg);
 
 /*_builtins_cmd_*/
@@ -134,7 +138,7 @@ int		ft_pwd(t_heads **line);
 int		ft_env(t_data *data, t_heads **line);
 
 /*_echo_builtin_*/
-int		ft_echo(t_token **token, t_data *data, t_heads **line);
+int		ft_echo(t_token **token, t_heads **line);
 int		check_option(t_token **token);
 
 /*_pipex_*/
