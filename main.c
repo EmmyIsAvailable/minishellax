@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 10:22:11 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:26:14 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_cmp_line(char *history, char *str)
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if (!history)
-		printf("\nexit\n");
+		printf("exit\n");
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message(history, "exit") == 0))
 		return (0);
@@ -62,13 +62,13 @@ int	minishell(t_data *data, t_token *head, t_token *shlvl)
 	event_ctrl_c();
 	while (data->shlvl != -1)
 	{
-		g_global = 0;
 		head = NULL;
 		history = readline("$> ");
 		if (ft_shlvl(data, history, &shlvl) == 0)
 			break ;
 		if (g_global == 1)
 			data->exit_status = 130;
+		g_global = 0;
 		if (history && ft_cmp_line(history, "./minishell") != 0)
 			ft_parse(history, &head, data, &shlvl);
 		add_history(history);
