@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 12:46:45 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:24:30 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ int	non_printable_builtins(t_heads **line, t_data *data)
 	}
 	if (ft_strncmp_len((*line)->cmd->data, "unset", 5) == 0
 		&& (*line)->cmd->next)
+	{
+		ft_free(&(*line)->cmd);
 		ret = ft_unset((*line)->cmd, data);
+	}
 	clear_all_heads(line);
 	return (ret);
 }
@@ -97,6 +100,7 @@ int	is_non_print_builtins(t_token *token)
 		return (error_export(token->next));
 	if (ft_strncmp_len(token->data, "unset", 5) == 0 && token->next)
 	{
+		tmp = tmp->next;
 		while (tmp)
 		{
 			if (check_unset(token->next->data) != 0)
