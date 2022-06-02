@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 11:30:28 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:52:13 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,14 @@ t_token	*ft_lst_last(t_token *lst);
 void	ft_lst_add_back(t_token **alst, t_token *new);
 void	ft_lst_add(t_token **alst, t_token *new);
 void	push(t_token **head, t_token **head_b);
+t_token	*fill_data_exit(t_type token, int len, t_data *data);
 
 /*_list_bis_*/
 void	ft_lst_delone(t_token *lst, void (*del)(void *));
 void	ft_lst_clear(t_token **lst, void (*del)(void *));
 int		clear_head(t_token **head);
 void	ft_free(t_token **head);
+char	*ft_create_data(char *str, int i);
 
 /*_parse_*/
 t_token	*scan_token(char *str, int io_here, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/02 12:02:38 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:53:14 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		return (0);
 	}
 	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
-	ft_print_line(line);
 	data->exit_status = ft_pipex(data, &final_line, line);
 	unlink("pipe");
 	return (0);
@@ -101,7 +100,6 @@ int	ft_parse(char *str, t_token **head, t_data *data, t_token **shlvl)
 	here_flag = 0;
 	line = NULL;
 	create_tokens(str, head, data, here_flag);
-	ft_print(*head);
 	if (!(*head))
 		return (0);
 	else
