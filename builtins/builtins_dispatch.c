@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 11:40:09 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:46:45 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 			return (0);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo(&(*line)->cmd, data, line));
+		return (ft_echo(&(*line)->cmd, line));
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 3) == 0 && !(*line)->cmd->next)
 		return (ft_pwd(line));
