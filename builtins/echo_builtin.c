@@ -6,13 +6,13 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:40:56 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/02 11:41:03 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:46:32 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_echo(t_token **token, t_data *data, t_heads **line)
+int	ft_echo(t_token **token, t_heads **line)
 {
 	int		option;
 	char	*str;
@@ -26,7 +26,7 @@ int	ft_echo(t_token **token, t_data *data, t_heads **line)
 	}
 	if (!(*token))
 		return (0);
-	str = prep_data(str, (*token), data);
+	str = prep_data(str, (*token));
 	if (option == 0)
 		str = join_elems(str, "\n");
 	write_outfile(line, str);
