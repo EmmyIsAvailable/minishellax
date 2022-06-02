@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:19 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/31 18:24:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 11:11:54 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ int	check_error(int i, char *str)
 	return (i);
 }
 
-int	distrib_token(t_token **head, t_token *tmp, t_data *data, char **spaceless)
+int	distrib_token(t_token **head, t_token *tmp, t_data *data, int len)
 {
 	int		j;
-	int		len;
+	char	**spaceless;
 
 	j = -1;
+	spaceless = NULL;
 	len = 0;
 	if (ft_strchr(tmp->data, 32) && tmp->token == 1)
 	{
@@ -60,22 +61,10 @@ int	distrib_token(t_token **head, t_token *tmp, t_data *data, char **spaceless)
 	return (ft_heredoc(tmp));
 }
 
-int	check_tmp(t_token **head, t_token *tmp, t_data *data, int i)
+void	routine_supp(t_token **head)
 {
-	if (!tmp)
-	{
-		printf("bash : parsing error\n");
-		ft_lst_clear(head, free);
-		return (-1);
-	}
-	if (!tmp->data)
-	{
-		ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
-		i += 2;
-	}
-	else
-	i += (int)tmp->data_size;
-	return (i);
+	printf("bash : parsing error\n");
+	ft_lst_clear(head, free);
 }
 
 void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
@@ -83,13 +72,11 @@ void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
 	int			i;
 	int			space;
 	t_token		*tmp;
-	char		**spaceless;
 
 	i = 0;
 	tmp = NULL;
 	while (str[i])
 	{
-		spaceless = NULL;
 		space = i;
 		i = check_error(i, str);
 		if (i == -1)
@@ -97,10 +84,12 @@ void	create_tokens(char *str, t_token **head, t_data *data, int h_flag)
 		if (space != i && space != 0)
 			ft_lst_add_back(head, fill_data(SPACE, 1, " ", data));
 		tmp = scan_token(&str[i], h_flag, data);
-		i = check_tmp(head, tmp, data, i);
-		if (i == -1)
-			return ;
+		if (!tmp)
+			return (routine_supp(head));
+		i += (int)tmp->data_size;
 		if (tmp->data)
-			h_flag = distrib_token(head, tmp, data, spaceless);
+			h_flag = distrib_token(head, tmp, data, i);
+		else
+			ft_lst_delone(tmp, free);
 	}
 }
