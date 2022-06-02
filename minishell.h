@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 13:55:39 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:04:25 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ char	**clean_envp(t_data *data);
 /*_unset_builtins_*/
 int		check_existence(char *str, char *env);
 int		check_unset(char *str);
+char	**ft_exec_unset(t_token *token, char **envp);
 int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
