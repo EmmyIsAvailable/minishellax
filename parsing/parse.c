@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:11:40 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/05/31 18:21:06 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:27:06 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ t_token	*fill_data(t_type token, int len, char *op, t_data *data)
 	while (op[++i] && i < len)
 		new_token->data[i] = op[i];
 	new_token->data[len] = '\0';
+	new_token->data_size = len;
+	return (new_token);
+}
+
+t_token	*fill_data_exit(t_type token, int len, t_data *data)
+{
+	t_token	*new_token;
+	char	*tmp;
+
+	tmp = ft_itoa(data->exit_status);
+	new_token = ft_create_token(token);
+	new_token->data = ft_strdup(tmp);
+	if (!new_token->data)
+		return (NULL);
+	free(tmp);
 	new_token->data_size = len;
 	return (new_token);
 }
@@ -102,7 +117,7 @@ t_token	*scan_token(char *str, int io_here, t_data *data)
 	else if (ft_strncmp((const char *)str, ">>", 2) == 0)
 		return (fill_data(DOUBLE_GREATER, 2, ">>", data));
 	else if (ft_strncmp((const char *)str, "$?", 2) == 0)
-		return (fill_data(ECHO, 2, "$?", data));
+		return (fill_data_exit(ECHO, 2, data));
 	else if (ft_strncmp((const char *)str, "\"", 1) == 0)
 		return (fill_data_quotes(DOUBLE_QUOTE, str, '\"', data));
 	else if (ft_strncmp((const char *)str, "\'", 1) == 0)

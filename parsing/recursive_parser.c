@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:23:36 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/02 11:34:05 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:28:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		if ((*tmp)->token == SPACE)
 			ft_free(tmp);
 		if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
-			|| (*tmp)->token == 3 || (*tmp)->token == 6)
+			|| (*tmp)->token == 3 || (*tmp)->token == 6 || (*tmp)->token == 11)
 		{
 			join_data(tmp);
 			(*tmp)->token = 8;
@@ -50,13 +50,8 @@ int	check_word(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 		return (0);
 	if ((*tmp)->token == PIPE && (*tmp)->next != NULL)
 		return (-1);
-	if ((*tmp)->token == ECHO)
-	{
-		push(tmp, cmd);
-		return (0);
-	}
 	if ((*tmp)->token == 9 || (*tmp)->token == 1 || (*tmp)->token == 2
-		|| (*tmp)->token == 3 || (*tmp)->token == 6)
+		|| (*tmp)->token == 3 || (*tmp)->token == 6 || (*tmp)->token == 11)
 	{
 		join_data(tmp);
 		push(tmp, cmd);
