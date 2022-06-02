@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/30 14:38:40 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 10:22:11 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_cmp_line(char *history, char *str)
 int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {
 	if (!history)
-		printf("exit\n");
+		printf("\nexit\n");
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message(history, "exit") == 0))
 		return (0);
