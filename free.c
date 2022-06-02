@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:14:59 by eruellan          #+#    #+#             */
-/*   Updated: 2022/05/31 18:19:52 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:45:40 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,14 @@ char	*join_elems(char *str, char *to_add)
 	return (str);
 }
 
-char	*prep_data(char *str, t_token *token, t_data *data)
+char	*prep_data(char *str, t_token *token)
 {
-	char	*exit_value;
 	t_token	*tmp;
 
-	exit_value = 0;
 	tmp = token;
 	while (tmp)
 	{
-		if (tmp->token == ECHO)
-		{
-			exit_value = ft_itoa(data->exit_status);
-			str = join_elems(str, exit_value);
-			free(exit_value);
-		}
-		else
-			str = join_elems(str, tmp->data);
+		str = join_elems(str, tmp->data);
 		if (tmp->next)
 			str = join_elems(str, " ");
 		tmp = tmp->next;
