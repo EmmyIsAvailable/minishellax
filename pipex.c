@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 11:24:23 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:24:38 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	child(t_data *data, t_heads **line, int i)
 		if (dup2(data->tmp_fd, STDOUT_FILENO) == -1)
 			return ;
 	}
-	if (i == 0 || i % 2 == 1)
+	if (i % 2 == 1)
 		dup2(data->pipes[0], STDIN_FILENO);
-	else if (i % 2 == 0)
+	else if (i % 2 == 0 && i != 0)
 	{
 		tmp = open("pipe", O_RDONLY, 0777);
 		if (dup2(tmp, STDIN_FILENO) == -1)
