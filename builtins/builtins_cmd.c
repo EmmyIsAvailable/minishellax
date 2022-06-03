@@ -65,6 +65,7 @@ int	write_outfile(t_heads **line, char *str)
 		tmp->fd = fd;
 		tmp->data = ft_strdup("tmp");
 		push(&tmp, &(*line)->next->infile);
+		close(fd);
 		return (fd);
 	}
 	return (write_outfile_bis(tmp_out, str));
