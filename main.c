@@ -39,24 +39,27 @@ int	ft_cmp_line(char *history, char *str)
 	return (0);
 }
 
-int	ft_shlvl(t_data *data, char *history, t_token **shlvl)
-{
+char	*ft_shlvl(t_data *data, char *history, t_token **shlvl)
+{	
 	if (!history)
 		printf("exit\n");
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message(history, "exit") == 0))
-		return (0);
+		return (NULL);
 	else if (history && ft_message(history, "./minishell") == 0)
 		change_shlvl(data, '+');
 	else if (data->shlvl > 1 && ((history && ft_message(history,
 					"exit") == 0) || history == NULL))
 		ft_prev_envp(shlvl, data);
-	return (1);
+	if (!history)
+		return ("history");
+	return (history);
 }
 
 int	minishell(t_data *data, t_token *head, t_token *shlvl)
 {
 	char	*history;
+	char	*ret;
 
 	history = NULL;
 	event_ctrl_c();
@@ -64,8 +67,11 @@ int	minishell(t_data *data, t_token *head, t_token *shlvl)
 	{
 		head = NULL;
 		history = readline("$> ");
-		if (ft_shlvl(data, history, &shlvl) == 0)
+		ret = ft_shlvl(data, history, &shlvl);
+		if (!ret)
 			break ;
+		else if (ft_strncmp(ret, "history", 7) == 0)
+			history = ft_strdup("");
 		if (g_global == 1)
 			data->exit_status = 130;
 		g_global = 0;

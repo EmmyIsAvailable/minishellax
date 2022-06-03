@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 13:55:39 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:04:25 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		check_here(t_token **tmp, t_token **inf, t_token **out, t_token **cmd);
 
 /*_main_*/
 int		ft_cmp_line(char *history, char *str);
-int		ft_shlvl(t_data *data, char *history, t_token **shlvl);
+char	*ft_shlvl(t_data *data, char *history, t_token **shlvl);
 int		change_shlvl(t_data *data, char c);
 int		minishell(t_data *data, t_token *head, t_token *shlvl);
 
@@ -139,7 +139,7 @@ int		check_option(t_token **token);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
-void	parent(t_data *data, t_heads **line);
+void	parent(t_data *data);
 void	child(t_data *data, t_heads **line, int i);
 int		ft_exit(t_heads **line);
 int		count_token(t_token *token);
@@ -169,6 +169,7 @@ char	**clean_envp(t_data *data);
 /*_unset_builtins_*/
 int		check_existence(char *str, char *env);
 int		check_unset(char *str);
+char	**ft_exec_unset(t_token *token, char **envp);
 int		ft_unset(t_token *token, t_data *data);
 
 /*_cmd_*/
