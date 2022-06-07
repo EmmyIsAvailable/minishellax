@@ -53,8 +53,6 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 	}
 	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	data->exit_status = ft_pipex(data, &final_line, line);
-	close(data->pipes[0]);
-	close(data->pipes[1]);
 	close(data->tmp_fd);
 	unlink("pipe");
 	return (0);
