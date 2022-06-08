@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/08 15:25:30 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:09:05 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,6 @@ int	minishell(t_data *data, t_token *head, t_token *shlvl)
 	}
 	ft_lst_clear(&shlvl, free);
 	free(history);
-	close(data->pipes[0]);
-	close(data->pipes[1]);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
 	return (0);
 }
 
@@ -106,6 +102,11 @@ int	main(int ac, char **av, char **envp)
 	init_envp(&data, envp);
 	minishell(&data, head, shlvl);
 	free_tab(data.envp);
+	close(data.pipes[0]);
+	close(data.pipes[1]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(data.tmp_fd);
 	unlink ("pipe");
 	return (0);
 }
