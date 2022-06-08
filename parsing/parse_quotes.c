@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/02 13:50:08 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/08 15:46:24 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	dollar_in_quotes(t_token **new_token, char *str, char op, t_data *data)
 	diff = 1;
 	while (str[i] != op)
 	{
-		if (str[i] == '$' && (ft_search_env(&str[i + 1], data)
+		if (op == '\"' && str[i] == '$' && (ft_search_env(&str[i + 1], data)
 				|| !ft_strncmp(&str[i], "$?", 2)))
 		{
 			if (!no_data(&(*new_token), i, str) && diff != i)
@@ -86,16 +86,11 @@ t_token	*fill_data_quotes(t_type token, char *str, char op, t_data *data)
 	int		i;
 
 	new_token = NULL;
+	printf("%s, op : _%c_\n", str, op);
 	if (!find_op(&str[1], op))
 		return (NULL);
 	new_token = ft_create_token(token);
-	if (token == DOUBLE_QUOTE)
-		i = dollar_in_quotes(&new_token, str, op, data);
-	else
-	{
-		i = ft_strlen(&str[1]);
-		new_token->data = ft_create_data(str, i);
-	}
+	i = dollar_in_quotes(&new_token, str, op, data);
 	new_token->data_size = i + 1;
 	return (new_token);
 }
