@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 11:08:38 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/08 15:46:24 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:01:15 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_token	*fill_data_quotes(t_type token, char *str, char op, t_data *data)
 	int		i;
 
 	new_token = NULL;
-	printf("%s, op : _%c_\n", str, op);
 	if (!find_op(&str[1], op))
 		return (NULL);
 	new_token = ft_create_token(token);
