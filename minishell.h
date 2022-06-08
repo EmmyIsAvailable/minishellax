@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 16:04:25 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:13:37 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int		check_option(t_token **token);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, t_heads **line);
-void	parent(t_data *data);
+void	parent(t_data *data, int i);
 void	child(t_data *data, t_heads **line, int i);
 int		ft_exit(t_heads **line);
 int		count_token(t_token *token);

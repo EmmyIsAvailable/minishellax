@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/08 15:12:11 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/08 17:16:22 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ void	child(t_data *data, t_heads **line, int i)
 	ft_exec((*line)->cmd, data);
 }
 
-void	parent(t_data *data)
+void	parent(t_data *data, int i)
 {
 	close(data->pipes[1]);
+	if (i % 2 == 1)
+		close (data->pipes[0]);
 	if (data->pid1 > 0)
 		if (waitpid(data->pid1, NULL, 0) == -1)
 			return ;
@@ -69,7 +71,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 			if (data->pid1 == 0)
 				child(data, final_line, i);
 		}
-		parent(data);
+		parent(data, i);
 		next = (*final_line)->next;
 		free_elem_heads(final_line);
 		(*final_line) = next;
