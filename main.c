@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 15:26:14 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:25:30 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ int	minishell(t_data *data, t_token *head, t_token *shlvl)
 	}
 	ft_lst_clear(&shlvl, free);
 	free(history);
+	close(data->pipes[0]);
+	close(data->pipes[1]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	return (0);
 }
 

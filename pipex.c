@@ -6,11 +6,13 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 15:24:38 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:12:11 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
+
+/*close : builtins, pipe, avant de rendre le prompt*/
 
 void	child(t_data *data, t_heads **line, int i)
 {
