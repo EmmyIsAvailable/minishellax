@@ -39,7 +39,10 @@ int	ft_cd(t_heads **line, t_data *data)
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
+	{
+		clear_all_heads(line);
 		return (1);
+	}
 	change_pwd(2, data);
 	clear_all_heads(line);
 	return (0);
