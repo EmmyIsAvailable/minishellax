@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:27 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 10:34:09 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:28:32 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,22 @@ void	sig_int(int code)
 	return ;
 }
 
-int	event_ctrl_c(void)
+int	event_ctrl_c(int i)
 {
-	struct sigaction	sa;
-	struct sigaction	sig_quit;
-
-	sa.sa_handler = sig_int;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sig_quit.sa_flags = 0;
-	sig_quit.sa_handler = SIG_IGN;
-	sigemptyset(&sig_quit.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sig_quit, NULL);
+	if (i == 1)
+	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sig_int);
+	}
+	if (i == 2)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+	}
+	if (i == 3)
+	{
+		signal(SIGINT, sig_int2);
+	}
 	return (0);
 }
 

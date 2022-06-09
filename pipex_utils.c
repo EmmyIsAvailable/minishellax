@@ -6,26 +6,11 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 10:12:21 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/09 14:26:44 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_wait(t_data *data)
-{
-	pid_t	pid;
-	int		wait_status;
-
-	wait_status = 0;
-	pid = 0;
-	while (pid != -1)
-	{
-		pid = wait(&wait_status);
-		if (pid == data->pid1)
-			break ;
-	}
-}
 
 int	check_infile(t_heads **line)
 {

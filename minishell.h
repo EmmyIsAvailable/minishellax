@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 10:30:52 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:27:07 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ int		minishell(t_data *data, t_token *head, t_token *shlvl);
 
 /*_exit_program_*/
 void	sig_int(int code);
-int		event_ctrl_c(void);
+void	sig_int2(int code);
+int		event_ctrl_c(int i);
 int		ft_message(char *history, char *str);
 int		ft_message_bis(char **tab);
 int		ft_exit_message(int i, t_heads **line);
@@ -146,6 +147,8 @@ int		ft_exit(t_heads **line);
 /*_pipex_utils_bis_*/
 int		count_token(t_token *token);
 void	close_fds(t_data *data);
+void	event_signal(void);
+void	sig_slash(int code);
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data);
@@ -183,7 +186,6 @@ char	*pass_path(t_token *token);
 char	*check_path_cmd(char *cmd);
 
 /*_pipex_utils_*/
-void	ft_wait(t_data *data);
 int		check_infile(t_heads **line);
 int		check_outfile(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
