@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 14:27:07 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:24:41 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ void	sig_slash(int code);
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data);
 int		ft_cd(t_heads **line, t_data *data);
-void	change_pwd(int i, t_data *data);
+char	*ft_cd_minus(t_data *data);
+void	change_pwd(int i, t_data *data, char *str);
 int		non_printable_builtins(t_heads **line, t_data *data);
 int		is_non_print_builtins(t_token *token);
 
