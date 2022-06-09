@@ -67,6 +67,8 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line, int i)
 	i = ft_no_fork(line, data, final_line);
 	if (i != -1)
 		return (i);
+	if (!(*final_line)->cmd)
+		return (check_outfile_bis(final_line));
 	i = 0;
 	while ((*final_line))
 	{

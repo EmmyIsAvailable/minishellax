@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 16:24:30 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:19:50 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,24 @@ int	is_non_print_builtins(t_token *token)
 	t_token	*tmp;
 
 	tmp = token;
-	if (ft_strncmp_len(token->data, "cd", 2) == 0)
-		return (error_cd(token));
-	if (ft_strncmp_len(token->data, "export", 6) == 0 && token->next)
-		return (error_export(token->next));
-	if (ft_strncmp_len(token->data, "unset", 5) == 0 && token->next)
+	if (tmp)
 	{
-		tmp = tmp->next;
-		while (tmp)
+		if (ft_strncmp_len(token->data, "cd", 2) == 0)
+			return (error_cd(token));
+		if (ft_strncmp_len(token->data, "export", 6) == 0 && token->next)
+			return (error_export(token->next));
+		if (ft_strncmp_len(token->data, "unset", 5) == 0 && token->next)
 		{
-			if (check_unset(token->next->data) != 0)
-				printf("bash: unset: '%s': not a valid identifier\n",
-					token->next->data);
 			tmp = tmp->next;
+			while (tmp)
+			{
+				if (check_unset(token->next->data) != 0)
+					printf("bash: unset: '%s': not a valid identifier\n",
+						token->next->data);
+				tmp = tmp->next;
+			}
+			return (0);
 		}
-		return (0);
 	}
 	return (1);
 }

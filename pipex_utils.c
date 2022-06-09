@@ -65,6 +65,32 @@ int	check_outfile(t_heads **line)
 	return (0);
 }
 
+int	check_outfile_bis(t_heads **line)
+{
+	t_token	*tmp_out;
+
+	tmp_out = (*line)->outfile;
+	while (tmp_out)
+	{
+		if (tmp_out->token == 5)
+			tmp_out->fd = open(tmp_out->data, O_WRONLY
+					| O_CREAT | O_TRUNC, 0664);
+		else if (tmp_out->token == 7)
+			tmp_out->fd = open (tmp_out->data, O_WRONLY
+					| O_CREAT | O_APPEND, 0664);
+		if (tmp_out->fd < 0)
+		{
+			perror("Open outfile failed");
+			return (1);
+		}
+		else
+			close(tmp_out->fd);
+		tmp_out = tmp_out->next;
+	}
+	clear_all_heads(line);
+	return (0);
+}
+
 int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 {
 	t_heads	*tmp;
@@ -96,11 +122,11 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 	char	*tmp_binary;
 
 	tmp_binary = NULL;
-	if (*line)
+	if ((*line))
 	{
 		if (is_non_print_builtins((*line)->cmd) == 0)
 			return (non_print(&(*line), &(*final_line), data));
-		else if (ft_strncmp_len((*line)->cmd->data, "export", 6) != 0)
+		else if ((*line)->cmd && ft_strncmp_len((*line)->cmd->data, "export", 6) != 0)
 		{
 			path = ft_split(getenv("PATH"), ':');
 			tmp_binary = get_binary((*line)->cmd->data, path);
