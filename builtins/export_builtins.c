@@ -68,32 +68,19 @@ int	ft_solo_export(t_heads **line, t_data *data)
 	char	**tmp;
 	int		i;
 	char	*tmp_var;
-//	int		j;
-//	int		k;
 
 	i = 0;
 	export = NULL;
 	tmp = ft_sort_tab(data->envp);
 	while (tmp[i])
 	{
-	//	j = ft_strlen(tmp[i]);
-	//	k = ft_name(tmp[i]) + 1;
 		tmp_var = ft_caps_value(tmp[i]);
-		ft_strjoin(export, "declare -x ");
-		ft_strjoin(export, tmp_var);
-		ft_strjoin(export, "\"");
-		ft_strjoin(export, ft_value(data, tmp_var));
-		ft_strjoin(export, "\"");
+		export = join_elems(export, "declare -x ");
+		export = join_elems(export, tmp_var);
+		export = join_elems(export, "\"");
+		export = join_elems(export, ft_value(data, tmp_var));
+		export = join_elems(export, "\"\n");
 		free(tmp_var);
-/*		write(1, "declare -x ", 11);
-		write(1, tmp[i], k);
-		write(1, "\"", 1);
-		while (k < j)
-		{
-			write(1, &tmp[i][k], 1);
-			k++;
-		}
-		write(1, "\"\n", 2);*/
 		i++;
 	}
 	write_outfile(line, export);
