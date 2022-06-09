@@ -70,7 +70,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 	{
 		if (!(*line)->cmd->next)
 		{
-			printf("\n");
+			write_outfile(line, "\n");
 			return (0);
 		}
 		ft_free(&(*line)->cmd);
