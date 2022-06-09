@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 10:30:52 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:35:00 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ char	*check_path_cmd(char *cmd);
 void	ft_wait(t_data *data);
 int		check_infile(t_heads **line);
 int		check_outfile(t_heads **line);
+int		check_outfile_bis(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
 int		no_binary(t_heads **line, t_heads **final_line, t_data *data);
 

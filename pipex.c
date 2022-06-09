@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 10:30:11 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:41:23 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line, int i)
 	i = ft_no_fork(line, data, final_line);
 	if (i != -1)
 		return (i);
+	if (!(*final_line)->cmd)
+		return (check_outfile_bis(final_line));
 	i = 0;
 	while ((*final_line))
 	{
