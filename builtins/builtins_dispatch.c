@@ -6,13 +6,13 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 15:50:00 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/09 16:46:23 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_cd_minus(t_data *data)
+char	*ft_value(t_data *data, char *str)
 {
 	char	**tmp;
 	char	*prev;
@@ -23,7 +23,7 @@ char	*ft_cd_minus(t_data *data)
 	tmp = data->envp;
 	while (tmp[i])
 	{
-		if (ft_strncmp("OLDPWD=", tmp[i], 7) == 0)
+		if (ft_strncmp(str, tmp[i], ft_strlen(str)) == 0)
 		{
 			prev = ft_strchr(tmp[i], '=');
 			break ;
@@ -41,7 +41,7 @@ int	ft_cd(t_heads **line, t_data *data)
 	char	*new;
 
 	ret = 0;
-	if ((*line)->cmd->next && ft_strncmp((*line)->cmd->next->data, "-", 1) != 0)
+	if (!(*line)->cmd->next || ((*line)->cmd->next && ft_strncmp((*line)->cmd->next->data, "-", 1) != 0))
 		change_pwd(1, data, NULL);
 	else
 		new = getcwd(NULL, 0);
@@ -51,7 +51,7 @@ int	ft_cd(t_heads **line, t_data *data)
 			ret = chdir((*line)->cmd->next->data);
 		else
 		{
-			ret = chdir(ft_cd_minus(data));
+			ret = chdir(ft_value(data, "OLDPWD="));
 			change_pwd(1, data, new);
 		}
 	}
@@ -81,7 +81,7 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 	if (ft_strncmp((*line)->cmd->data, "env", 3) == 0 && !(*line)->cmd->next)
 		return (ft_env(data, line));
 	if (ft_strncmp((*line)->cmd->data, "export", 6) == 0 && !(*line)->cmd->next)
-		return (ft_solo_export(data));
+		return (ft_solo_export(line, data));
 	return (1);
 }
 
