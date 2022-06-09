@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 11:41:23 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/09 14:22:14 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,27 @@ void	child(t_data *data, t_heads **line, int i)
 	}
 	if (check_outfile(line) || check_infile(line))
 		return ;
+	event_ctrl_c(2);
 	ft_exec((*line)->cmd, data);
 }
 
 void	parent(t_data *data, int i)
 {
+	int	status;
+
 	close(data->pipes[1]);
 	if (i % 2 == 1)
 		close (data->pipes[0]);
+	event_ctrl_c(3);
 	if (data->pid1 > 0)
-		if (waitpid(data->pid1, NULL, 0) == -1)
+	{
+		waitpid(data->pid1, &status, 0);
+		if (WTERMSIG(status) == 3)
+			printf("Quit (core dumped)\n");
+		if (WIFEXITED(status) || WIFSIGNALED(status))
 			return ;
+	}
+
 }
 
 int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line, int i)
