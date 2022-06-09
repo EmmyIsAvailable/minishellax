@@ -6,19 +6,22 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 11:19:50 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/09 15:25:52 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	change_pwd(int i, t_data *data)
+void	change_pwd(int i, t_data *data, char *str)
 {
 	char	*new;
 	char	*cwd;
 
 	new = NULL;
-	cwd = getcwd(NULL, 0);
+	if (!str)
+		cwd = getcwd(NULL, 0);
+	else
+		cwd = str;
 	if (i == 1)
 		new = ft_strjoin("OLDPWD=", cwd);
 	else if (i == 2)
@@ -28,14 +31,49 @@ void	change_pwd(int i, t_data *data)
 	free(cwd);
 }
 
+char	*ft_cd_minus(t_data *data)
+{
+	char	**tmp;
+	char	*prev;
+	int		i;
+
+	i = 0;
+	prev = NULL;
+	tmp = data->envp;
+	while (tmp[i])
+	{
+		if (ft_strncmp("OLDPWD=", tmp[i], 7) == 0)
+		{
+			prev = ft_strchr(tmp[i], '=');
+			break ;
+		}
+		i++;
+	}
+	if (prev[1])
+		return (&prev[1]);
+	return (NULL);
+}
+
 int	ft_cd(t_heads **line, t_data *data)
 {
 	int		ret;
+	char	*new;
 
 	ret = 0;
-	change_pwd(1, data);
+	if ((*line)->cmd->next && ft_strncmp((*line)->cmd->next->data, "-", 1) != 0)
+		change_pwd(1, data, NULL);
+	else
+		new = getcwd(NULL, 0);
 	if ((*line)->cmd->next)
-		ret = chdir((*line)->cmd->next->data);
+	{
+		if (ft_strncmp((*line)->cmd->next->data, "-", 1) != 0)
+			ret = chdir((*line)->cmd->next->data);
+		else
+		{
+			ret = chdir(ft_cd_minus(data));
+			change_pwd(1, data, new);
+		}
+	}
 	else
 		ret = chdir(getenv("HOME"));
 	if (ret == -1)
@@ -43,7 +81,7 @@ int	ft_cd(t_heads **line, t_data *data)
 		clear_all_heads(line);
 		return (1);
 	}
-	change_pwd(2, data);
+	change_pwd(2, data, NULL);
 	clear_all_heads(line);
 	return (0);
 }

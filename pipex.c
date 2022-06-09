@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 14:22:14 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:50:36 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	parent(t_data *data, int i)
 {
 	int	status;
 
+	status = 0;
 	close(data->pipes[1]);
 	if (i % 2 == 1)
 		close (data->pipes[0]);
