@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:24:01 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/06/02 13:53:14 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/06/09 10:30:36 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 {
 	t_heads	*final_line;
+	int		i;
 
+	i = 0;
 	final_line = NULL;
 	create_shlvl(count, &(*line)->cmd, data, shlvl);
 	if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
@@ -52,7 +54,7 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		return (0);
 	}
 	data->tmp_fd = open("pipe", O_CREAT | O_RDWR | O_TRUNC, 0777);
-	data->exit_status = ft_pipex(data, &final_line, line);
+	data->exit_status = ft_pipex(data, &final_line, line, i);
 	close(data->tmp_fd);
 	unlink("pipe");
 	return (0);
