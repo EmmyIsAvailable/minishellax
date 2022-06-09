@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:31:26 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 14:26:44 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:46:34 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 	{
 		if (is_non_print_builtins((*line)->cmd) == 0)
 			return (non_print(&(*line), &(*final_line), data));
-		else if ((*line)->cmd && ft_strncmp_len((*line)->cmd->data, "export", 6) != 0)
+		else if ((*line)->cmd
+			&& ft_strncmp_len((*line)->cmd->data, "export", 6) != 0)
 		{
 			path = ft_split(getenv("PATH"), ':');
 			tmp_binary = get_binary((*line)->cmd->data, path);
