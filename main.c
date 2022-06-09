@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/08 16:09:05 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:28:44 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ int	main(int ac, char **av, char **envp)
 	init_envp(&data, envp);
 	minishell(&data, head, shlvl);
 	free_tab(data.envp);
-	close(data.pipes[0]);
-	close(data.pipes[1]);
+	close_fds(&data);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	close(data.tmp_fd);
 	unlink ("pipe");
 	return (0);

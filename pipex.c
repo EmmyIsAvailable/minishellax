@@ -6,13 +6,11 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/08 17:16:22 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:30:11 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
-/*close : builtins, pipe, avant de rendre le prompt*/
 
 void	child(t_data *data, t_heads **line, int i)
 {
@@ -51,9 +49,8 @@ void	parent(t_data *data, int i)
 			return ;
 }
 
-int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
+int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line, int i)
 {
-	int		i;
 	t_heads	*next;
 
 	next = NULL;
@@ -77,6 +74,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, t_heads **line)
 		(*final_line) = next;
 		i++;
 	}
+	close_fds(data);
 	return (0);
 }
 
@@ -105,19 +103,4 @@ int	ft_exit(t_heads **line)
 	tmp = ft_atoi(cmd->next->data) % 256;
 	clear_all_heads(line);
 	return (tmp);
-}
-
-int	count_token(t_token *token)
-{
-	int		i;
-	t_token	*tmp;
-
-	tmp = token;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
 }
