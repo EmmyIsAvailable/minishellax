@@ -1,6 +1,6 @@
 NAME	= minishell
 
-SRCS	= main.c exit_program.c shlvl.c free.c\
+SRCS	= main.c exit_program.c shlvl.c shlvl_bis.c free.c\
 		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/export_builtins.c \
 		./builtins/unset_builtins.c ./builtins/check_error_builtins.c ./builtins/export_utils.c \
 		./builtins/echo_builtin.c \
