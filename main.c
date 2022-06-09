@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 11:52:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 13:07:47 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:37:52 by eruellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	main(int ac, char **av, char **envp)
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
-	close(data.tmp_fd);
+	if (data.tmp_fd > 0)
+		close(data.tmp_fd);
 	unlink ("pipe");
 	return (0);
 }
