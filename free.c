@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:14:59 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/08 16:08:06 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:50:26 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	init_envp(t_data *data, char **envp)
 	data->tmp_fd = 0;
 	data->exit_status = 0;
 	data->pid1 = -2;
-	data->pipes[0] = 0;
-	data->pipes[1] = 0;
-	data->tmp_fd = 0;
 	return (0);
 }
 

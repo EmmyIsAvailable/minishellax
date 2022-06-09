@@ -6,30 +6,11 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 13:24:49 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 15:25:52 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:50:00 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	change_pwd(int i, t_data *data, char *str)
-{
-	char	*new;
-	char	*cwd;
-
-	new = NULL;
-	if (!str)
-		cwd = getcwd(NULL, 0);
-	else
-		cwd = str;
-	if (i == 1)
-		new = ft_strjoin("OLDPWD=", cwd);
-	else if (i == 2)
-		new = ft_strjoin("PWD=", cwd);
-	browse_data_var(new, data);
-	free(new);
-	free(cwd);
-}
 
 char	*ft_cd_minus(t_data *data)
 {
@@ -76,13 +57,10 @@ int	ft_cd(t_heads **line, t_data *data)
 	}
 	else
 		ret = chdir(getenv("HOME"));
-	if (ret == -1)
-	{
-		clear_all_heads(line);
-		return (1);
-	}
-	change_pwd(2, data, NULL);
 	clear_all_heads(line);
+	if (ret == -1)
+		return (1);
+	change_pwd(2, data, NULL);
 	return (0);
 }
 
