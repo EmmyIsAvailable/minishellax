@@ -152,7 +152,7 @@ void	sig_slash(int code);
 
 /*_builtins_dispatch_*/
 int		dispatch_builtins(t_heads **line, t_data *data);
-int		ft_cd(t_heads **line, t_data *data);
+int		ft_cd(t_heads **line, t_data *data, int ret);
 char	*ft_value(t_data *data, char *str);
 void	change_pwd(int i, t_data *data, char *str);
 int		non_printable_builtins(t_heads **line, t_data *data);

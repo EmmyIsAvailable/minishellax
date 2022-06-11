@@ -48,7 +48,7 @@ char	*ft_caps_value(char *tmp)
 
 	i = 0;
 	ret = NULL;
-	while(tmp[i] != '=')
+	while (tmp[i] != '=')
 		i++;
 	ret = (char *)malloc(sizeof(char) * i + 2);
 	i = 0;

@@ -35,13 +35,13 @@ char	*ft_value(t_data *data, char *str)
 	return (NULL);
 }
 
-int	ft_cd(t_heads **line, t_data *data)
+int	ft_cd(t_heads **line, t_data *data, int ret)
 {
-	int		ret;
 	char	*new;
 
 	ret = 0;
-	if (!(*line)->cmd->next || ((*line)->cmd->next && ft_strncmp((*line)->cmd->next->data, "-", 1) != 0))
+	if (!(*line)->cmd->next || ((*line)->cmd->next
+			&& ft_strncmp((*line)->cmd->next->data, "-", 1) != 0))
 		change_pwd(1, data, NULL);
 	else
 		new = getcwd(NULL, 0);
@@ -91,7 +91,7 @@ int	non_printable_builtins(t_heads **line, t_data *data)
 
 	ret = 1;
 	if (ft_strncmp_len((*line)->cmd->data, "cd", 2) == 0)
-		return (ft_cd(&(*line), data));
+		return (ft_cd(&(*line), data, ret));
 	if (ft_strncmp_len((*line)->cmd->data, "export", 6) == 0
 		&& (*line)->cmd->next)
 	{

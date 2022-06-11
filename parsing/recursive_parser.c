@@ -77,6 +77,8 @@ int	check_inf(t_token **tmp, t_token **inf, t_token **out, t_token **cmd)
 	{
 		while ((*tmp)->token == SPACE && (*tmp)->next)
 			ft_free(tmp);
+		if ((*tmp)->token == REDIR_IN)
+			ft_free(tmp);
 		(*tmp)->token = 4;
 		push(&(*tmp), inf);
 		if (!(*tmp))

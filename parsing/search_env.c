@@ -57,7 +57,10 @@ int	join_data(t_token **tmp)
 	{
 		if ((*tmp)->token == DOLLAR_SIGN)
 			var_env = 1;
-		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE)
+		if ((*tmp)->next->token == SPACE || (*tmp)->next->token == PIPE
+			|| (*tmp)->next->token == REDIR_OUT
+			|| (*tmp)->next->token == REDIR_IN
+			|| (*tmp)->next->token == DOUBLE_GREATER)
 			break ;
 		str = ft_strjoin((*tmp)->data, (*tmp)->next->data);
 		ft_free(tmp);
