@@ -6,38 +6,44 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 15:58:17 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/21 12:19:52 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-void	child(t_data *data, t_heads **line, int i)
+int	child(t_data *data, t_heads **line, int i)
 {
 	check_heredoc(line, data);
-	if ((*line)->next && i % 2 == 0)
-		dup2(data->pipes[1], STDOUT_FILENO);
-	else if ((*line)->next && i % 2 == 1)
-	{
-		close(data->tmp_fd);
-		data->tmp_fd = open("pipe", O_WRONLY | O_TRUNC, 0777);
-		if (dup2(data->tmp_fd, STDOUT_FILENO) == -1)
-			return ;
-		close(data->tmp_fd);
-	}
+	if (check_outfile(line) || check_infile(line))
+		return (-1);
 	if (i % 2 == 1)
+	{
 		dup2(data->pipes[0], STDIN_FILENO);
+		close(data->pipes[1]);
+	}
 	else if (i % 2 == 0 && i != 0)
 	{
 		data->tmp_fd = open("pipe", O_RDONLY, 0777);
 		if (dup2(data->tmp_fd, STDIN_FILENO) == -1)
-			return ;
+			return (0);
 		close(data->tmp_fd);
 	}
-	if (check_outfile(line) || check_infile(line))
-		return ;
+	if ((*line)->next && i % 2 == 0)
+	{
+		dup2(data->pipes[1], STDOUT_FILENO);
+		close(data->pipes[0]);
+	}
+	else if ((*line)->next && i % 2 == 1)
+	{
+		data->tmp_fd = open("pipe", O_WRONLY | O_TRUNC, 0777);
+		if (dup2(data->tmp_fd, STDOUT_FILENO) == -1)
+			return (0);
+		close(data->tmp_fd);
+	}
 	event_ctrl_c(2);
 	ft_exec((*line)->cmd, data);
+	return (0);
 }
 
 void	parent(t_data *data, int i)
@@ -65,8 +71,10 @@ void	parent(t_data *data, int i)
 int	ft_pipex(t_data *data, t_heads **final_line, int i)
 {
 	t_heads	*next;
+	int		val_ret;
 
 	next = NULL;
+	val_ret = 0;
 	if (!(*final_line)->cmd)
 		return (check_outfile_bis(final_line));
 	while ((*final_line))
@@ -77,13 +85,19 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		{
 			data->pid1 = fork();
 			if (data->pid1 == 0)
-				child(data, final_line, i);
+				val_ret = child(data, final_line, i);
 		}
 		parent(data, i);
 		next = (*final_line)->next;
 		free_elem_heads(final_line);
 		(*final_line) = next;
 		i++;
+		if (val_ret == -1)
+		{
+			clear_all_heads(final_line);
+			close_fds(data);
+			return (1);
+		}
 	}
 	close_fds(data);
 	return (0);

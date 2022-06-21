@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:19:38 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 16:46:45 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/06/21 10:56:41 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int		check_option(t_token **token);
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, int i);
 void	parent(t_data *data, int i);
-void	child(t_data *data, t_heads **line, int i);
+int		child(t_data *data, t_heads **line, int i);
 int		ft_exit(t_heads **line);
 
 /*_pipex_utils_bis_*/
