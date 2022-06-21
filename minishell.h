@@ -188,6 +188,7 @@ char	*check_path_cmd(char *cmd);
 
 /*_pipex_utils_*/
 int		check_infile(t_heads **line);
+int		check_infile_bis(t_heads **line);
 int		check_outfile(t_heads **line);
 int		check_outfile_bis(t_heads **line);
 int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);

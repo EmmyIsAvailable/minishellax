@@ -77,6 +77,8 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 	val_ret = 0;
 	if (!(*final_line)->cmd)
 		return (check_outfile_bis(final_line));
+	if (check_infile_bis(final_line) == 1)
+		return (1);
 	while ((*final_line))
 	{
 		if (i % 2 == 0)

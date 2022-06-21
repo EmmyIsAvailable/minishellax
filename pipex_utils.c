@@ -37,6 +37,25 @@ int	check_infile(t_heads **line)
 	return (0);
 }
 
+int	check_infile_bis(t_heads **line)
+{
+	t_token	*tmp_in;
+	tmp_in = (*line)->infile;
+	while (tmp_in)
+	{
+		tmp_in->fd = open(tmp_in->data, O_RDONLY);
+		if (tmp_in->fd < 0)
+		{
+			printf("bash: %s: No such file or directory\n", tmp_in->data);
+			return (1);
+		}
+		else
+			close(tmp_in->fd);
+		tmp_in = tmp_in->next;
+	}
+	return (0);
+}
+
 int	check_outfile(t_heads **line)
 {
 	t_token	*tmp_out;
@@ -80,7 +99,7 @@ int	check_outfile_bis(t_heads **line)
 					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
-			printf("bash: %s: No such file or directory\n", tmp_out->data);
+			printf("bash: No such file or directory\n");
 			return (1);
 		}
 		else
