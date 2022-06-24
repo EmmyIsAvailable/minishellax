@@ -140,7 +140,7 @@ int		check_option(t_token **token);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, int i);
-void	parent(t_data *data, int i);
+void	parent(t_data *data, t_heads **line, int i);
 int		child(t_data *data, t_heads **line, int i);
 int		ft_exit(t_heads **line);
 

@@ -18,16 +18,13 @@ int	child(t_data *data, t_heads **line, int i)
 	if (check_outfile(line) || check_infile(line))
 		return (-1);
 	if (i % 2 == 1)
-	{
 		dup2(data->pipes[0], STDIN_FILENO);
-		close(data->pipes[1]);
-	}
 	else if (i % 2 == 0 && i != 0)
 	{
 		data->tmp_fd = open("pipe", O_RDONLY, 0777);
 		if (dup2(data->tmp_fd, STDIN_FILENO) == -1)
 			return (0);
-		close(data->tmp_fd);
+		//close(data->tmp_fd);
 	}
 	if ((*line)->next && i % 2 == 0)
 	{
@@ -39,21 +36,30 @@ int	child(t_data *data, t_heads **line, int i)
 		data->tmp_fd = open("pipe", O_WRONLY | O_TRUNC, 0777);
 		if (dup2(data->tmp_fd, STDOUT_FILENO) == -1)
 			return (0);
-		close(data->tmp_fd);
+	//	close(data->tmp_fd);
 	}
 	event_ctrl_c(2);
 	ft_exec((*line)->cmd, data);
 	return (0);
 }
 
-void	parent(t_data *data, int i)
+void	parent(t_data *data, t_heads **line, int i)
+{
+	if (i % 2 == 1)
+		close (data->pipes[0]);
+//	else if (i % 2 == 0 && i != 0)
+//		close(data->tmp_fd);
+	if ((*line)->next && i % 2 == 0)
+		close (data->pipes[1]);
+	else if ((*line)->next && i % 2 == 1)
+		close(data->tmp_fd);
+}
+	
+void	ft_wait(t_data *data)
 {
 	int	status;
 
 	status = 0;
-	close(data->pipes[1]);
-	if (i % 2 == 1)
-		close (data->pipes[0]);
 	event_ctrl_c(3);
 	if (data->pid1 > 0)
 	{
@@ -89,7 +95,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 			if (data->pid1 == 0)
 				val_ret = child(data, final_line, i);
 		}
-		parent(data, i);
+		parent(data, final_line, i);
 		next = (*final_line)->next;
 		free_elem_heads(final_line);
 		(*final_line) = next;
@@ -101,6 +107,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 			return (1);
 		}
 	}
+	ft_wait(data);
 	close_fds(data);
 	return (0);
 }
