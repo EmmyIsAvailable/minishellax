@@ -48,24 +48,11 @@ int	child(t_data *data, t_heads **line, int i)
 
 void	parent(t_data *data, int i)
 {
-	int	status;
-
-	status = 0;
 	close(data->pipes[1]);
-	if (i % 2 == 1)
-		close (data->pipes[0]);
+	if (i % 2 == 1 && i != 0)
+		close (data->pipes[0]); //close a chaque fois ??
+	//tmp_fd pas a close car pas touche dans le parent 
 	event_ctrl_c(3);
-	if (data->pid1 > 0)
-	{
-		waitpid(data->pid1, &status, 0);
-		if (WTERMSIG(status) == 3)
-		{
-			g_global = 2;
-			printf("Quit (core dumped)\n");
-		}
-		if (WIFEXITED(status) || WIFSIGNALED(status))
-			return ;
-	}
 }
 
 int	ft_pipex(t_data *data, t_heads **final_line, int i)
@@ -102,6 +89,17 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		}
 	}
 	close_fds(data);
+	int	status = 0;
+	if (waitpid(data->pid1, &status, 0) != -1)
+	{
+		if (WTERMSIG(status) == 3)
+		{
+			g_global = 2;
+			printf("Quit (core dumped)\n");
+		}
+		if (WIFEXITED(status) || WIFSIGNALED(status))
+			return (0);
+	}
 	return (0);
 }
 

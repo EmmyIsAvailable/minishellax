@@ -46,7 +46,7 @@ void	sig_int2(int code)
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 1);
+//	rl_replace_line("", 1);
 	g_global = 1;
 	return ;
 }
