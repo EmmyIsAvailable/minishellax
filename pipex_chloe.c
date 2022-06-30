@@ -79,6 +79,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		if ((*final_line)->next)
 			pipe(data->pipe_fd);
 		//gerer les builtins ici
+/*		if (dispatch_builtins(final_line, data) == 1)*/
 		data->pid1 = fork();
 		if (data->pid1 == 0)
 		{
@@ -96,7 +97,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		clear_elem(&(*final_line));
 	}
 	close(data->tmp_fd);
-//	close_fds(data);
+//	close_fds(data); // ??
 	return (0);
 }
 
