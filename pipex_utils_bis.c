@@ -29,8 +29,8 @@ int	count_token(t_token *token)
 
 void	close_fds(t_data *data)
 {
-	close(data->pipes[0]);
-	close(data->pipes[1]);
+	close(data->pipe_fd[0]);
+	close(data->pipe_fd[1]);
 }
 
 void	sig_slash(int code)

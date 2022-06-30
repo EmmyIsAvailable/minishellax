@@ -28,18 +28,19 @@ void	free_elem_heads(t_heads **lst)
 	}
 }
 
-void	clear_all_heads(t_heads **lst)
+int	clear_all_heads(t_heads **lst)
 {
 	t_heads	*tmp;
 
 	if (!(*lst))
-		return ;
+		return (1);
 	while (*lst)
 	{
 		tmp = (*lst)->next;
 		free_elem_heads(lst);
 		*lst = tmp;
 	}
+	return (1);
 }
 
 t_heads	*ft_last(t_heads *lst)

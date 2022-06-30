@@ -19,7 +19,7 @@ typedef struct s_data {
 	char	*oldpwd;
 	char	*pwd;
 	int		tmp_fd;
-	int		pipes[2];
+	int		pipe_fd[2];
 	int		shlvl;
 	int		exit_status;
 	pid_t	last_pid;
