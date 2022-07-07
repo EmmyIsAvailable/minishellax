@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:25:22 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 12:08:58 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:52:22 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	sig_int2(int code)
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-//	rl_replace_line("", 1);
+	rl_replace_line("", 1);
 	g_global = 1;
 	return ;
 }

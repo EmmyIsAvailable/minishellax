@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_chloe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 15:02:56 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/21 12:19:52 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/07/07 12:48:44 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ int	child(t_data *data, t_heads **line)
 	if (check_outfile(line) || check_infile(line))
 		return (-1);
 	dup2(data->tmp_fd, STDIN_FILENO);
-	close(data->tmp_fd);
 	event_ctrl_c(2);
 	ft_exec((*line)->cmd, data);
-	exit(EXIT_FAILURE); //whyyy
+		exit(EXIT_FAILURE); //sauf si builtin
 	return (0);
 }
 
@@ -54,26 +53,23 @@ void	parent(t_data *data, t_heads **line)
 			if (WIFEXITED(status) || WIFSIGNALED(status))
 				return ;
 		}
-		data->tmp_fd = dup(STDIN_FILENO); //dont know why
+		data->tmp_fd = dup(STDIN_FILENO); //dont know why ; maybe restiuer stdin 
 	}
 	else //pipe
 	{
 		close(data->pipe_fd[1]);
-		data->tmp_fd = data->pipe_fd[0]; //save input for next cmd
+		data->tmp_fd = data->pipe_fd[0]; //save input for next cmd, will be duped w/ stdin in next child 
 	}
 }
 
 int	ft_pipex(t_data *data, t_heads **final_line, int i)
 {
-	t_heads	**tmp;
-
 	(void)i;
 	data->tmp_fd = dup(STDIN_FILENO);
 	if (!(*final_line)->cmd)
 		return (check_outfile_bis(final_line));
 	if (check_infile_bis(final_line) == 1)
 		return (1);
-	tmp = final_line;
 	while ((*final_line))
 	{
 		if ((*final_line)->next)
@@ -85,18 +81,19 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		{
 			if ((*final_line)->next) // exec dans pipe et pas dans stdout
 			{
-				dup2(data->pipe_fd[1], STDOUT_FILENO);
+				dup2(data->pipe_fd[1], STDOUT_FILENO); //oldfd, newfd
 				close(data->pipe_fd[0]);
-				close(data->pipe_fd[1]);
 			}
 			if (child(data, final_line) == -1)
 				return (clear_all_heads(final_line));
 		}
 		else
+		{
 			parent(data, final_line);
+		}
 		clear_elem(&(*final_line));
 	}
-	close(data->tmp_fd);
+//	close(data->tmp_fd);
 //	close_fds(data); // ??
 	return (0);
 }
