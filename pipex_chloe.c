@@ -48,7 +48,7 @@ void	parent(t_data *data, t_heads **line)
 			if (WTERMSIG(status) == 3)
 			{
 				g_global = 2;
-				printf("Quit (core dumped)\n");
+				write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 			}
 			if (WIFEXITED(status) || WIFSIGNALED(status))
 				return ;

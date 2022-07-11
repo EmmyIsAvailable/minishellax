@@ -22,7 +22,7 @@ int	check_infile(t_heads **line)
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{
-			printf("bash: %s: No such file or directory\n", tmp_in->data);
+			write(STDERR_FILENO, "bash: no such file or directory\n", 32);
 			return (1);
 		}
 		else
@@ -46,7 +46,7 @@ int	check_infile_bis(t_heads **line)
 		tmp_in->fd = open(tmp_in->data, O_RDONLY);
 		if (tmp_in->fd < 0)
 		{
-			printf("bash: %s: No such file or directory\n", tmp_in->data);
+			write(STDERR_FILENO, "bash: no such file or directory\n", 32);
 			return (1);
 		}
 		else
@@ -71,7 +71,7 @@ int	check_outfile(t_heads **line)
 					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
-			printf("bash: %s: No such file or directory\n", tmp_out->data);
+			write(STDERR_FILENO, "bash: no such file or directory\n", 32);
 			return (1);
 		}
 		else
@@ -99,7 +99,7 @@ int	check_outfile_bis(t_heads **line)
 					| O_CREAT | O_APPEND, 0664);
 		if (tmp_out->fd < 0)
 		{
-			printf("bash: No such file or directory\n");
+			write(STDERR_FILENO, "bash: no such file or directory\n", 32);
 			return (1);
 		}
 		else
@@ -124,7 +124,7 @@ int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 			return (0);
 		}
 	}
-	printf("bash: %s: command not found\n", (*line)->cmd->data);
+	write(STDERR_FILENO, "bash: command not found\n", 24);
 	tmp = (*line)->next;
 	free_elem_heads(&(*line));
 	(*line) = tmp;

@@ -57,7 +57,7 @@ int	ft_message(char *history, char *str)
 	}
 	if (ft_strncmp_len(tab[0], "./minishell", 11) == 0 && tab[1])
 	{
-		printf("minishell: %s: No such file or directory\n", tab[1]);
+		write(STDERR_FILENO, "minishell: no such file or directory\n", 35);
 		free_tab(tab);
 		return (1);
 	}
@@ -68,7 +68,7 @@ int	ft_message_bis(char **tab)
 {
 	if (ft_strncmp_len(tab[0], "exit", 4) == 0)
 	{
-		printf("exit\n");
+		write(STDERR_FILENO, "exit\n", 5);
 		if (tab[1] && !check_exit_args(tab[1]) && tab[2])
 		{
 			free_tab(tab);
@@ -81,18 +81,15 @@ int	ft_message_bis(char **tab)
 
 int	ft_exit_message(int i, t_heads **line)
 {
-	t_token	*cmd;
-
-	cmd = (*line)->cmd;
 	if (i == 1)
 	{
-		printf("bash: exit: %s: numeric argument required\n", cmd->next->data);
+		write(STDERR_FILENO, "bash: exit: numeric argument required\n", 38);
 		clear_all_heads(line);
 		return (2);
 	}
 	if (i == 2)
 	{
-		printf("bash: exit: %s: too many arguments\n", cmd->next->data);
+		write(STDERR_FILENO, "bash: exit: too many arguments\n", 31);
 		clear_all_heads(line);
 		return (1);
 	}

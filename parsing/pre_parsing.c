@@ -63,7 +63,7 @@ int	distrib_token(t_token **head, t_token *tmp, t_data *data, int len)
 
 void	routine_supp(t_token **head)
 {
-	printf("bash : parsing error\n");
+	write(STDERR_FILENO, "bash: parsing error\n", 20);
 	ft_lst_clear(head, free);
 }
 

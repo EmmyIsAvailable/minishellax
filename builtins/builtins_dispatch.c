@@ -125,8 +125,7 @@ int	is_non_print_builtins(t_token *token)
 			while (tmp)
 			{
 				if (check_unset(token->next->data) != 0)
-					printf("bash: unset: '%s': not a valid identifier\n",
-						token->next->data);
+					write(STDERR_FILENO, "bash: unset: not a valid identifier\n", 36);
 				tmp = tmp->next;
 			}
 			return (0);
