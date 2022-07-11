@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
 
-int	error_msg(int type, char *str)
+int	error_msg(int type, __attribute__((unused))char *str)
 {
 	if (type == 1)
-		printf("Bash: syntax error near unexpected token `newline'\n");
+		write(STDERR_FILENO, "bash: syntax error near unexpected token `newline'\n", 51);
 	else if (type == 0)
-		printf("Bash: syntax error near unexpected token `%s'\n", str);
+		write(STDERR_FILENO, "bash: syntax error near unexpected token\n", 41);
 	else
-		printf(" : command not found\n");
+		write(STDERR_FILENO, " : command not found\n", 21);
 	return (1);
 }
 
@@ -75,7 +75,7 @@ void	ft_print(t_token *head)
 	if (temp)
 	{
 		while (temp != NULL)
-		{	
+		{
 			printf("i : %d, tok : %u, data : %s, ", i, temp->token, temp->data);
 			printf("shlvl : %d, cmd_env : %d\n", temp->shlvl, temp->cmd_env);
 			i++;

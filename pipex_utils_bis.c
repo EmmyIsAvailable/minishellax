@@ -36,7 +36,7 @@ void	close_fds(t_data *data)
 void	sig_slash(int code)
 {
 	(void)code;
-	printf("Quit (core dumped)\n");
+	write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 	g_global = 2;
 	return ;
 }

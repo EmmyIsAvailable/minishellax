@@ -42,7 +42,7 @@ int	ft_cmp_line(char *history, char *str)
 char	*ft_shlvl(t_data *data, char *history, t_token **shlvl)
 {	
 	if (!history)
-		printf("exit\n");
+		write(STDERR_FILENO, "exit\n", 5);
 	if ((data->shlvl == 1 && history == NULL) || (history && data->shlvl == 1
 			&& ft_message(history, "exit") == 0))
 		return (NULL);

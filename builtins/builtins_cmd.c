@@ -72,10 +72,7 @@ int	write_outfile(t_heads **line, char *str)
 	fd = 0;
 	tmp_out = (*line)->outfile;
 	if (!tmp_out && !(*line)->next)
-	{
-		printf("%s", str);
 		return (-1);
-	}
 	if (!tmp_out && (*line)->next)
 	{
 		fd = open("tmp", O_CREAT | O_WRONLY, 0664);
