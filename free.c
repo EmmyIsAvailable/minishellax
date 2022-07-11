@@ -32,8 +32,8 @@ int	init_envp(t_data *data, char **envp)
 	}
 	data->envp[i] = NULL;
 	data->shlvl = 1;
-	data->pipes[0] = 0;
-	data->pipes[1] = 0;
+	data->pipe_fd[0] = 0;
+	data->pipe_fd[1] = 0;
 	data->tmp_fd = 0;
 	data->exit_status = 0;
 	data->pid1 = -2;

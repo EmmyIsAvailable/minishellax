@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:25:22 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/09 12:08:58 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:52:22 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	count_token(t_token *token)
 
 void	close_fds(t_data *data)
 {
-	close(data->pipes[0]);
-	close(data->pipes[1]);
+	close(data->pipe_fd[0]);
+	close(data->pipe_fd[1]);
 }
 
 void	sig_slash(int code)

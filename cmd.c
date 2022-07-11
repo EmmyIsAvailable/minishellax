@@ -6,7 +6,7 @@
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:20:14 by eruellan          #+#    #+#             */
-/*   Updated: 2022/06/02 11:25:08 by eruellan         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:31:24 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	ft_exec(t_token *token, t_data *data)
 	{
 		free (binary);
 		free_tab(cmd);
+		return (-1);
 	}
 	return (0);
 }

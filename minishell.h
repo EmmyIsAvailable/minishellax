@@ -60,7 +60,7 @@ void	ft_clear_shlvl(t_token **cmd, t_token **shlvl, t_token *cmp);
 t_heads	*tmp_init(void); //malloc
 void	push_heads(t_heads **head, t_heads **head_b);
 void	free_elem_heads(t_heads **lst);
-void	clear_all_heads(t_heads **lst);
+int		clear_all_heads(t_heads **lst);
 
 /*_list_*/
 t_token	*ft_lst_last(t_token *lst);
@@ -140,8 +140,8 @@ int		check_option(t_token **token);
 
 /*_pipex_*/
 int		ft_pipex(t_data *data, t_heads **final_line, int i);
-void	parent(t_data *data, t_heads **line, int i);
-int		child(t_data *data, t_heads **line, int i);
+void	parent(t_data *data, t_heads **line);
+int		child(t_data *data, t_heads **line);
 int		ft_exit(t_heads **line);
 
 /*_pipex_utils_bis_*/
