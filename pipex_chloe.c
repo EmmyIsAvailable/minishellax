@@ -28,9 +28,10 @@ int	child(t_data *data, t_heads **line)
 	if (check_outfile(line) || check_infile(line))
 		return (-1);
 	dup2(data->tmp_fd, STDIN_FILENO);
+	close (data->tmp_fd);
 	event_ctrl_c(2);
 	ft_exec((*line)->cmd, data);
-		exit(EXIT_FAILURE); //sauf si builtin
+	exit(EXIT_FAILURE); //sauf (si printable) builtin
 	return (0);
 }
 
@@ -40,23 +41,24 @@ void	parent(t_data *data, t_heads **line)
 
 	status = 0;
 	event_ctrl_c(3);
-	close (data->tmp_fd);
-	if (!(*line)->next) //exec dans stdout
+	if (!(*line)->next) //wait a la toute fin
 	{
-		while (waitpid(data->pid1, &status, 0) != -1)
+		close (data->tmp_fd);
+		while (wait(&status) != -1)
 		{
-			if (WTERMSIG(status) == 3)
-			{
-				g_global = 2;
-				write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-			}
-			if (WIFEXITED(status) || WIFSIGNALED(status))
-				return ;
 		}
+		if (WTERMSIG(status) == 3)
+		{
+			g_global = 2;
+			write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+		}
+		if (WIFEXITED(status) || WIFSIGNALED(status))
+			return ;
 		data->tmp_fd = dup(STDIN_FILENO); //dont know why ; maybe restiuer stdin 
 	}
 	else //pipe
 	{
+		close (data->tmp_fd);
 		close(data->pipe_fd[1]);
 		data->tmp_fd = data->pipe_fd[0]; //save input for next cmd, will be duped w/ stdin in next child 
 	}
@@ -83,18 +85,16 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 			{
 				dup2(data->pipe_fd[1], STDOUT_FILENO); //oldfd, newfd
 				close(data->pipe_fd[0]);
+				close(data->pipe_fd[1]);
 			}
 			if (child(data, final_line) == -1)
 				return (clear_all_heads(final_line));
 		}
 		else
-		{
 			parent(data, final_line);
-		}
 		clear_elem(&(*final_line));
 	}
-//	close(data->tmp_fd);
-//	close_fds(data); // ??
+	close(data->tmp_fd);
 	return (0);
 }
 
