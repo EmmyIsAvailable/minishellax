@@ -64,24 +64,37 @@ int	ft_cd(t_heads **line, t_data *data, int ret)
 	return (0);
 }
 
+int	is_builtin(t_heads **line, t_data *data)
+{
+	(void)data;
+	if (ft_strncmp((*line)->cmd->data, "echo", 4) == 0
+			|| ft_strncmp((*line)->cmd->data, "pwd", 3) == 0
+			|| ft_strncmp((*line)->cmd->data, "env", 3) == 0
+			|| ft_strncmp((*line)->cmd->data, "export", 6) == 0
+			|| ft_strncmp((*line)->cmd->data, "cd", 2) == 0
+			|| ft_strncmp((*line)->cmd->data, "unset", 5) == 0)
+		return (1);
+	return (0);
+}
+
 int	dispatch_builtins(t_heads **line, t_data *data)
 {
 	if (ft_strncmp((*line)->cmd->data, "echo", 4) == 0)
 	{
 		if (!(*line)->cmd->next)
 		{
-			write_outfile(line, "\n");
+			write(1, "\n", 1);
 			return (0);
 		}
 		ft_free(&(*line)->cmd);
-		return (ft_echo(&(*line)->cmd, line));
+		return (ft_echo(&(*line)->cmd));
 	}
 	if (ft_strncmp((*line)->cmd->data, "pwd", 3) == 0 && !(*line)->cmd->next)
-		return (ft_pwd(line));
+		return (ft_pwd());
 	if (ft_strncmp((*line)->cmd->data, "env", 3) == 0 && !(*line)->cmd->next)
-		return (ft_env(data, line));
+		return (ft_env(data));
 	if (ft_strncmp((*line)->cmd->data, "export", 6) == 0 && !(*line)->cmd->next)
-		return (ft_solo_export(line, data));
+		return (ft_solo_export(data));
 	return (1);
 }
 

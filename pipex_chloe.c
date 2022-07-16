@@ -30,8 +30,13 @@ int	child(t_data *data, t_heads **line)
 	dup2(data->tmp_fd, STDIN_FILENO);
 	close (data->tmp_fd);
 	event_ctrl_c(2);
-	ft_exec((*line)->cmd, data);
-	exit(EXIT_FAILURE); //sauf (si printable) builtin
+	if (!is_builtin(line, data)) //builtins > on fork avant le pipe
+	{
+		ft_exec((*line)->cmd, data);
+		exit(EXIT_FAILURE);
+	}
+	else 
+		dispatch_builtins(line, data);
 	return (0);
 }
 
@@ -41,7 +46,7 @@ void	parent(t_data *data, t_heads **line)
 
 	status = 0;
 	event_ctrl_c(3);
-	if (!(*line)->next) //wait a la toute fin
+	if (!(*line)->next)
 	{
 		close (data->tmp_fd);
 		while (wait(&status) != -1)
@@ -54,13 +59,13 @@ void	parent(t_data *data, t_heads **line)
 		}
 		if (WIFEXITED(status) || WIFSIGNALED(status))
 			return ;
-		data->tmp_fd = dup(STDIN_FILENO); //dont know why ; maybe restiuer stdin 
+		data->tmp_fd = dup(STDIN_FILENO);
 	}
-	else //pipe
+	else
 	{
 		close (data->tmp_fd);
 		close(data->pipe_fd[1]);
-		data->tmp_fd = data->pipe_fd[0]; //save input for next cmd, will be duped w/ stdin in next child 
+		data->tmp_fd = data->pipe_fd[0];
 	}
 }
 
@@ -74,24 +79,27 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		return (1);
 	while ((*final_line))
 	{
-		if ((*final_line)->next)
-			pipe(data->pipe_fd);
-		//gerer les builtins ici
-/*		if (dispatch_builtins(final_line, data) == 1)*/
-		data->pid1 = fork();
-		if (data->pid1 == 0)
+		if (is_builtin(final_line, data) && !(*final_line)->next)
+			dispatch_builtins(final_line, data);
+		else 
 		{
-			if ((*final_line)->next) // exec dans pipe et pas dans stdout
+			if ((*final_line)->next)
+				pipe(data->pipe_fd);
+			data->pid1 = fork();
+			if (data->pid1 == 0)
 			{
-				dup2(data->pipe_fd[1], STDOUT_FILENO); //oldfd, newfd
-				close(data->pipe_fd[0]);
-				close(data->pipe_fd[1]);
+				if ((*final_line)->next)
+				{
+					dup2(data->pipe_fd[1], STDOUT_FILENO);
+					close(data->pipe_fd[0]);
+					close(data->pipe_fd[1]);
+				}
+				if (child(data, final_line) == -1)
+					return (clear_all_heads(final_line));
 			}
-			if (child(data, final_line) == -1)
-				return (clear_all_heads(final_line));
+			else
+				parent(data, final_line);
 		}
-		else
-			parent(data, final_line);
 		clear_elem(&(*final_line));
 	}
 	close(data->tmp_fd);

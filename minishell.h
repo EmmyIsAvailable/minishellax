@@ -129,13 +129,9 @@ char	*prep_data(char *str, t_token *token);
 int		check_exit_args(char *arg);
 
 /*_builtins_cmd_*/
-int		write_outfile(t_heads **line, char *str);
-int		write_outfile_bis(t_token *tmp_out, char *str);
-int		ft_pwd(t_heads **line);
-int		ft_env(t_data *data, t_heads **line);
-
-/*_echo_builtin_*/
-int		ft_echo(t_token **token, t_heads **line);
+int		ft_pwd(void);
+int		ft_env(t_data *data);
+int		ft_echo(t_token **token);
 int		check_option(t_token **token);
 
 /*_pipex_*/
@@ -151,6 +147,7 @@ void	event_signal(void);
 void	sig_slash(int code);
 
 /*_builtins_dispatch_*/
+int		is_builtin(t_heads **line, t_data *data);
 int		dispatch_builtins(t_heads **line, t_data *data);
 int		ft_cd(t_heads **line, t_data *data, int ret);
 char	*ft_value(t_data *data, char *str);
@@ -165,7 +162,7 @@ int		non_print(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_export_builtins_*/
 int		ft_export(t_token *token, t_data *data);
-int		ft_solo_export(t_heads **line, t_data *data);
+int		ft_solo_export(t_data *data);
 
 /*_export_utils_*/
 int		browse_data_var(char *str, t_data *data);

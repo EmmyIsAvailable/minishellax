@@ -62,7 +62,7 @@ char	*ft_caps_value(char *tmp)
 	return (ret);
 }
 
-int	ft_solo_export(t_heads **line, t_data *data)
+int	ft_solo_export(t_data *data)
 {
 	char	*export;
 	char	**tmp;
@@ -83,7 +83,7 @@ int	ft_solo_export(t_heads **line, t_data *data)
 		free(tmp_var);
 		i++;
 	}
-	write_outfile(line, export);
+	write(1, export, ft_strlen(export));
 	free(export);
 	return (0);
 }
