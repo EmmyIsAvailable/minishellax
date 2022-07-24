@@ -81,6 +81,7 @@ int	ft_message_bis(char **tab)
 
 int	ft_exit_message(int i, t_heads **line)
 {
+	(void)line;
 	if (i == 1)
 	{
 		write(STDERR_FILENO, "bash: exit: numeric argument required\n", 38);
