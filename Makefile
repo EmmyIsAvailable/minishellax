@@ -3,7 +3,7 @@ NAME	= minishell
 SRCS	= main.c exit_program.c shlvl.c shlvl_bis.c free.c\
 		./builtins/builtins_cmd.c ./builtins/builtins_dispatch.c ./builtins/export_builtins.c \
 		./builtins/unset_builtins.c ./builtins/check_error_builtins.c ./builtins/export_utils.c \
-		./cmd.c pipex_chloe.c heredoc.c pipex_utils.c pipex_utils_bis.c\
+		./cmd.c pipex.c heredoc.c pipex_utils.c pipex_utils_bis.c\
 		./parsing/parse.c ./parsing/cmd_line.c\
 		./parsing/list.c ./parsing/recursive_parser.c \
 		./parsing/parse_quotes.c ./parsing/pre_parsing.c \
