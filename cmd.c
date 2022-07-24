@@ -99,10 +99,19 @@ int	ft_exec(t_token *token, t_data *data)
 		return (-1);
 	env_path = ft_split(getenv("PATH"), ':');
 	binary = get_binary(cmd[0], env_path);
+	if (!binary)
+	{
+		write(STDERR_FILENO, "bash: ", 6);
+		write(STDERR_FILENO, token->data, ft_strlen(token->data));
+		write(STDERR_FILENO, ": command not found\n", 20);
+		free(binary);
+		free_tab(cmd);
+		return (-1);	
+	}
 	free_tab(env_path);
 	if (execve(binary, cmd, data->envp) == -1)
 	{
-		free (binary);
+		free(binary);
 		free_tab(cmd);
 		return (-1);
 	}
