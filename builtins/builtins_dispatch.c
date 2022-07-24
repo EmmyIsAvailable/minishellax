@@ -79,6 +79,9 @@ int	is_builtin(t_heads **line, t_data *data)
 
 int	dispatch_builtins(t_heads **line, t_data *data)
 {
+	int	ret;
+
+	ret = 1;
 	if (ft_strncmp((*line)->cmd->data, "echo", 4) == 0)
 	{
 		if (!(*line)->cmd->next)
@@ -95,9 +98,6 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 		return (ft_env(data));
 	if (ft_strncmp((*line)->cmd->data, "export", 6) == 0 && !(*line)->cmd->next)
 		return (ft_solo_export(data));
-	int	ret;
-
-	ret = 1;
 	if (ft_strncmp_len((*line)->cmd->data, "cd", 2) == 0)
 		return (ft_cd(&(*line), data, ret));
 	if (ft_strncmp_len((*line)->cmd->data, "export", 6) == 0
@@ -112,11 +112,10 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 		ft_free(&(*line)->cmd);
 		ret = ft_unset((*line)->cmd, data);
 	}
-	clear_all_heads(line);
 	return (ret);
 }
 
-int	non_printable_builtins(t_heads **line, t_data *data)
+/*int	non_printable_builtins(t_heads **line, t_data *data)
 {
 	int	ret;
 
@@ -163,4 +162,4 @@ int	is_non_print_builtins(t_token *token)
 		}
 	}
 	return (1);
-}
+}*/

@@ -110,7 +110,7 @@ int	check_outfile_bis(t_heads **line)
 	return (0);
 }
 
-int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
+/*int	no_binary(t_heads **line, t_heads **final_line, t_data *data)
 {
 	t_heads	*tmp;
 
@@ -162,4 +162,4 @@ int	ft_no_fork(t_heads **line, t_data *data, t_heads **final_line)
 		}
 	}
 	return (-1);
-}
+}*/

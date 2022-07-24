@@ -40,10 +40,10 @@ int	check_token(t_token **head, t_token **inf, t_token **out, t_token **cmd)
 
 int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 {
-	t_heads	*final_line;
-	int		i;
+//	t_heads	*final_line;
+	//int		i;
 
-	final_line = NULL;
+//	final_line = NULL;
 	create_shlvl(count, &(*line)->cmd, data, shlvl);
 	if ((*line)->infile && (*line)->infile->token == 8 && !(*line)->cmd)
 	{
@@ -52,15 +52,16 @@ int	no_pipe(int count, t_heads **line, t_data *data, t_token **shlvl)
 		clear_all_heads(line);
 		return (0);
 	}
-	i = ft_no_fork(line, data, &final_line);
+/*	i = ft_no_fork(line, data, &final_line);
 	if (i != -1)
 	{
 		data->exit_status = i;
 		return (0);
 	}
-	data->exit_status = ft_pipex(data, &final_line, 0);
-	if (data->tmp_fd > 0)
-		close(data->tmp_fd);
+	data->exit_status = ft_pipex(data, &final_line, 0);*/
+	ft_pipex(data, line, 0); //final_line obsolette sans ft_no_fork
+	/*if (data->tmp_fd > 0)
+		close(data->tmp_fd);*/
 	return (0);
 }
 

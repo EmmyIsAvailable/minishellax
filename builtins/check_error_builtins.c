@@ -38,7 +38,7 @@ int	error_cd(t_token *token)
 	return (0);
 }
 
-int	non_print(t_heads **line, t_heads **final_line, t_data *data)
+/*int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 {
 	t_heads	*tmp;
 
@@ -52,4 +52,4 @@ int	non_print(t_heads **line, t_heads **final_line, t_data *data)
 		return (ft_no_fork(&(*line), data, &(*final_line)));
 	}
 	return (0);
-}
+}*/

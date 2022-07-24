@@ -152,13 +152,13 @@ int		dispatch_builtins(t_heads **line, t_data *data);
 int		ft_cd(t_heads **line, t_data *data, int ret);
 char	*ft_value(t_data *data, char *str);
 void	change_pwd(int i, t_data *data, char *str);
-int		non_printable_builtins(t_heads **line, t_data *data);
-int		is_non_print_builtins(t_token *token);
+//int		non_printable_builtins(t_heads **line, t_data *data);
+//int		is_non_print_builtins(t_token *token);
 
 /*_check_error_builtins_*/
 int		error_export(t_token *token);
 int		error_cd(t_token *token);
-int		non_print(t_heads **line, t_heads **final_line, t_data *data);
+//int		non_print(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_export_builtins_*/
 int		ft_export(t_token *token, t_data *data);
@@ -188,8 +188,8 @@ int		check_infile(t_heads **line);
 int		check_infile_bis(t_heads **line);
 int		check_outfile(t_heads **line);
 int		check_outfile_bis(t_heads **line);
-int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
-int		no_binary(t_heads **line, t_heads **final_line, t_data *data);
+//int		ft_no_fork(t_heads **line, t_data *data, t_heads **final_line);
+//int		no_binary(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_heredoc_*/
 int		is_heredoc(char *deli, t_data *data);
