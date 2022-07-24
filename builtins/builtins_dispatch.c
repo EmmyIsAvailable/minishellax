@@ -57,7 +57,6 @@ int	ft_cd(t_heads **line, t_data *data, int ret)
 	}
 	else
 		ret = chdir(getenv("HOME"));
-	clear_all_heads(line);
 	if (ret == -1)
 		return (1);
 	change_pwd(2, data, NULL);
@@ -134,7 +133,6 @@ int	dispatch_builtins(t_heads **line, t_data *data)
 		ft_free(&(*line)->cmd);
 		ret = ft_unset((*line)->cmd, data);
 	}
-	clear_all_heads(line);
 	return (ret);
 }
 

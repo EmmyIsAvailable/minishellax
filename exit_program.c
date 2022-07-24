@@ -84,13 +84,13 @@ int	ft_exit_message(int i, t_heads **line)
 	if (i == 1)
 	{
 		write(STDERR_FILENO, "bash: exit: numeric argument required\n", 38);
-		clear_all_heads(line);
+	//	clear_all_heads(line);
 		return (2);
 	}
 	if (i == 2)
 	{
 		write(STDERR_FILENO, "bash: exit: too many arguments\n", 31);
-		clear_all_heads(line);
+	//	clear_all_heads(line);
 		return (1);
 	}
 	return (0);

@@ -158,6 +158,7 @@ void	change_pwd(int i, t_data *data, char *str);
 /*_check_error_builtins_*/
 int		error_export(t_token *token);
 int		error_cd(t_token *token);
+int		check_error_builtins(t_token *token);
 //int		non_print(t_heads **line, t_heads **final_line, t_data *data);
 
 /*_export_builtins_*/

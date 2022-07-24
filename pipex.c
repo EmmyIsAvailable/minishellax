@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_chloe.c                                      :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eruellan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,7 +36,10 @@ int	child(t_data *data, t_heads **line)
 		exit(EXIT_FAILURE);
 	}
 	else 
-		dispatch_builtins(line, data);
+	{
+		if (!check_error_builtins((*line)->cmd))
+			dispatch_builtins(line, data);
+	}
 	return (0);
 }
 
@@ -71,7 +74,6 @@ void	parent(t_data *data, t_heads **line)
 
 int	ft_pipex(t_data *data, t_heads **final_line, int i)
 {
-	(void)i;
 	data->tmp_fd = dup(STDIN_FILENO);
 	if (!(*final_line)->cmd)
 		return (check_outfile_bis(final_line));
@@ -79,8 +81,11 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 		return (1);
 	while ((*final_line))
 	{
-		if (is_builtin(final_line, data) && !(*final_line)->next)
-			dispatch_builtins(final_line, data);
+		if (is_builtin(final_line, data) && !(*final_line)->next && i == 0)
+		{
+			if (!check_error_builtins((*final_line)->cmd))
+				dispatch_builtins(final_line, data);
+		}
 		else 
 		{
 			if ((*final_line)->next)
@@ -101,6 +106,7 @@ int	ft_pipex(t_data *data, t_heads **final_line, int i)
 				parent(data, final_line);
 		}
 		clear_elem(&(*final_line));
+		i++;
 	}
 	close(data->tmp_fd);
 	return (0);
